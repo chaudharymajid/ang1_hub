@@ -24,7 +24,10 @@
     <tbody>
         <ng-container *ngFor="let employee of employees;">
             <tr *ngIf="selectedEmployeeCountRadioButton=='All' || selectedEmployeeCountRadioButton==employee.gender">
-                <td>{{employee.code}}</td>
+                <td>
+                    <a [routerLink]="['/employees', employee.code]">
+                        {{employee.code}}        
+                    </a> </td>
                 <td>{{employee.name | employeeTitle:employee.gender}}</td>
                 <td>{{employee.gender}}</td>
                 <td>{{employee.annualSalary }}</td>
@@ -42,4 +45,5 @@
     </tbody>
 </table>
 <br/>
-<button (click)="toggleEmployees()">{{showNewEmployee ? 'Hide ' : 'Show ' }}New Dude</button>
+<button type="button" class="btn btn-success" (click)="toggleEmployees()">{{showNewEmployee ? 'Hide ' : 'Show ' }}New Dude</button>
+<br/>

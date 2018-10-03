@@ -1,43 +1,34 @@
-<table >
-    <thead>
-        <tr>
-            <th [attr.colspan]="columnSpan">Employee Details</th>
-        </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td >
-            First Name
-        </td>
-        <td >
-            {{firstName}}
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Last Name
-        </td>
-        <td>
-            {{lastName}}
-        </td>
-    </tr>
-    <tr *ngIf='showDetails'>
-        <td>
-            Gender
-        </td>
-        <td>
-            {{gender}}
-        </td>
-    </tr>
-    <tr *ngIf='showDetails'>
-        <td>
-            Age
-        </td>
-        <td>
-            {{age}}
-        </td>
-    </tr>
-</tbody>
-</table>
-<br/>
-<button (click) = "toggleDetails()" style="width: 160px; height: 30px;">{{showDetails? 'Hide' : 'Show'}} Details</button>
+<table *ngIf="employee">
+        <thead>
+            <tr>
+                <th colspan="2">
+                    Employee Details
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Employee Code</td>
+                <td>{{employee.code}}</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>{{employee.name}}</td>
+            </tr>
+            <tr>
+                <td>Gender</td>
+                <td>{{employee.gender}}</td>
+            </tr>
+            <tr>
+                <td>Annual Salary</td>
+                <td>{{employee.annualSalary}}</td>
+            </tr>
+            <tr>
+                <td>Date of Birth</td>
+                <td>{{employee.dateOfBirth}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div *ngIf="!employee">
+        {{statusMessage}}
+    </div>

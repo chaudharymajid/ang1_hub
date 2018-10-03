@@ -8,6 +8,8 @@ table {
 thead{
     font-weight: bold;
     text-align: center;
+    border: 1px solid black;  
+    align-content: center;
 }
 
 td{

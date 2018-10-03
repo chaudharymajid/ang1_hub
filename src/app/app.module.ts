@@ -14,10 +14,12 @@ import { EmployeeTitlePipe } from './employee/employeeTitle.pipe';
 import { EmployeeCountComponent } from './employee/employeeCount.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './others/pageNotFound.component';
+import { EmployeeService } from './employee/employee.service';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'employees', component: EmployeeComponentList },
+  { path: 'employees/:code', component: EmployeeComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
@@ -29,7 +31,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule, FormsModule, HttpModule, BsDropdownModule, TooltipModule, ModalModule, RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [EmployeeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
