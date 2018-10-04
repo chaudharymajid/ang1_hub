@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { IEmployee } from "./employee";
 import { EmployeeService } from "./employee.service";
+import { UserPreferencesService } from "./userPreference.service";
 
 @Component({
     selector: 'emp-complist',
@@ -16,7 +17,8 @@ export class EmployeeComponentList implements OnInit {
 
     selectedEmployeeCountRadioButton: string = 'All';
 
-    constructor(private _employeeService: EmployeeService) {
+    constructor(private _employeeService: EmployeeService,
+                private _userPreference : UserPreferencesService) {
     }
 
     ngOnInit() {
@@ -62,5 +64,13 @@ export class EmployeeComponentList implements OnInit {
 
     getFemaleEmpoyeesCount(): number {
         return this.employees.filter(e => e.gender === "Female").length;
+    }
+
+    get colour() : string{
+        return this._userPreference.colourPreference;
+    }
+
+    set colour (value : string){
+        this._userPreference.colourPreference = value;
     }
 }

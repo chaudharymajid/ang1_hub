@@ -46,4 +46,8 @@
 </table>
 <br/>
 <button type="button" class="btn btn-success" (click)="toggleEmployees()">{{showNewEmployee ? 'Hide ' : 'Show ' }}New Dude</button>
-<br/>
+<br/><br/>
+<div>
+    background color is:
+    <input type="text" [(ngModel)] = "colour" [style.background] = "colour">
+</div>
