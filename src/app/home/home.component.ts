@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { UserPreferencesService } from 'src/app/employee/userPreference.service';
 
 @Component({
-    templateUrl: 'home.component.html'
+    templateUrl: 'home.component.html',    
 })
 export class HomeComponent {
     constructor(private _userPreference: UserPreferencesService) {

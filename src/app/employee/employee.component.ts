@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IEmployee } from './employee';
 import { EmployeeService } from './employee.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserPreferencesService } from './userPreference.service';
 
 @Component({
@@ -14,7 +14,13 @@ export class EmployeeComponent implements OnInit {
     statusMessage: string = 'Loading data. Please wait...';
 
     constructor(private _employeeService: EmployeeService,
-        private _activatedRoute: ActivatedRoute, private _userPreference : UserPreferencesService) { }
+                private _activatedRoute: ActivatedRoute,
+                private _userPreference : UserPreferencesService,
+                private _backRoute: Router) { }
+
+    onBackButtonClick(): void {
+        this._backRoute.navigate(['/employees']);
+    }
 
     ngOnInit() {
         let empCode: number = this._activatedRoute.snapshot.params['code'];

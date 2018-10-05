@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { EmployeeComponent } from './employee/employee.component';
+import { UserPreferencesService } from './employee/userPreference.service';
 
 @Component({
   selector: 'my-app',
-  templateUrl: 'app.component.html'
+  templateUrl: 'app.component.html',
+  providers:[UserPreferencesService]
 })
 export class AppComponent {
   pageHeader : string = 'Employee Details';

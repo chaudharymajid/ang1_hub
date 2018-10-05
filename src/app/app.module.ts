@@ -32,7 +32,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule, FormsModule, HttpModule, BsDropdownModule, TooltipModule, ModalModule, RouterModule.forRoot(appRoutes)
   ],
-  providers: [EmployeeService, UserPreferencesService],
+  providers: [EmployeeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
