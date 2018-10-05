@@ -1,3 +1,4 @@
+<div [style.background] = "colour">
 <employee-count *ngIf="employees" [all]="getEmployeesCount()" [male]="getMaleEmpoyeesCount()" [female]="getFemaleEmpoyeesCount()" (countRadioButtonSelectionChanged)="onEmployeeCountRadioButtonChange($event)">
 </employee-count>
 <br/><br/>
@@ -50,4 +51,5 @@
 <div>
     background color is:
     <input type="text" [(ngModel)] = "colour" [style.background] = "colour">
+</div>
 </div>

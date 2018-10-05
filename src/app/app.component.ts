@@ -3,19 +3,7 @@ import { EmployeeComponent } from './employee/employee.component';
 
 @Component({
   selector: 'my-app',
-  template: `<div style="padding:5px">
-  <ul class="nav nav-tabs">
-      <li routerLinkActive="active">
-          <a routerLink="home">Home</a>
-      </li>
-      <li routerLinkActive="active">
-          <a routerLink="employees">Employees</a>
-      </li>
-  </ul>
-  <br/>
-  <router-outlet></router-outlet>
-</div>`
-  // templateUrl: 'app.component.html'
+  templateUrl: 'app.component.html'
 })
 export class AppComponent {
   pageHeader : string = 'Employee Details';
