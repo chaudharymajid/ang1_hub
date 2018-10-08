@@ -1,0 +1,22 @@
+.grid-container {
+    display: grid;
+    border: solid #336699 0.5px;
+    width: 60%;
+    grid-template-columns: 10% 20% 20% 20% 30%;
+
+  }
+
+  #gridHead {
+    border: solid #336699 0.5px;
+    background: yellow;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    text-align: center;
+  }
+
+  #gridRow {
+    border: solid #336699 0.5px;
+    background: lightgreen;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+  }

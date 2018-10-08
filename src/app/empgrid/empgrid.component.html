@@ -1,0 +1,31 @@
+<h1>
+    Employee Grid
+</h1>
+<div class="grid-container">
+
+    <div id='gridHead' class="grid-item">Code</div>
+    <div id='gridHead' class="grid-item">Name</div>
+    <div id='gridHead' class="grid-item">Gender</div>
+    <div id='gridHead' class="grid-item">Salary</div>
+    <div id='gridHead' class="grid-item">DOB</div>
+
+
+    <ng-container *ngFor="let employee of employees;">
+        <div id='gridRow' class="grid-item">
+            {{employee.code}}
+        </div>
+        <div id='gridRow' class="grid-item">
+            {{employee.name}}
+        </div>
+        <div id='gridRow' class="grid-item">
+            {{employee.gender}}
+        </div>
+        <div id='gridRow' class="grid-item">
+            {{employee.annualSalary}}
+        </div>
+        <div id='gridRow' class="grid-item">
+            {{employee.dateOfBirth}}
+        </div>
+    </ng-container>
+
+</div>

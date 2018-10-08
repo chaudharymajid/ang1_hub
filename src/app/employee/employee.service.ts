@@ -3,6 +3,7 @@ import { IEmployee } from './employee';
 import { Http, Response } from '@angular/http';
 import { Observable, Subject, observable } from 'rxjs';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/Observable/throw';
 
@@ -22,8 +23,8 @@ export class EmployeeService {
             .catch(this.handleError);
     }
 
-    handleError(error: Response){
+    handleError(error: Response) {
         console.error(error);
-        return Observable.throw (error);        
+        return Observable.throw(error);
     }
 }

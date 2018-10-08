@@ -16,21 +16,24 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './others/pageNotFound.component';
 import { EmployeeService } from './employee/employee.service';
 import { UserPreferencesService } from './employee/userPreference.service';
+import { EmpGrid } from './empgrid/empgrid.component'
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'employees', component: EmployeeComponentList },
   { path: 'employees/:code', component: EmployeeComponent },
+  { path: 'grid', component: EmpGrid },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
   declarations: [
-    AppComponent, EmployeeComponent, EmployeeComponentList, EmployeeTitlePipe, EmployeeCountComponent, HomeComponent, PageNotFoundComponent
+    AppComponent, EmployeeComponent, EmployeeComponentList, EmployeeTitlePipe, EmployeeCountComponent, HomeComponent, PageNotFoundComponent, EmpGrid
   ],
   imports: [
-    BrowserModule, FormsModule, HttpModule, BsDropdownModule, TooltipModule, ModalModule, RouterModule.forRoot(appRoutes)
+    BrowserModule, FormsModule, HttpModule, BsDropdownModule, TooltipModule, ModalModule, RouterModule.forRoot(appRoutes
+      )
   ],
   providers: [EmployeeService],
   bootstrap: [AppComponent]
