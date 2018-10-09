@@ -1,4 +1,4 @@
-<div [style.background]="colour">
+<!-- <div [style.background]="colour">
     <div style="padding:5px">
         <ul class="nav nav-tabs">
             <li routerLinkActive="active">
@@ -13,9 +13,26 @@
         </ul>
         <br />
         <router-outlet></router-outlet>
-    </div>
-</div>
+    </div> -->
+<!-- </div> -->
 
+<button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+</button>
+<div>
+<mat-menu #menu="matMenu">
+    <button mat-menu-item>
+        <a routerLink="home"><mat-icon>home</mat-icon></a>
+    </button>
+    <button mat-menu-item>
+        <a routerLink="employees"><mat-icon>group</mat-icon></a>
+    </button>
+    <button mat-menu-item>
+        <a routerLink="grid"><mat-icon>apps</mat-icon></a>
+    </button>
+</mat-menu>
+<router-outlet></router-outlet>
+</div>
 
 <!-- <h1>
     {{getFullName()}}
