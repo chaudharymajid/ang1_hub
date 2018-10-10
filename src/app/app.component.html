@@ -22,13 +22,16 @@
 <div>
 <mat-menu #menu="matMenu">
     <button mat-menu-item>
-        <a routerLink="home"><mat-icon>home</mat-icon></a>
+            <mat-icon>home</mat-icon><a routerLink="home">Home</a>
     </button>
     <button mat-menu-item>
-        <a routerLink="employees"><mat-icon>group</mat-icon></a>
+            <mat-icon>group</mat-icon><a routerLink="employees">Employees</a>
     </button>
     <button mat-menu-item>
         <a routerLink="grid"><mat-icon>apps</mat-icon></a>
+    </button>
+    <button mat-menu-item>
+        <a routerLink="skills"><mat-icon>beenhere</mat-icon></a>
     </button>
 </mat-menu>
 <router-outlet></router-outlet>

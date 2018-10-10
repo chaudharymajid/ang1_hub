@@ -7,6 +7,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { RouterModule, Routes } from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { MaterialModule } from './material/material';
 
 import { AppComponent } from './app.component';
 import { EmployeeComponent } from './employee/employee.component';
@@ -17,24 +18,29 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './others/pageNotFound.component';
 import { EmployeeService } from './employee/employee.service';
 import { UserPreferencesService } from './employee/userPreference.service';
-import { EmpGrid } from './empgrid/empgrid.component'
-import { MaterialModule } from './material/material'
+import { EmpGrid } from './empgrid/empgrid.component';
+import { EmployeeSkills } from './employee/empskills.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'employees', component: EmployeeComponentList },
   { path: 'employees/:code', component: EmployeeComponent },
   { path: 'grid', component: EmpGrid },
+  { path: 'skills', component: EmployeeSkills },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
   declarations: [
-    AppComponent, EmployeeComponent, EmployeeComponentList, EmployeeTitlePipe, EmployeeCountComponent, HomeComponent, PageNotFoundComponent, EmpGrid
+    AppComponent, EmployeeComponent, EmployeeComponentList, EmployeeTitlePipe, EmployeeCountComponent, HomeComponent, PageNotFoundComponent, 
+    EmpGrid, EmployeeSkills
   ],
   imports: [
-    BrowserModule, FormsModule, HttpModule, BsDropdownModule, TooltipModule, ModalModule, RouterModule.forRoot(appRoutes), BrowserAnimationsModule, MaterialModule
+    BrowserModule, FormsModule, HttpModule, BsDropdownModule, TooltipModule, ModalModule, RouterModule.forRoot(appRoutes), BrowserAnimationsModule, 
+    MaterialModule, ReactiveFormsModule
   ],
   providers: [EmployeeService],
   bootstrap: [AppComponent]
