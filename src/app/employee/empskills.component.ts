@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormControl, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,19 +11,21 @@ export class EmployeeSkills implements OnInit {
     employeeForm : FormGroup;    
     
     constructor(
-        private _homeRoute : Router
+        private _homeRoute : Router,
+        private _fb : FormBuilder
     ){}
     
     ngOnInit(){
-        this.employeeForm = new FormGroup({
-            fullName: new FormControl(),
-            email: new FormControl(),
-            skills: new FormGroup({
-                skillName: new FormControl(),
-                experienceInYears: new FormControl(),
-                proficiency: new FormControl()
-            })            
-        });
+        this.employeeForm = this._fb.group({
+            fullName: ['',[Validators.required, Validators.minLength(2), Validators.maxLength(12)]],
+            email: [''],
+            skills: this._fb.group({
+                skillName:[''],
+                experienceInYears: [''],
+                proficiency: ['beginner']
+            })
+        })
+        ;
     }
 
     onSave():void {
