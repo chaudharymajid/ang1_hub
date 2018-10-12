@@ -44,16 +44,4 @@ export class EmployeeSkills implements OnInit {
             }
         });
     }
-
-    // onLoadData(): void {
-    //     this.employeeForm.setValue({
-    //       fullName: 'Pragim Technologies',
-    //       email: 'pragim@pragimtech.com',
-    //       skills: {
-    //         skillName: 'C#',
-    //         experienceInYears: 5,
-    //         proficiency: 'beginner'
-    //       }
-    //     });
-    //   }
 }

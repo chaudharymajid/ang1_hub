@@ -1,30 +1,58 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
-/*             
-h1 {
-    color: #369;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 250%;
+
+ .mat-card {    
+    text-align: -webkit-center;    
+}    
+    
+.demo-toolbar {    
+    display: flex;    
+    align-items: center;    
+    width: 100%;    
+}    
+    
+.demo-form {    
+    /* min-width: 150px;     */
+    max-width: 100%;    
+    width: 100%;    
+}    
+    
+.demo-full-width {    
+    width: 90%;    
+}    
+    
+body {    
+    margin: 0;    
+    font-family: Roboto, sans-serif;    
+}    
+    
+mat-card {    
+    max-width: 100%;    
+    /* margin: 2em auto;     */
+    text-align: center;    
+}    
+    
+mat-toolbar-row {    
+    justify-content: space-between;    
+}    
+    
+.done {    
+    position: fixed;    
+    bottom: 20px;    
+    right: 20px;    
+    color: white;    
+}    
+    
+.content-center {    
+    text-align: -webkit-center;    
+} 
+.form-full-width {
+    min-width: 150px;
+    max-width: 500px;
+    width:100%;
 }
 
-table {
-    color: #369;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: large;
-    border-collapse: collapse;
+.input-full-width {
+    width:800px;
 }
-
-td{
-    border: 1px solid black;    
-}
-
-tr{
-    border: 1px solid black;    
-}
-
-.radioClass{
-    color: #369;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: large;
-} */
