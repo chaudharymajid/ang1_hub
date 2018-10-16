@@ -4,41 +4,50 @@
             <h3 class="panel-title">Create Employee</h3>
         </div>
         <div class="panel-body">
-            <div class="form-group" [ngClass]="{'has-error': (employeeForm.get('fullName').errors && employeeForm.get('fullName').touched
-                                 || employeeForm.get('fullName').dirty)}">
+            <div class="form-group" [ngClass]="{'has-error': formErrors.fullName}">
                 <label class="col-sm-2 control-label" for="fullName">Full Name</label>
                 <div class="col-sm-8">
                     <input id="fullName" type="text" class="form-control" formControlName="fullName">
-                    <span class="help-block" *ngIf="((employeeForm.get('fullName').touched || employeeForm.get('fullName').dirty) && 
-                                employeeForm.get('fullName').errors)">
-                        <span *ngIf="employeeForm.get('fullName').errors.required"> Dont leave it empty and nameless</span>
-                        <span *ngIf="employeeForm.get('fullName').errors.minlength || employeeForm.get('fullName').errors.maxlength">
-                            Required more than 2 and less than 16 charachers
-                        </span>
+                    <span class="help-block" *ngIf="formErrors.fullName">
+                        {{formErrors.fullName}}
                     </span>
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" [ngClass]="{'has-error' : formErrors.email}">
                 <label class="col-sm-2 control-label" for="email">Email</label>
                 <div class="col-sm-8">
                     <input id="email" type="text" class="form-control" formControlName="email">
+                    <span class="help-block" *ngIf="formErrors.email">
+                        {{formErrors.email}}
+                    </span>
                 </div>
             </div>
 
-            
-        </div>
-        <div id="formskills" formGroupName="skills">
 
-            <div class="form-group">
+        <!-- </div>
+        <div id="formskills" formGroupName="skills"> -->
+
+            <div class="form-group" [ngClass]="{'has-error' : formErrors.skillName}">
                 <label class="col-sm-2 control-label" for="skillName">
                     Skill
                 </label>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" id="skillName" placeholder="Name" formControlName="skillName">
+                <div class="col-sm-8">
+                    <input id="skillName" type="text" class="form-control" formControlName="skillName">
+                    <span class="help-block" *ngIf="formErrors.skillName">
+                        {{formErrors.skillName}}
+                    </span>
                 </div>
-                <div class="col-sm-4">
-                    <input type="text" placeholder="Experience in Years" class="form-control" formControlName="experienceInYears">
+            </div>
+            <div class="form-group" [ngClass]="{'has-error' : formErrors.experienceInYears}">
+                <label class="col-sm-2 control-label" for="experienceInYears">
+                    Skill
+                </label>
+                <div class="col-sm-8">
+                    <input id="experienceInYears" type="text" class="form-control" formControlName="experienceInYears">
+                    <span class="help-block" *ngIf="formErrors.experienceInYears">
+                        {{formErrors.experienceInYears}}
+                    </span>
                 </div>
             </div>
 
@@ -61,7 +70,7 @@
         <div class="panel-footer">
             <div class="btn-toolbar">
                 <button class="btn btn-primary" type="button" (click)="onSave()">Save</button>
-                <button class="btn btn-primary" type="button" (click)="onLoadData()">Load Data</button>
+                <button class="btn btn-primary" type="button" (click)="formLoop()">Load Data</button>
             </div>
         </div>
     </div>
@@ -80,10 +89,10 @@
             <br /> Form Values : {{employeeForm.value | json}}
         </td>
         <td style="padding: 10px">
-            touched : {{ employeeForm.get('fullName').touched }}
-            <br /> dirty : {{ employeeForm.get('fullName').dirty }}
-            <br /> valid : {{ employeeForm.get('fullName').valid }}
-            <br /> FullName Value : {{employeeForm.get('fullName').value}}
+            touched : {{ employeeForm.get('email').touched }}
+            <br /> dirty : {{ employeeForm.get('email').dirty }}
+            <br /> valid : {{ employeeForm.get('email').valid }}
+            <br /> FullName Value : {{employeeForm.get('email').value}}
         </td>
     </tr>
 </table>

@@ -20,39 +20,76 @@ export class EmployeeSkills implements OnInit {
     ngOnInit(){
         this.employeeForm = this._fb.group({
             fullName: ['',[Validators.required, Validators.minLength(2), Validators.maxLength(12)]],
-            email: [''],
+            email: ['', [Validators.required, Validators.email]],
             skills: this._fb.group({
-                skillName:[''],
-                experienceInYears: [''],
+                skillName:['',[Validators.required]],
+                experienceInYears: ['',[Validators.required]],
                 proficiency: ['beginner']
             })
         })
         ;
-    }
 
-    formLoop(group : FormGroup):void {
-        Object.keys(group.controls).forEach((key:string) => {
-            const abstractControl = group.get(key);
-            if (abstractControl instanceof FormGroup) {
-                
-            }
+        this.employeeForm.valueChanges.subscribe((data) => {
+            this.logValidationErrors(this.employeeForm);
         })
     }
 
+    formErrors = {
+        'fullName' : '',
+        'email' : '',
+        'skillName' : '',
+        'experienceInYears' : '',
+        'proficiency' : ''
+    }
+
+    validationMessages = {
+        'fullName' : {
+            'required' : 'Name is required',
+            'minlength' : 'Name must be greater than 2 characters',
+            'maxlength' : 'Name must not exceed 15 characters'
+        },
+        'email' : {
+            'required' : 'Email is required',
+            'email' : 'Not valid email address'
+        },
+        'skillName' : {
+            'required' : 'Skill is required'
+        },
+        'proficiency' : {
+            'required' : 'It is required'
+        },
+        'experienceInYears' : {
+            'required' : 'Experience is required'
+        }
+    }
+
+    logValidationErrors(group : FormGroup):void {
+        Object.keys(group.controls).forEach((key:string) => {
+            const abstractControl = group.get(key);
+            if (abstractControl instanceof FormGroup) {
+                this.logValidationErrors(abstractControl);                
+            }
+            else {
+                this.formErrors[key] = '';
+                if(abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty)){
+                    const messages = this.validationMessages[key];
+                    for(const errorKey in abstractControl.errors){
+                        if(errorKey){
+                            this.formErrors[key] += messages[errorKey] + ' ';                            
+                        }
+                    }
+                }
+            }
+        })
+    }
+    
     onSave():void {
         console.log(this.employeeForm.value);
         // this._homeRoute.navigate(['/home']);
     }
 
     onLoadData(): void {
-        this.employeeForm.patchValue({
-            fullName:'Majid',
-            email: 'majid.chaudhary@yahoo.co.uk',
-            skills:{
-                skillName:'DBA',
-                experienceInYears: 15,
-                proficiency: 'intermediate'
-            }
-        });
-    }
+        this.logValidationErrors(this.employeeForm);
+        console.log(this.formErrors);
+      }
 }
