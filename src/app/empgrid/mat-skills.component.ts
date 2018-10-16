@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 
 @Component({
     templateUrl: 'mat-skills.component.html'
+    // ,
+    // styleUrls : ['mat-skills.component.css']
 })
 
 export class MatSkills implements OnInit {

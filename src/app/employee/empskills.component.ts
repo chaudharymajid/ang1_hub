@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { keyframes } from '@angular/animations';
+import { Key } from 'protractor';
 
 @Component({
     templateUrl: 'empskills.component.html',
@@ -26,6 +28,15 @@ export class EmployeeSkills implements OnInit {
             })
         })
         ;
+    }
+
+    formLoop(group : FormGroup):void {
+        Object.keys(group.controls).forEach((key:string) => {
+            const abstractControl = group.get(key);
+            if (abstractControl instanceof FormGroup) {
+                
+            }
+        })
     }
 
     onSave():void {

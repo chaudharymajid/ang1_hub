@@ -56,3 +56,15 @@ mat-toolbar-row {
 .input-full-width {
     width:800px;
 }
+
+.td{
+    width: 600px;
+}
+
+.mat-form-field-infix {
+    width: 480px;
+ }
+
+table {
+    width: 350px;
+}
