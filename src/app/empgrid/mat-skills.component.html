@@ -1,111 +1,73 @@
-    <mat-card>    
-        <!-- Title of an Card -->    
-        <mat-card-title>    
-            Angular Material Component With Angular 5    
-        </mat-card-title>    
-        
-        <mat-card-content>    
-            <form>    
-                <table>    
-                    <tr>    
-                        <td colspan="2">    
-                            <mat-form-field class="demo-full-width">    
-                                <input id="field1" matInput placeholder="Full Name">    
-                            </mat-form-field>    
-                        </td>  
-                    </tr>    
-                    <tr>    
-                        <td colspan="2">    
-                            <mat-form-field class="demo-full-width">    
-                                <textarea matInput placeholder="Address" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5"></textarea>    
-                            </mat-form-field>    
-                        </td>    
-                    </tr>    
-                    <tr>    
-                        <td colspan="2">    
-                            <mat-form-field class="demo-full-width">    
-                                <input matInput [matDatepicker]="picker" placeholder="Date of birth">    
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>    
-                                <mat-datepicker touchUi="true" #picker></mat-datepicker>    
-                            </mat-form-field>    
-                        </td>    
-                    </tr>    
-                    <tr>    
-                        <td>    
-                            <span>Gender</span><br><br>    
-                            <mat-radio-group>    
-                                <mat-radio-button value="1">Male</mat-radio-button>    
-                                <mat-radio-button value="2">Female</mat-radio-button>    
-                            </mat-radio-group>    
+<mat-card>
+    <!-- Title of an Card -->
+    <mat-card-title>
+        Company Registeration
+    </mat-card-title>
+
+    <mat-card-content>
+        <form>
+            <table>
+                <tr>
+                    <td>
+                        <mat-form-field class="demo-full-width">
+                            <input id="field-companyName" matInput placeholder="Company Name">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="demo-full-width">
+                            <input id="field-businessType" matInput placeholder="Business Type">
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-form-field class="demo-full-width">
+                            <textarea matInput placeholder="Address" matTextareaAutosize matAutosizeMinRows="1"
+                                matAutosizeMaxRows="5"></textarea>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="demo-full-width">
+                            <input id="field-phone" matInput placeholder="Phone Number">
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-form-field class="demo-full-width">
+                            <input id="field-email" matInput placeholder="Email">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="demo-full-width">
+                            <input id="field-web" matInput placeholder="Web Address">
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                        <td>
+                            <mat-form-field class="demo-full-width">
+                                <input id="field-regNumber" matInput placeholder="Registeration Number">
+                            </mat-form-field>
                         </td>
-                    </tr>    
-                        <tr><td><br>    
-                            <mat-form-field>    
-                                <mat-select placeholder="Select Blog" [(value)]="selected">    
-                                    <mat-option>-- Select Any --</mat-option>    
-                                    <mat-option value="1">C#Corner</mat-option>    
-                                    <mat-option value="2">C#Corner</mat-option>    
-                                    <mat-option value="3">C#Corner</mat-option>    
-                                </mat-select>    
-                            </mat-form-field>    
-                        </td>    
-                    </tr>    
-                    <tr>    
-                        <td colspan="2">    
-                            <mat-form-field class="demo-full-width">    
-                                <input matInput placeholder="Email">    
-                            </mat-form-field>    
-                        </td>    
-                    </tr>    
-                    <tr>    
-                        <td colspan="2">    
-        
-                        </td>    
-                    </tr>    
-                   
-                            <mat-toolbar>
-                        <!-- <div style="font-weight:bold; text-align:right; margin-left: 45%;"> -->
-                            <button mat-raised-button color="accent" style="margin-right: 5px;">Submit</button>    
-                            <button mat-raised-button color="accent">Clear</button>    
-                        <!-- </div> -->
-                        </mat-toolbar>
-
-                    </table> 
-                        
-                    
-            </form>    
-        </mat-card-content>    
-    </mat-card>   
-
-
-
-
-
-<!-- <div class="example-container">
-    <div col-md-8>
-    <mat-form-field class="input-full-width">
-                <input matInput placeholder="Input">
-              </mat-form-field>
-            </div>    
-        <mat-form-field >
-          <input matInput placeholder="Enter your email" [formControl]="fullName" required>
-          <mat-error *ngIf="fullName.invalid">What do you want</mat-error>
-        </mat-form-field>
-      </div> -->
-<!--       
-      <br><br>
-<div>
-    <table id="tab1" border="1">
-        <tr>
-            <th style="padding: 10px">FormControl (fullName)</th>
-        </tr>
-        <tr>
-            <td style="padding: 10px">
-                touched : {{ fullName.touched }}
-                <br /> dirty : {{ fullName.dirty }}
-                <br /> valid : {{ fullName.valid }}
-                <br /> FullName Value : {{fullName.value}}
-            </td>
-        </tr>
-    </table>
-</div> -->
+                        <td>
+                            <mat-form-field class="demo-full-width">
+                                <input id="field-vatNumber" matInput placeholder="Tax Registeration Number">
+                            </mat-form-field>
+                        </td>
+                    </tr>
+            </table>
+        </form>
+    </mat-card-content>
+    <mat-card-title>
+        <button align="center" mat-stroked-button color="white" style="margin-right: 5px;" onclick="document.getElementById('fileToUpload').click()">
+            Upload Company Logo
+        </button>
+    </mat-card-title>
+</mat-card>
+<br>
+<div align="center">
+    <button mat-stroked-button color="white" style="margin-right: 5px;">Submit</button>
+    <button mat-stroked-button color="white">Clear</button>
+</div>
+<br>
