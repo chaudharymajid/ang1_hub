@@ -60,14 +60,13 @@
         </form>
     </mat-card-content>
     <mat-card-title>
-        <button align="center" mat-stroked-button color="white" style="margin-right: 5px;" onclick="document.getElementById('fileToUpload').click()">
-            Upload Company Logo
-        </button>
+            <input type="file" accept="image/*" #file style= "visibility:hidden">
+            <button mat-stroked-button color="white" (click)="file.click()">Upload Company Logo</button>
     </mat-card-title>
 </mat-card>
 <br>
 <div align="center">
     <button mat-stroked-button color="white" style="margin-right: 5px;">Submit</button>
-    <button mat-stroked-button color="white">Clear</button>
+    <button mat-stroked-button color="white">Clear</button>    
 </div>
 <br>
