@@ -5,17 +5,17 @@
     </mat-card-title>
 
     <mat-card-content>
-        <form>
+        <div [formGroup]="employeeForm">
             <table>
                 <tr>
                     <td>
                         <mat-form-field class="demo-full-width">
-                            <input id="field-companyName" matInput placeholder="Company Name">
+                            <input id="field-companyName" matInput placeholder="Company Name" formControlName="companyName">
                         </mat-form-field>
                     </td>
                     <td>
                         <mat-form-field class="demo-full-width">
-                            <input id="field-businessType" matInput placeholder="Business Type">
+                            <input id="field-businessType" matInput placeholder="Business Type" formControlName="businessType">
                         </mat-form-field>
                     </td>
                 </tr>
@@ -23,50 +23,55 @@
                     <td>
                         <mat-form-field class="demo-full-width">
                             <textarea matInput placeholder="Address" matTextareaAutosize matAutosizeMinRows="1"
-                                matAutosizeMaxRows="5"></textarea>
+                                matAutosizeMaxRows="5" formControlName="compAddress" id="field-compAddress"></textarea>
                         </mat-form-field>
                     </td>
                     <td>
                         <mat-form-field class="demo-full-width">
-                            <input id="field-phone" matInput placeholder="Phone Number">
+                            <input id="field-phoneNumber" matInput placeholder="Phone Number" formControlName="phoneNumber">
                         </mat-form-field>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <mat-form-field class="demo-full-width">
-                            <input id="field-email" matInput placeholder="Email">
+                            <input id="field-compEmail" matInput placeholder="Email" formControlName="compEmail">
                         </mat-form-field>
                     </td>
                     <td>
                         <mat-form-field class="demo-full-width">
-                            <input id="field-web" matInput placeholder="Web Address">
+                            <input id="field-webAddress" matInput placeholder="Web Address" formControlName="webAddress">
                         </mat-form-field>
                     </td>
                 </tr>
                 <tr>
-                        <td>
-                            <mat-form-field class="demo-full-width">
-                                <input id="field-regNumber" matInput placeholder="Registeration Number">
-                            </mat-form-field>
-                        </td>
-                        <td>
-                            <mat-form-field class="demo-full-width">
-                                <input id="field-vatNumber" matInput placeholder="Tax Registeration Number">
-                            </mat-form-field>
-                        </td>
+                    <td>
+                        <mat-form-field class="demo-full-width">
+                            <input id="field-companyRegNum" matInput placeholder="Registeration Number" formControlName="companyRegNum">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="demo-full-width">
+                            <input id="field-companyTaxNum" matInput placeholder="Tax Registeration Number"
+                                formControlName="companyTaxNum">
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                        <td>{{mailAddress}}</td>
+                        <td>{{mailAddress1}}</td>
                     </tr>
             </table>
-        </form>
+        </div>
     </mat-card-content>
     <mat-card-title>
-            <input type="file" accept="image/*" #file style= "visibility:hidden">
-            <button mat-stroked-button color="white" (click)="file.click()">Upload Company Logo</button>
+        <input type="file" accept="image/*" #file style="visibility:hidden">
+        <button mat-stroked-button color="white" (click)="file.click()">Upload Company Logo</button>
     </mat-card-title>
 </mat-card>
 <br>
 <div align="center">
     <button mat-stroked-button color="white" style="margin-right: 5px;">Submit</button>
-    <button mat-stroked-button color="white">Clear</button>    
+    <button mat-stroked-button color="white" (click)="onLoadData()">Clear</button>
 </div>
 <br>

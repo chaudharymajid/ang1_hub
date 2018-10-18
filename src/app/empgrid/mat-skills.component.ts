@@ -10,47 +10,39 @@ import { Router } from '@angular/router';
 
 export class MatSkills implements OnInit {
     employeeForm : FormGroup;
-    fullName : FormControl;    
+    mailAddress : string;
+    mailAddress1 : string;
     
     constructor(
         private _homeRoute : Router,
-        private _fb : FormBuilder
+        private fb : FormBuilder
     ){}
     
     ngOnInit(){
-        // this.employeeForm = this._fb.group({
-        //     fullName: ['',[Validators.required, Validators.minLength(2), Validators.maxLength(12)]],
-        //     email: [''],
-        //     skills: this._fb.group({
-        //         skillName:[''],
-        //         experienceInYears: [''],
-        //         proficiency: ['beginner']
-        //     })
-        // })
-        // ;
-        this.fullName = new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(12)]);
+        this.employeeForm = this.fb.group({
+            companyName: ['',[Validators.required, Validators.minLength(2), Validators.maxLength(12)]],
+            businessType: ['',[Validators.required]],
+            compAddress: ['',[Validators.required]],
+            phoneNumber: ['',[Validators.required]],
+            compEmail: ['', [Validators.required, Validators.email]],
+            webAddress: [''],
+            companyRegNum: [''],
+            companyTaxNum: ['']
+        });
+         
     }
 
-    getErrorMessage() {
-        return this.fullName.hasError('required') ? 'You must enter a value' :
-            this.fullName.hasError('fullName') ? 'Not a valid email' :
-                '';
-      }
+    // getErrorMessage() {
+    //     return this.fullName.hasError('required') ? 'You must enter a value' :
+    //         this.fullName.hasError('fullName') ? 'Not a valid email' :
+    //             '';
+    //   }
 
     onSave():void {
-        console.log(this.employeeForm.value);
-        // this._homeRoute.navigate(['/home']);
+        let mailAddress2 = this.fb.control('compEmail').value;
     }
 
     onLoadData(): void {
-        this.employeeForm.patchValue({
-            fullName:'Majid',
-            email: 'majid.chaudhary@yahoo.co.uk',
-            skills:{
-                skillName:'DBA',
-                experienceInYears: 15,
-                proficiency: 'intermediate'
-            }
-        });
+        
     }
 }

@@ -22,6 +22,7 @@ import { UserPreferencesService } from './employee/userPreference.service';
 import { EmpGrid } from './empgrid/empgrid.component';
 import { EmployeeSkills } from './employee/empskills.component';
 import { MatSkills } from './empgrid/mat-skills.component';
+import { CompSetup } from './setup/compsetup.component';
 
 
 const appRoutes: Routes = [
@@ -29,7 +30,7 @@ const appRoutes: Routes = [
   { path: 'employees', component: EmployeeComponentList },
   { path: 'employees/:code', component: EmployeeComponent },
   { path: 'grid', component: EmpGrid },
-  { path: 'mat-skills', component: MatSkills },
+  { path: 'compsetup', component: CompSetup },
   { path: 'skills', component: EmployeeSkills },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
@@ -38,7 +39,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent, EmployeeComponent, EmployeeComponentList, EmployeeTitlePipe, EmployeeCountComponent, HomeComponent, PageNotFoundComponent, 
-    EmpGrid, EmployeeSkills, MatSkills
+    EmpGrid, EmployeeSkills, MatSkills, CompSetup
   ],
   imports: [
     BrowserModule, FormsModule, HttpModule, BsDropdownModule, TooltipModule, ModalModule, RouterModule.forRoot(appRoutes), BrowserAnimationsModule, 
