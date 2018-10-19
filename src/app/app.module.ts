@@ -6,7 +6,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { RouterModule, Routes } from '@angular/router';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -18,12 +18,10 @@ import { EmployeeCountComponent } from './employee/employeeCount.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './others/pageNotFound.component';
 import { EmployeeService } from './employee/employee.service';
-import { UserPreferencesService } from './employee/userPreference.service';
 import { EmpGrid } from './empgrid/empgrid.component';
 import { EmployeeSkills } from './employee/empskills.component';
 import { MatSkills } from './empgrid/mat-skills.component';
 import { CompSetup } from './setup/compsetup.component';
-
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -45,6 +43,7 @@ const appRoutes: Routes = [
     BrowserModule, FormsModule, HttpModule, BsDropdownModule, TooltipModule, ModalModule, RouterModule.forRoot(appRoutes), BrowserAnimationsModule, 
     MaterialModule, ReactiveFormsModule
   ],
+  exports: [],
   providers: [EmployeeService],
   bootstrap: [AppComponent]
 })

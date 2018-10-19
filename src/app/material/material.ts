@@ -15,16 +15,21 @@ import {
     MatSlideToggleModule, 
     ErrorStateMatcher, 
     ShowOnDirtyErrorStateMatcher, 
-    MatCheckboxModule
-} from '@angular/material';
+    MatCheckboxModule,
+    MatDialogModule
+    
+}
+    from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 @NgModule({
     imports: [MatButtonModule, MatCheckboxModule, MatMenuModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatSelectModule, MatDatepickerModule,
-        MatToolbarModule, MatCardModule, BrowserAnimationsModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, MatRadioModule, MatSlideToggleModule],
+        MatToolbarModule, MatCardModule, BrowserAnimationsModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, MatRadioModule, MatSlideToggleModule, 
+        MatDialogModule],
     exports: [MatButtonModule, MatCheckboxModule, MatMenuModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatSelectModule, MatDatepickerModule,
-        MatToolbarModule, MatCardModule, BrowserAnimationsModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, MatRadioModule, MatSlideToggleModule],
+        MatToolbarModule, MatCardModule, BrowserAnimationsModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, MatRadioModule, MatSlideToggleModule, 
+        MatDialogModule],
     providers: [MatDatepickerModule]
 })
 

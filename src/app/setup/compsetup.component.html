@@ -10,12 +10,14 @@
                     <tr>
                         <td>
                             <mat-form-field class="demo-full-width">
-                                <input id="field-companyName" matInput placeholder="Company Name" formControlName="companyName">
+                                <input matInput placeholder="Company Name" formControlName="companyName">
+                                <mat-error *ngIf="formErrors.companyName">{{formErrors.companyName}}</mat-error>
                             </mat-form-field>
                         </td>
                         <td>
                             <mat-form-field class="demo-full-width">
                                 <input id="field-businessType" matInput placeholder="Business Type" formControlName="businessType">
+                                <mat-error *ngIf="formErrors.companyType">{{formErrors.companyType}}</mat-error>
                             </mat-form-field>
                         </td>
                     </tr>
@@ -24,11 +26,13 @@
                             <mat-form-field class="demo-full-width">
                                 <textarea matInput placeholder="Address" matTextareaAutosize matAutosizeMinRows="1"
                                     matAutosizeMaxRows="5" formControlName="compAddress" id="field-compAddress"></textarea>
+                                    <mat-error *ngIf="formErrors.Address">{{formErrors.Address}}</mat-error>
                             </mat-form-field>
                         </td>
                         <td>
                             <mat-form-field class="demo-full-width">
                                 <input id="field-phoneNumber" matInput placeholder="Phone Number" formControlName="phoneNumber">
+                                <mat-error *ngIf="formErrors.phoneNumber">{{formErrors.phoneNumber}}</mat-error>
                             </mat-form-field>
                         </td>
                     </tr>
@@ -71,7 +75,7 @@
     </mat-card>
     <br>
     <div align="center">
-        <button mat-stroked-button color="white" style="margin-right: 5px;">Submit</button>
+        <button id="submitButton" type="submit" mat-stroked-button color="white" style="margin-right: 5px;" (click)= "onSubmit()" disabled>Submit</button>
         <button mat-stroked-button color="white" (click)="onClearButtonClick()">Clear</button>
     </div>
     <br>
