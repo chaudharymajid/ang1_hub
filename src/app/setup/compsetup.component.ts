@@ -84,14 +84,21 @@ export class CompSetup implements OnInit {
                 companyRegNum: [''],
                 companyTaxNum: ['']
             });
+            var subButton = <HTMLInputElement> document.getElementById("submitButton");
             this.employeeForm.valueChanges.subscribe((data) => {
                 this.logValidationErrors(this.employeeForm);
+                if (this.employeeForm.get('companyName').valid
+                && this.employeeForm.get('businessType').valid
+                && this.employeeForm.get('compAddress').valid
+                && this.employeeForm.get('phoneNumber').valid
+                && this.employeeForm.get('compEmail').valid){
+                    subButton.disabled = false;
+                } else {
+                    subButton.disabled = true;
+                }
             })
 
-            if (this.employeeForm.valid && this.employeeForm.touched){
-                var subButton = <HTMLInputElement> document.getElementById("sybmitButton");
-                subButton.disabled = false;
-            }
+            
     }
 
     formToModel (employeeForm : FormBuilder) {

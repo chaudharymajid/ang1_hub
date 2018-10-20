@@ -5,7 +5,9 @@ import { Observable, Subject, observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/Observable/throw';
+// import 'rxjs/add/Observable/throw';
+import { throwError } from 'rxjs';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 @Injectable()
 export class EmployeeService {
@@ -25,6 +27,6 @@ export class EmployeeService {
 
     handleError(error: Response) {
         console.error(error);
-        return Observable.throw(error);
+        return ErrorObservable.create(error);
     }
 }
