@@ -120,18 +120,14 @@ export class CompSetup implements OnInit {
               filetype: file.type,
               value: reader.result
             })            
-          };
+          };             
         }
-      }
+        }
 
     onSubmit() {
         const result: CompanyDetails = Object.assign({}, this.employeeForm.value);
-        if (this.employeeForm.valid && this.employeeForm.touched){
-        console.log('www.webapi:5200' + '/"' + result.companyName + '"/"' + result.businessType + '"');
-        }
-        alert(this.formErrors.companyName);
-        this.employeeForm.reset();
-
+        console.log('www.webapi:5200' + '/' + result.companyLogo );
+        // this.employeeForm.reset();
     }
 
     
