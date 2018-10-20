@@ -16,7 +16,7 @@ import { EmployeeComponentList } from './employee/emp.complist';
 import { EmployeeTitlePipe } from './employee/employeeTitle.pipe';
 import { EmployeeCountComponent } from './employee/employeeCount.component';
 import { HomeComponent } from './home/home.component';
-import { PageNotFoundComponent } from './others/pageNotFound.component';
+import { PageNotFoundComponent } from './Others/pageNotFound.component';
 import { EmployeeService } from './employee/employee.service';
 import { EmpGrid } from './empgrid/empgrid.component';
 import { EmployeeSkills } from './employee/empskills.component';
