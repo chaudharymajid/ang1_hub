@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { componentFactoryName } from '@angular/compiler';
@@ -82,7 +82,8 @@ export class CompSetup implements OnInit {
                 compEmail: ['', [Validators.required, Validators.email]],
                 webAddress: [''],
                 companyRegNum: [''],
-                companyTaxNum: ['']
+                companyTaxNum: [''],
+                companyLogo: ['']
             });
             var subButton = <HTMLInputElement> document.getElementById("submitButton");
             this.employeeForm.valueChanges.subscribe((data) => {
@@ -96,6 +97,7 @@ export class CompSetup implements OnInit {
                 } else {
                     subButton.disabled = true;
                 }
+                
             })
 
             
@@ -106,6 +108,21 @@ export class CompSetup implements OnInit {
             fb: employeeForm.group(new CompanyDetails())
         });
     }
+
+    onFileChange(event) {
+        let reader = new FileReader();
+        if(event.target.files && event.target.files.length > 0) {
+          let file = event.target.files[0];
+          reader.readAsDataURL(file);
+          reader.onload = () => {
+            this.employeeForm.get('companyLogo').setValue({
+              filename: file.name,
+              filetype: file.type,
+              value: reader.result
+            })            
+          };
+        }
+      }
 
     onSubmit() {
         const result: CompanyDetails = Object.assign({}, this.employeeForm.value);

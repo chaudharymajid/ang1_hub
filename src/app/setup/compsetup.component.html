@@ -60,17 +60,17 @@
                                     formControlName="companyTaxNum">
                             </mat-form-field>
                         </td>
-                    </tr>
-                    <!-- <tr>
-                            <td>{{mailAddress}}</td>
-                            <td>{{mailAddress1}}</td>
-                        </tr> -->
+                    </tr>                 
                 </table>
+                <input type="file" id="companyLogo" (change)="onFileChange($event)" 
+                #file formControlName="companyLogo" style="visibility:hidden">
+            <button mat-stroked-button color="white" (click)="file.click()">
+                Upload Company Logo
+            </button>
             </div>
         </mat-card-content>
         <mat-card-title>
-            <input type="file" accept="image/*" #file style="visibility:hidden">
-            <button mat-stroked-button color="white" (click)="file.click()">Upload Company Logo</button>
+            
         </mat-card-title>
     </mat-card>
     <br>
