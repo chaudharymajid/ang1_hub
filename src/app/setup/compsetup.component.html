@@ -1,85 +1,81 @@
-<mat-card >
-        <!-- Title of an Card -->
-        <mat-card-title>
-            Company Registeration
-        </mat-card-title>
-    
-        <mat-card-content>
-            <div [formGroup]="employeeForm">
-                <table>
-                    <tr>
-                        <td>
-                            <mat-form-field class="demo-full-width">
-                                <input matInput placeholder="Company Name" formControlName="companyName">
-                                <mat-error *ngIf="formErrors.companyName">{{formErrors.companyName}}</mat-error>
-                            </mat-form-field>
-                        </td>
-                        <td>
-                            <mat-form-field class="demo-full-width">
-                                <input id="field-businessType" matInput placeholder="Business Type" formControlName="businessType">
-                                <mat-error *ngIf="formErrors.companyType">{{formErrors.companyType}}</mat-error>
-                            </mat-form-field>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <mat-form-field class="demo-full-width">
-                                <textarea matInput placeholder="Address" matTextareaAutosize matAutosizeMinRows="1"
-                                    matAutosizeMaxRows="5" formControlName="compAddress" id="field-compAddress"></textarea>
-                                    <mat-error *ngIf="formErrors.Address">{{formErrors.Address}}</mat-error>
-                            </mat-form-field>
-                        </td>
-                        <td>
-                            <mat-form-field class="demo-full-width">
-                                <input id="field-phoneNumber" matInput placeholder="Phone Number" formControlName="phoneNumber">
-                                <mat-error *ngIf="formErrors.phoneNumber">{{formErrors.phoneNumber}}</mat-error>
-                            </mat-form-field>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <mat-form-field class="demo-full-width">
-                                <input id="field-compEmail" matInput placeholder="Email" formControlName="compEmail">
-                            </mat-form-field>
-                        </td>
-                        <td>
-                            <mat-form-field class="demo-full-width">
-                                <input id="field-webAddress" matInput placeholder="Web Address" formControlName="webAddress">
-                            </mat-form-field>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <mat-form-field class="demo-full-width">
-                                <input id="field-companyRegNum" matInput placeholder="Registeration Number" formControlName="companyRegNum">
-                            </mat-form-field>
-                        </td>
-                        <td>
-                            <mat-form-field class="demo-full-width">
-                                <input id="field-companyTaxNum" matInput placeholder="Tax Registeration Number"
-                                    formControlName="companyTaxNum">
-                            </mat-form-field>
-                        </td>
-                    </tr>                 
-                </table>
-                <!-- <label>Upload Company Logo</label> -->
-                <!-- <input  class='mat-stroked-button' type="file" id="companyLogo" 
-                (change)="onFileChange($event)" #fileInput formControlName="companyLogo" style="visibility:hidden"> -->
-                <input type="file" id="companyLogo" 
-                #fileinput formControlName="companyLogo" style="visibility:hidden">
-            <button mat-stroked-button color="white" (click)="file.click()" 
-            (change)="onFileChange($event)">
-             Upload Company Logo
-            </button>{{employeeForm.get('companyLogo').value}}
-            </div>
-        </mat-card-content>
-        <mat-card-title>
-            
-        </mat-card-title>
-    </mat-card>
-    <br>
-    <div align="center" >
-        <button id="submitButton" type="submit" mat-stroked-button color="white" style="margin-right: 5px;" (click)= "onSubmit()" disabled>Submit</button>
-        <button mat-stroked-button color="white" (click)="onClearButtonClick()">Clear</button>
-    </div>
-    <br>
+<mat-card>
+    <!-- Title of an Card -->
+    <mat-card-title>
+        Company Registeration
+    </mat-card-title>
+
+    <mat-card-content>
+        <div [formGroup]="employeeForm">
+            <table>
+                <tr>
+                    <td>
+                        <mat-form-field class="demo-full-width">
+                            <input matInput placeholder="Company Name" formControlName="companyName">
+                            <mat-error *ngIf="formErrors.companyName">{{formErrors.companyName}}</mat-error>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="demo-full-width">
+                            <input id="field-businessType" matInput placeholder="Business Type" formControlName="businessType">
+                            <mat-error *ngIf="formErrors.companyType">{{formErrors.companyType}}</mat-error>
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-form-field class="demo-full-width">
+                            <textarea matInput placeholder="Address" matTextareaAutosize matAutosizeMinRows="1"
+                                matAutosizeMaxRows="5" formControlName="compAddress" id="field-compAddress"></textarea>
+                            <mat-error *ngIf="formErrors.Address">{{formErrors.Address}}</mat-error>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="demo-full-width">
+                            <input id="field-phoneNumber" matInput placeholder="Phone Number" formControlName="phoneNumber">
+                            <mat-error *ngIf="formErrors.phoneNumber">{{formErrors.phoneNumber}}</mat-error>
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-form-field class="demo-full-width">
+                            <input id="field-compEmail" matInput placeholder="Email" formControlName="compEmail">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="demo-full-width">
+                            <input id="field-webAddress" matInput placeholder="Web Address" formControlName="webAddress">
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-form-field class="demo-full-width">
+                            <input id="field-companyRegNum" matInput placeholder="Registeration Number" formControlName="companyRegNum">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="demo-full-width">
+                            <input id="field-companyTaxNum" matInput placeholder="Tax Registeration Number"
+                                formControlName="companyTaxNum">
+                        </mat-form-field>
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <input type="file" id="companyLogo" #file formControlName="companyLogo" style="visibility:hidden">
+            <button mat-stroked-button color="white" (click)="file.click()" (change)="onFileChange($event)">
+                Upload Company Logo
+            </button>
+            <br>
+            {{employeeForm.get('companyLogo').value}}
+        </div>
+    </mat-card-content>
+</mat-card>
+<br>
+<div align="center">
+    <button id="submitButton" type="submit" mat-stroked-button color="white" style="margin-right: 5px;" (click)="onSubmit()"
+        disabled>Submit</button>
+    <button mat-stroked-button color="white" (click)="onClearButtonClick()">Clear</button>
+</div>
+<br>

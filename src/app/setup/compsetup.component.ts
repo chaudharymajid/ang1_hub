@@ -83,7 +83,8 @@ export class CompSetup implements OnInit {
                 webAddress: [''],
                 companyRegNum: [''],
                 companyTaxNum: [''],
-                companyLogo: ['']
+                companyLogo: [''],
+                attachedFileName: ['']
             });
             var subButton = <HTMLInputElement> document.getElementById("submitButton");
             this.employeeForm.valueChanges.subscribe((data) => {
@@ -111,18 +112,19 @@ export class CompSetup implements OnInit {
 
     onFileChange(event) {
         let reader = new FileReader();
-        if(event.target.files && event.target.files.length > 0) {
-          let file = event.target.files[0];
-          reader.readAsDataURL(file);
-          reader.onload = () => {
-            this.employeeForm.get('companyLogo').setValue({
-              filename: file.name,
-              filetype: file.type,
-              value: reader.result
-            })            
-          };             
+        if (event.target.files && event.target.files.length > 0) {
+            let file = event.target.files[0];
+            let attachedFile = file.name;
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                this.employeeForm.get('companyLogo').setValue({
+                    filename: file.name,
+                    filetype: file.type,
+                    value: reader.result
+                })                
+            };
         }
-        }
+    }
 
     onSubmit() {
         const result: CompanyDetails = Object.assign({}, this.employeeForm.value);

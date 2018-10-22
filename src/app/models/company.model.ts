@@ -8,5 +8,6 @@ export class CompanyDetails {
     companyRegNum: string;
     companyTaxNum: string;
     companyLogo: string | any;    
+    attachedFileName: string;
 }
 
