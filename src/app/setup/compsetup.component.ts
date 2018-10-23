@@ -12,54 +12,51 @@ export class CompSetup implements OnInit {
     employeeForm: FormGroup;
 
     formErrors = {
-        'companyName' : '',
-        'businessType' : '',
+        'companyName': '',
+        'businessType': '',
         'compAddress': '',
-        'phoneNumber' :'',
-        'compEmail' : '',
-        // 'webAddress' : '',
-        // 'companyRegNum' : '',
-        // 'companyTaxNum' :''
+        'phoneNumber': '',
+        'compEmail': ''
     }
 
     validationMessages = {
-        'companyName' : {
-            'required' : 'Name is required',
-            'minlength' : 'Name must be greater than 2 characters',
-            'maxlength' : 'Name must not exceed 25 characters'
+        'companyName': {
+            'required': 'Name is required',
+            'minlength': 'Name must be greater than 2 characters',
+            'maxlength': 'Name must not exceed 25 characters'
         },
 
-        'businessType' : {
-            'required' : 'Business Type is required'
+        'businessType': {
+            'required': 'Business Type is required'
         },
 
-        'compAddress' : {
-            'required' : 'Address is required'
+        'compAddress': {
+            'required': 'Address is required'
         },
 
-        'phoneNumber' : {
-            'required' : 'Phone is required'
+        'phoneNumber': {
+            'required': 'Phone is required'
         },
 
-        'compEmail' : {
-            'required' : 'Email is required',
-            'email' : 'Not valid email address'
+        'compEmail': {
+            'required': 'Email is required',
+            'email': 'Not valid email address'
         }
     }
 
-    logValidationErrors(group : FormGroup):void {
-        Object.keys(group.controls).forEach((key:string) => {
+    logValidationErrors(group: FormGroup): void {
+        Object.keys(group.controls).forEach((key: string) => {
             const abstractControl = group.get(key);
             if (abstractControl instanceof FormGroup) {
-                this.logValidationErrors(abstractControl);                
+                this.logValidationErrors(abstractControl);
             }
             else {
                 this.formErrors[key] = '';
-                if(abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty)){
+                if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty)) {
                     const messages = this.validationMessages[key];
-                    for(const errorKey in abstractControl.errors){
-                        if(errorKey){
-                            this.formErrors[key] += messages[errorKey] + ' ';                            
+                    for (const errorKey in abstractControl.errors) {
+                        if (errorKey) {
+                            this.formErrors[key] += messages[errorKey] + ' ';
                         }
                     }
                 }
@@ -73,38 +70,36 @@ export class CompSetup implements OnInit {
     ) { }
 
     ngOnInit() {
-        
-            this.employeeForm = this.fb.group({
-                companyName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
-                businessType: ['', [Validators.required]],
-                compAddress: ['', [Validators.required]],
-                phoneNumber: ['', [Validators.required]],
-                compEmail: ['', [Validators.required, Validators.email]],
-                webAddress: [''],
-                companyRegNum: [''],
-                companyTaxNum: [''],
-                companyLogo: [''],
-                attachedFileName: ['']
-            });
-            var subButton = <HTMLInputElement> document.getElementById("submitButton");
-            this.employeeForm.valueChanges.subscribe((data) => {
-                this.logValidationErrors(this.employeeForm);
-                if (this.employeeForm.get('companyName').valid
+
+        this.employeeForm = this.fb.group({
+            companyName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
+            businessType: ['', [Validators.required]],
+            compAddress: ['', [Validators.required]],
+            phoneNumber: ['', [Validators.required]],
+            compEmail: ['', [Validators.required, Validators.email]],
+            webAddress: [''],
+            companyRegNum: [''],
+            companyTaxNum: [''],
+            companyLogo: ['']
+        });
+        var subButton = <HTMLInputElement>document.getElementById("submitButton");
+        this.employeeForm.valueChanges.subscribe((data) => {
+            this.logValidationErrors(this.employeeForm);
+            if (this.employeeForm.get('companyName').valid
                 && this.employeeForm.get('businessType').valid
                 && this.employeeForm.get('compAddress').valid
                 && this.employeeForm.get('phoneNumber').valid
-                && this.employeeForm.get('compEmail').valid){
-                    subButton.disabled = false;
-                } else {
-                    subButton.disabled = true;
-                }
-                
-            })
+                && this.employeeForm.get('compEmail').valid) {
+                subButton.disabled = false;
+            } else {
+                subButton.disabled = true;
+            }
+        })
 
-            
+
     }
 
-    formToModel (employeeForm : FormBuilder) {
+    formToModel(employeeForm: FormBuilder) {
         return employeeForm.group({
             fb: employeeForm.group(new CompanyDetails())
         });
@@ -114,25 +109,23 @@ export class CompSetup implements OnInit {
         let reader = new FileReader();
         if (event.target.files && event.target.files.length > 0) {
             let file = event.target.files[0];
-            let attachedFile = file.name;
             reader.readAsDataURL(file);
             reader.onload = () => {
                 this.employeeForm.get('companyLogo').setValue({
                     filename: file.name,
                     filetype: file.type,
                     value: reader.result
-                })                
+                })
             };
         }
     }
 
     onSubmit() {
         const result: CompanyDetails = Object.assign({}, this.employeeForm.value);
-        console.log('www.webapi:5200' + '/' + result.companyLogo );
-        // this.employeeForm.reset();
+        console.log('www.webapi:5200' + '/' + result.companyLogo);
     }
 
-    
+
     onClearButtonClick(): void {
         this.employeeForm.reset();
     }

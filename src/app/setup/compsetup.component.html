@@ -61,14 +61,17 @@
                         </mat-form-field>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="2">
+
+                        <label>Upload Company Logo</label>
+                        <input type="file" id="companyLogo" #file formControlName="companyLogo">
+                        <button mat-stroked-button color="white" (click)="file.click()" (change)="onFileChange($event)"
+                            style='visibility:hidden'>
+                            Upload Company Logo
+                        </button></td>
+                </tr>
             </table>
-            <br>
-            <input type="file" id="companyLogo" #file formControlName="companyLogo" style="visibility:hidden">
-            <button mat-stroked-button color="white" (click)="file.click()" (change)="onFileChange($event)">
-                Upload Company Logo
-            </button>
-            <br>
-            {{employeeForm.get('companyLogo').value}}
         </div>
     </mat-card-content>
 </mat-card>

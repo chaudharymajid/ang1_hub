@@ -9,6 +9,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatFileUploadModule } from 'angular-material-fileupload';
 
 import { AppComponent } from './app.component';
 import { EmployeeComponent } from './employee/employee.component';
@@ -41,7 +42,7 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule, FormsModule, HttpModule, BsDropdownModule, TooltipModule, ModalModule, RouterModule.forRoot(appRoutes), BrowserAnimationsModule, 
-    MaterialModule, ReactiveFormsModule
+    MaterialModule, ReactiveFormsModule, MatFileUploadModule
   ],
   exports: [],
   providers: [EmployeeService],

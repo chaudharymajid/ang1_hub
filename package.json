@@ -23,6 +23,7 @@
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
+    "angular-material-fileupload": "^1.0.1",
     "bootstrap": "^3.3.7",
     "core-js": "^2.5.4",
     "dragula": "^3.7.2",
