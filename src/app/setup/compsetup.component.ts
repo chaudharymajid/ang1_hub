@@ -3,13 +3,17 @@ import { FormGroup, FormControl, ReactiveFormsModule, FormBuilder, Validators } 
 import { Router } from '@angular/router';
 import { componentFactoryName } from '@angular/compiler';
 import { CompanyDetails } from 'src/app/models/company.model';
+import { CompanyService } from 'src/app/providers/company.service';
 
 @Component({
-    templateUrl: 'compsetup.component.html'
+    templateUrl: 'compsetup.component.html',
+    providers:[CompanyService]
 })
 
 export class CompSetup implements OnInit {
     employeeForm: FormGroup;
+    company: CompanyDetails;
+    
 
     formErrors = {
         'companyName': '',
@@ -66,7 +70,8 @@ export class CompSetup implements OnInit {
 
     constructor(
         private _homeRoute: Router,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private _companyService: CompanyService
     ) { }
 
     ngOnInit() {
@@ -123,7 +128,10 @@ export class CompSetup implements OnInit {
         console.log('www.webapi:5200' + '/' + result.companyLogo);
     }
 
-    onClearButtonClick(): void {
-        this.employeeForm.reset();
+    onLoadButtonClick(): void {
+        this._companyService.getCompany()
+            .subscribe((companyData) => this.company = companyData, 
+            (error) => {'Problem with the service, plz try later';
+        });
     }
 }

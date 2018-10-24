@@ -1,4 +1,5 @@
 export class CompanyDetails {
+    company_id: number;
     companyName: string;
     businessType: string;
     compAddress: string;
