@@ -95,8 +95,6 @@ export class CompSetup implements OnInit {
                 subButton.disabled = true;
             }
         })
-
-
     }
 
     formToModel(employeeForm: FormBuilder) {
@@ -124,7 +122,6 @@ export class CompSetup implements OnInit {
         const result: CompanyDetails = Object.assign({}, this.employeeForm.value);
         console.log('www.webapi:5200' + '/' + result.companyLogo);
     }
-
 
     onClearButtonClick(): void {
         this.employeeForm.reset();

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { IEmployee } from "src/app/employee/employee";
-import { EmployeeService } from "src/app/employee/employee.service";
+import { EmployeeService } from "src/app/providers/employee.service";
 
 @Component({
     selector: 'empgrid',
