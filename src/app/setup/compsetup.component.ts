@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { componentFactoryName } from '@angular/compiler';
 import { CompanyDetails } from 'src/app/models/company.model';
 import { CompanyService } from 'src/app/providers/company.service';
+import { SELECT_VALUE_ACCESSOR } from '@angular/forms/src/directives/select_control_value_accessor';
 
 @Component({
     templateUrl: 'compsetup.component.html',
@@ -12,8 +13,7 @@ import { CompanyService } from 'src/app/providers/company.service';
 
 export class CompSetup implements OnInit {
     employeeForm: FormGroup;
-    company: CompanyDetails;
-    
+    companyDet: CompanyDetails;
 
     formErrors = {
         'companyName': '',
@@ -71,7 +71,7 @@ export class CompSetup implements OnInit {
     constructor(
         private _homeRoute: Router,
         private fb: FormBuilder,
-        private _companyService: CompanyService
+        private companyserv: CompanyService
     ) { }
 
     ngOnInit() {
@@ -87,6 +87,15 @@ export class CompSetup implements OnInit {
             companyTaxNum: [''],
             companyLogo: ['']
         });
+
+        this.companyserv.getCompany()
+            .subscribe((companyData) => {
+                this.companyDet = companyData;
+                this.companyDet = companyData
+            }, 
+            (error) => {'Problem with the service, plz try later';
+        });
+
         var subButton = <HTMLInputElement>document.getElementById("submitButton");
         this.employeeForm.valueChanges.subscribe((data) => {
             this.logValidationErrors(this.employeeForm);
@@ -100,6 +109,8 @@ export class CompSetup implements OnInit {
                 subButton.disabled = true;
             }
         })
+
+
     }
 
     formToModel(employeeForm: FormBuilder) {
@@ -128,10 +139,14 @@ export class CompSetup implements OnInit {
         console.log('www.webapi:5200' + '/' + result.companyLogo);
     }
 
-    onLoadButtonClick(): void {
-        this._companyService.getCompany()
-            .subscribe((companyData) => this.company = companyData, 
+
+    onClearButtonClick(): void {
+
+        let result = this.companyserv.getCompany()
+            .subscribe((companyData) => this.companyDet = companyData, 
             (error) => {'Problem with the service, plz try later';
         });
+        
+        // this.employeeForm.reset();
     }
 }

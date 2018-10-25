@@ -69,7 +69,8 @@
                         <button mat-stroked-button color="white" (click)="file.click()" (change)="onFileChange($event)"
                             style='visibility:hidden'>
                             Upload Company Logo
-                        </button></td>
+                        </button>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -79,6 +80,6 @@
 <div align="center">
     <button id="submitButton" type="submit" mat-stroked-button color="white" style="margin-right: 5px;" (click)="onSubmit()"
         disabled>Submit</button>
-    <button mat-stroked-button color="white" (click)="onLoadButtonClick()">Load</button>
+    <button mat-stroked-button color="white" (click)="onClearButtonClick()">Clear</button>
 </div>
 <br>
