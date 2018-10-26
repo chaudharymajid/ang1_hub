@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 @Injectable()
-export class CompanyService {
+export class ICompanyService {
 
     constructor(private _http: Http) { }
     

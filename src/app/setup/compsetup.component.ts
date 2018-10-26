@@ -1,20 +1,64 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { componentFactoryName } from '@angular/compiler';
 import { CompanyDetails } from 'src/app/models/company.model';
-import { CompanyService } from 'src/app/providers/company.service';
-import { SELECT_VALUE_ACCESSOR } from '@angular/forms/src/directives/select_control_value_accessor';
+import { ICompanyService } from 'src/app/providers/company.service';
 
 @Component({
     templateUrl: 'compsetup.component.html',
-    providers:[CompanyService]
+    providers: [ICompanyService]
 })
 
 export class CompSetup implements OnInit {
     employeeForm: FormGroup;
-    companyDetails: CompanyDetails;
-    
+    companyDetails: CompanyDetails 
+
+    constructor(
+        private _homeRoute: Router,
+        private fb: FormBuilder,
+        private companyserv: ICompanyService
+    ) { }
+
+    ngOnInit() {
+
+        this.companyserv.getCompany()
+            .subscribe((companyData) => this.companyDetails = companyData,
+                (error) => {
+                    'Problem with the service, plz try later';
+                });
+
+            
+            
+
+        this.employeeForm = this.fb.group({
+            companyName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
+            businessType: ['', [Validators.required]],
+            compAddress: ['', [Validators.required]],
+            phoneNumber: ['', [Validators.required]],
+            compEmail: ['', [Validators.required, Validators.email]],
+            webAddress: [''],
+            companyRegNum: [''],
+            companyTaxNum: [''],
+            companyLogo: ['']
+        });
+
+        
+        var subButton = <HTMLInputElement>document.getElementById("submitButton");
+        this.employeeForm.valueChanges.subscribe((data) => {
+            this.logValidationErrors(this.employeeForm);
+            if (this.employeeForm.get('companyName').valid
+                && this.employeeForm.get('businessType').valid
+                && this.employeeForm.get('compAddress').valid
+                && this.employeeForm.get('phoneNumber').valid
+                && this.employeeForm.get('compEmail').valid) {
+                subButton.disabled = false;
+            } else {
+                subButton.disabled = true;
+            }
+        })
+        
+    }
+
     formErrors = {
         'companyName': '',
         'businessType': '',
@@ -68,71 +112,7 @@ export class CompSetup implements OnInit {
         })
     }
 
-    constructor(
-        private _homeRoute: Router,
-        private fb: FormBuilder,
-        private companyserv: CompanyService
-    ) { }
-
-    ngOnInit() {
-
-        this.companyserv.getCompany()
-            .subscribe((companyData) => this.companyDetails = companyData,
-                (error) => {
-                    'Problem with the service, plz try later';
-                });
-
-        this.employeeForm = this.fb.group({
-            companyName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
-            businessType: ['', [Validators.required]],
-            compAddress: ['', [Validators.required]],
-            phoneNumber: ['', [Validators.required]],
-            compEmail: ['', [Validators.required, Validators.email]],
-            webAddress: [''],
-            companyRegNum: [''],
-            companyTaxNum: [''],
-            companyLogo: ['']
-        });
-      
-        var subButton = <HTMLInputElement>document.getElementById("submitButton");
-        this.employeeForm.valueChanges.subscribe((data) => {
-            this.logValidationErrors(this.employeeForm);
-            if (this.employeeForm.get('companyName').valid
-                && this.employeeForm.get('businessType').valid
-                && this.employeeForm.get('compAddress').valid
-                && this.employeeForm.get('phoneNumber').valid
-                && this.employeeForm.get('compEmail').valid) {
-                subButton.disabled = false;
-            } else {
-                subButton.disabled = true;
-            }
-        })
-
-
-    }
-
-    // formToModel(employeeForm: FormBuilder) {
-    //     return employeeForm.group({
-    //         fb: employeeForm.group(new CompanyDetails())
-    //     });
-    // }
-
-    // onFileChange(event) {
-    //     let reader = new FileReader();
-    //     if (event.target.files && event.target.files.length > 0) {
-    //         let file = event.target.files[0];
-    //         reader.readAsDataURL(file);
-    //         reader.onload = () => {
-    //             this.employeeForm.get('companyLogo').setValue({
-    //                 filename: file.name,
-    //                 filetype: file.type,
-    //                 value: reader.result
-    //             })
-    //         };
-    //     }
-    // }
-
     onSubmit() {
-        console.log(this.companyDetails.company_reg_number + ' - ' + this.companyDetails.company_name + ' - ' + this.companyDetails.company_logo);
+        console.log(this.companyDetails.company_reg_number + ' - ' + this.companyDetails.company_name + ' - ' + this.companyDetails.company_tax_number);
     }
 }

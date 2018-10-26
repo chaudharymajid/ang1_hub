@@ -8,5 +8,6 @@ export class CompanyDetails {
     web_address: string;
     company_reg_number: string;
     company_tax_number: string;
+    parent_company: string;
     company_logo: string | any;
 }
