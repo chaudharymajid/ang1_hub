@@ -8,6 +8,7 @@ import 'rxjs/add/operator/retry';
 import 'rxjs/add/operator/retryWhen';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/scan';
+import {  } from 'src/app/setup/compsetup.component';
 
 
 @Component({

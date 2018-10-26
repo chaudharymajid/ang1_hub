@@ -1,12 +1,12 @@
 export class CompanyDetails {
     company_id: number;
-    companyName: string;
-    businessType: string;
-    compAddress: string;
-    phoneNumber: number;
-    compEmail: string;
-    webAddress: string;
-    companyRegNum: string;
-    companyTaxNum: string;
-    companyLogo: string | any;
+    company_name: string;
+    business_type: string;
+    company_address: string;
+    phone_number: number;
+    company_email: string;
+    web_address: string;
+    company_reg_number: string;
+    company_tax_number: string;
+    company_logo: string | any;
 }

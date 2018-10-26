@@ -10,13 +10,13 @@
                 <tr>
                     <td>
                         <mat-form-field class="demo-full-width">
-                            <input matInput placeholder="Company Name" formControlName="companyName">
+                            <input matInput placeholder="Company Name" formControlName="companyName" name='company_name' [(ngModel)]="companyDetails.company_name"> 
                             <mat-error *ngIf="formErrors.companyName">{{formErrors.companyName}}</mat-error>
-                        </mat-form-field>
+                        </mat-form-field> 
                     </td>
                     <td>
                         <mat-form-field class="demo-full-width">
-                            <input id="field-businessType" matInput placeholder="Business Type" formControlName="businessType">
+                            <input id="field-businessType" matInput placeholder="Business Type" name='business_type' formControlName="businessType" [(ngModel)]="companyDetails.business_type">
                             <mat-error *ngIf="formErrors.companyType">{{formErrors.companyType}}</mat-error>
                         </mat-form-field>
                     </td>
@@ -25,39 +25,39 @@
                     <td>
                         <mat-form-field class="demo-full-width">
                             <textarea matInput placeholder="Address" matTextareaAutosize matAutosizeMinRows="1"
-                                matAutosizeMaxRows="5" formControlName="compAddress" id="field-compAddress"></textarea>
+                                matAutosizeMaxRows="5" formControlName="compAddress" id="field-compAddress" name='company_address' [(ngModel)]="companyDetails.company_address"></textarea>
                             <mat-error *ngIf="formErrors.Address">{{formErrors.Address}}</mat-error>
                         </mat-form-field>
                     </td>
                     <td>
                         <mat-form-field class="demo-full-width">
-                            <input id="field-phoneNumber" matInput placeholder="Phone Number" formControlName="phoneNumber">
-                            <mat-error *ngIf="formErrors.phoneNumber">{{formErrors.phoneNumber}}</mat-error>
+                            <input id="field-phoneNumber" matInput placeholder="Phone Number" formControlName="phoneNumber" name='phone_number' [(ngModel)]="companyDetails.phone_number">
+                            <mat-error *ngIf="formErrors.phoneNumber"></mat-error>
                         </mat-form-field>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <mat-form-field class="demo-full-width">
-                            <input id="field-compEmail" matInput placeholder="Email" formControlName="compEmail">
+                            <input id="field-compEmail" matInput placeholder="Email" formControlName="compEmail" name='company_email' [(ngModel)]="companyDetails.company_email">
                         </mat-form-field>
                     </td>
                     <td>
                         <mat-form-field class="demo-full-width">
-                            <input id="field-webAddress" matInput placeholder="Web Address" formControlName="webAddress">
+                            <input id="field-webAddress" matInput placeholder="Web Address" formControlName="webAddress" name='web_address' [(ngModel)]="companyDetails.web_address">
                         </mat-form-field>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <mat-form-field class="demo-full-width">
-                            <input id="field-companyRegNum" matInput placeholder="Registeration Number" formControlName="companyRegNum">
+                            <input id="field-companyRegNum" matInput placeholder="Registeration Number" formControlName="companyRegNum" name='company_reg_number' [(ngModel)]="companyDetails.company_reg_number">
                         </mat-form-field>
                     </td>
                     <td>
                         <mat-form-field class="demo-full-width">
                             <input id="field-companyTaxNum" matInput placeholder="Tax Registeration Number"
-                                formControlName="companyTaxNum">
+                                formControlName="companyTaxNum" name='company_tax_number' [(ngModel)]="companyDetails.company_tax_number">
                         </mat-form-field>
                     </td>
                 </tr>
@@ -65,7 +65,7 @@
                     <td colspan="2">
 
                         <label>Upload Company Logo</label>
-                        <input type="file" id="companyLogo" #file formControlName="companyLogo">
+                        <input type="file" id="companyLogo" #file formControlName="companyLogo" name='company_logo' [(ngModel)]="companyDetails.company_logo">
                         <button mat-stroked-button color="white" (click)="file.click()" (change)="onFileChange($event)"
                             style='visibility:hidden'>
                             Upload Company Logo
@@ -80,6 +80,6 @@
 <div align="center">
     <button id="submitButton" type="submit" mat-stroked-button color="white" style="margin-right: 5px;" (click)="onSubmit()"
         disabled>Submit</button>
-    <button mat-stroked-button color="white" (click)="onClearButtonClick()">Clear</button>
+    <!-- <button mat-stroked-button color="white" (click)="onClearButtonClick()">Clear</button> -->
 </div>
 <br>

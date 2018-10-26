@@ -13,8 +13,8 @@ import { SELECT_VALUE_ACCESSOR } from '@angular/forms/src/directives/select_cont
 
 export class CompSetup implements OnInit {
     employeeForm: FormGroup;
-    companyDet: CompanyDetails;
-
+    companyDetails: CompanyDetails;
+    
     formErrors = {
         'companyName': '',
         'businessType': '',
@@ -76,6 +76,12 @@ export class CompSetup implements OnInit {
 
     ngOnInit() {
 
+        this.companyserv.getCompany()
+            .subscribe((companyData) => this.companyDetails = companyData,
+                (error) => {
+                    'Problem with the service, plz try later';
+                });
+
         this.employeeForm = this.fb.group({
             companyName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
             businessType: ['', [Validators.required]],
@@ -87,15 +93,7 @@ export class CompSetup implements OnInit {
             companyTaxNum: [''],
             companyLogo: ['']
         });
-
-        this.companyserv.getCompany()
-            .subscribe((companyData) => {
-                this.companyDet = companyData;
-                this.companyDet = companyData
-            }, 
-            (error) => {'Problem with the service, plz try later';
-        });
-
+      
         var subButton = <HTMLInputElement>document.getElementById("submitButton");
         this.employeeForm.valueChanges.subscribe((data) => {
             this.logValidationErrors(this.employeeForm);
@@ -113,40 +111,28 @@ export class CompSetup implements OnInit {
 
     }
 
-    formToModel(employeeForm: FormBuilder) {
-        return employeeForm.group({
-            fb: employeeForm.group(new CompanyDetails())
-        });
-    }
+    // formToModel(employeeForm: FormBuilder) {
+    //     return employeeForm.group({
+    //         fb: employeeForm.group(new CompanyDetails())
+    //     });
+    // }
 
-    onFileChange(event) {
-        let reader = new FileReader();
-        if (event.target.files && event.target.files.length > 0) {
-            let file = event.target.files[0];
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                this.employeeForm.get('companyLogo').setValue({
-                    filename: file.name,
-                    filetype: file.type,
-                    value: reader.result
-                })
-            };
-        }
-    }
+    // onFileChange(event) {
+    //     let reader = new FileReader();
+    //     if (event.target.files && event.target.files.length > 0) {
+    //         let file = event.target.files[0];
+    //         reader.readAsDataURL(file);
+    //         reader.onload = () => {
+    //             this.employeeForm.get('companyLogo').setValue({
+    //                 filename: file.name,
+    //                 filetype: file.type,
+    //                 value: reader.result
+    //             })
+    //         };
+    //     }
+    // }
 
     onSubmit() {
-        const result: CompanyDetails = Object.assign({}, this.employeeForm.value);
-        console.log('www.webapi:5200' + '/' + result.companyLogo);
-    }
-
-
-    onClearButtonClick(): void {
-
-        let result = this.companyserv.getCompany()
-            .subscribe((companyData) => this.companyDet = companyData, 
-            (error) => {'Problem with the service, plz try later';
-        });
-        
-        // this.employeeForm.reset();
+        console.log(this.companyDetails.company_reg_number + ' - ' + this.companyDetails.company_name + ' - ' + this.companyDetails.company_logo);
     }
 }

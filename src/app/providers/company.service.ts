@@ -17,6 +17,8 @@ export class CompanyService {
             .catch(this.handleError);
     }
 
+    updateCompany(CompanyDetails):void{}
+
     handleError(error: Response) {
         console.error(error);
         return ErrorObservable.create(error);
