@@ -17,7 +17,6 @@ import {
     ShowOnDirtyErrorStateMatcher, 
     MatCheckboxModule,
     MatDialogModule
-    
 }
     from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
