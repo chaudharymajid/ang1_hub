@@ -120,8 +120,16 @@ export class CompSetup implements OnInit {
     }
 
     onFileChange(event){
+        
+        const reader = new FileReader();
         let file = event.target.files[0];
+        reader.readAsDataURL(file);
+        this.employeeForm.patchValue({
+            companyLogo : reader.result
+        });
+        this.companyDetails.company_logo = reader.result;
     }
+    
 
     onSubmit() {
         this.companyserv.updateCompany(this.companyDetails)

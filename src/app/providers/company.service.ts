@@ -18,16 +18,15 @@ export class ICompanyService {
     }
 
     updateCompany(companyDetails: CompanyDetails): Observable<CompanyDetails> {
+        let headers = new Headers;
+        headers.append('Content-Type', 'application/json');
+        
         if (companyDetails.company_id === null) {
-            let headers = new Headers;
-            headers.append('Content-Type', 'application/json');
             return this._http.post("http://localhost:50087/api/company", companyDetails, {
                 headers: headers
             }).map((response: Response) => <CompanyDetails>response.json())
                 .catch(this.handleError);
         } else {
-            let headers = new Headers;
-            headers.append('Content-Type', 'application/json');
             return this._http.put("http://localhost:50087/api/company", companyDetails, {
                 headers: headers
             }).map((response: Response) => <CompanyDetails>response.json())
