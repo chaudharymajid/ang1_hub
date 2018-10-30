@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CompanyDetails } from 'src/app/models/company.model';
 import { ICompanyService } from 'src/app/providers/company.service';
@@ -11,7 +11,19 @@ import { ICompanyService } from 'src/app/providers/company.service';
 
 export class CompSetup implements OnInit {
     employeeForm: FormGroup;
-    companyDetails: CompanyDetails 
+    companyDetails: CompanyDetails = {
+    company_id: null,
+    company_name: null,
+    business_type: null,
+    company_address: null,
+    phone_number: null,
+    company_email: null,
+    web_address: null,
+    company_reg_number: null,
+    company_tax_number: null,
+    parent_company: null,
+    company_logo: null
+    }
 
     constructor(
         private _homeRoute: Router,
@@ -21,27 +33,17 @@ export class CompSetup implements OnInit {
 
     ngOnInit() {
 
-        this.companyserv.getCompany()
-            .subscribe((companyData) => this.companyDetails = companyData,
-                (error) => {
-                    'Problem with the service, plz try later';
-                });
-
-            
-            
-
-        this.employeeForm = this.fb.group({
-            companyName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
-            businessType: ['', [Validators.required]],
-            compAddress: ['', [Validators.required]],
-            phoneNumber: ['', [Validators.required]],
-            compEmail: ['', [Validators.required, Validators.email]],
-            webAddress: [''],
-            companyRegNum: [''],
-            companyTaxNum: [''],
-            companyLogo: ['']
+        this.employeeForm = new FormGroup ({
+            companyName: new FormControl ('', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]),
+            businessType: new FormControl ('', [Validators.required]),
+            compAddress: new FormControl ('', [Validators.required]),
+            phoneNumber: new FormControl ('', [Validators.required]),
+            compEmail: new FormControl ('', [Validators.required, Validators.email]),
+            webAddress: new FormControl (''),
+            companyRegNum: new FormControl (''),
+            companyTaxNum: new FormControl (''),
+            companyLogo: new FormControl ('')
         });
-
         
         var subButton = <HTMLInputElement>document.getElementById("submitButton");
         this.employeeForm.valueChanges.subscribe((data) => {
@@ -54,9 +56,14 @@ export class CompSetup implements OnInit {
                 subButton.disabled = false;
             } else {
                 subButton.disabled = true;
-            }
+            }            
         })
-        
+
+        this.companyserv.getCompany()
+            .subscribe((companyData) => this.companyDetails = companyData,
+                (error) => {
+                    'Problem with the service, plz try later';
+                });                
     }
 
     formErrors = {
@@ -112,7 +119,15 @@ export class CompSetup implements OnInit {
         })
     }
 
+    onFileChange(event){
+        let file = event.target.files[0];
+    }
+
     onSubmit() {
-        console.log(this.companyDetails.company_reg_number + ' - ' + this.companyDetails.company_name + ' - ' + this.companyDetails.company_tax_number);
+        this.companyserv.updateCompany(this.companyDetails)
+            .subscribe((companyData) => this.companyDetails = companyData,
+                (error) => {
+                    'Problem with the service, plz try later';
+                });                
     }
 }
