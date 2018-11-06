@@ -65,7 +65,7 @@ export class CompSetup implements OnInit {
             .subscribe((companyData) => this.companyDetails = companyData,
                 (error) => {
                     'Problem with the service, plz try later';
-                });
+                });        
     }
 
     formErrors = {
@@ -125,7 +125,7 @@ export class CompSetup implements OnInit {
     onFileChange(event) {
         this.file = <File>event.target.files[0];
     }
-
+    
     onSubmit() {
         const fd = new FormData();
 
@@ -137,8 +137,9 @@ export class CompSetup implements OnInit {
         fd.append('web_address', this.companyDetails.web_address);
         fd.append('company_reg_number', this.companyDetails.company_reg_number);
         fd.append('company_tax_number', this.companyDetails.company_tax_number);
-        
-        if (this.companyDetails.company_logo !== null) {
+        fd.append('company_id', this.companyDetails.company_id.toString())
+
+        if (this.file !== null) {
             fd.append('Image', this.file, this.file.name);
         }
 

@@ -30,6 +30,8 @@ export class AppComponent implements OnInit {
     company_logo: null,
   }
 
+  img: File;
+
   constructor(
     private companyserv: ICompanyService
   ) { }
@@ -39,7 +41,8 @@ export class AppComponent implements OnInit {
       .subscribe((companyData) => this.compDetails = companyData,
         (error) => {
           'Problem with the service, plz try later';
-        });        
+        });   
+        this.img = this.compDetails.company_logo;     
   }
 
 
