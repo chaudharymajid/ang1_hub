@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { EmployeeComponent } from './employee/employee.component';
 import { UserPreferencesService } from './employee/userPreference.service';
 import { ICompanyService } from 'src/app/providers/company.service';
 import { CompanyDetails } from 'src/app/models/company.model';

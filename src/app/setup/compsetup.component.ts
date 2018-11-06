@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { Router } from '@angular/router';
 import { CompanyDetails } from 'src/app/models/company.model';
 import { ICompanyService } from 'src/app/providers/company.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
     templateUrl: 'compsetup.component.html',
@@ -12,39 +13,40 @@ import { ICompanyService } from 'src/app/providers/company.service';
 export class CompSetup implements OnInit {
     employeeForm: FormGroup;
     companyDetails: CompanyDetails = {
-    company_id: null,
-    company_name: null,
-    business_type: null,
-    company_address: null,
-    phone_number: null,
-    company_email: null,
-    web_address: null,
-    company_reg_number: null,
-    company_tax_number: null,
-    parent_company: null,
-    company_logo: null
+        company_id: null,
+        company_name: null,
+        business_type: null,
+        company_address: null,
+        phone_number: null,
+        company_email: null,
+        web_address: null,
+        company_reg_number: null,
+        company_tax_number: null,
+        parent_company: null,
+        company_logo: null
     }
 
     constructor(
         private _homeRoute: Router,
         private fb: FormBuilder,
-        private companyserv: ICompanyService
+        private companyserv: ICompanyService,
+        private http: HttpClient
     ) { }
 
     ngOnInit() {
 
-        this.employeeForm = new FormGroup ({
-            companyName: new FormControl ('', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]),
-            businessType: new FormControl ('', [Validators.required]),
-            compAddress: new FormControl ('', [Validators.required]),
-            phoneNumber: new FormControl ('', [Validators.required]),
-            compEmail: new FormControl ('', [Validators.required, Validators.email]),
-            webAddress: new FormControl (''),
-            companyRegNum: new FormControl (''),
-            companyTaxNum: new FormControl (''),
-            companyLogo: new FormControl ('')
+        this.employeeForm = new FormGroup({
+            companyName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]),
+            businessType: new FormControl('', [Validators.required]),
+            compAddress: new FormControl('', [Validators.required]),
+            phoneNumber: new FormControl('', [Validators.required]),
+            compEmail: new FormControl(''),
+            webAddress: new FormControl(''),
+            companyRegNum: new FormControl(''),
+            companyTaxNum: new FormControl(''),
+            companyLogo: new FormControl('')
         });
-        
+
         var subButton = <HTMLInputElement>document.getElementById("submitButton");
         this.employeeForm.valueChanges.subscribe((data) => {
             this.logValidationErrors(this.employeeForm);
@@ -56,14 +58,14 @@ export class CompSetup implements OnInit {
                 subButton.disabled = false;
             } else {
                 subButton.disabled = true;
-            }            
+            }
         })
 
         this.companyserv.getCompany()
             .subscribe((companyData) => this.companyDetails = companyData,
                 (error) => {
                     'Problem with the service, plz try later';
-                });                
+                });
     }
 
     formErrors = {
@@ -119,23 +121,35 @@ export class CompSetup implements OnInit {
         })
     }
 
-    onFileChange(event){
-        
-        const reader = new FileReader();
-        let file = event.target.files[0];
-        reader.readAsDataURL(file);
-        this.employeeForm.patchValue({
-            companyLogo : reader.result
-        });
-        this.companyDetails.company_logo = reader.result;
+    file: File = null;
+    onFileChange(event) {
+        this.file = <File>event.target.files[0];
     }
-    
 
     onSubmit() {
-        this.companyserv.updateCompany(this.companyDetails)
-            .subscribe((companyData) => this.companyDetails = companyData,
-                (error) => {
-                    'Problem with the service, plz try later';
-                });                
+        const fd = new FormData();
+
+        fd.append('company_name', this.companyDetails.company_name);
+        fd.append('business_type', this.companyDetails.business_type);
+        fd.append('company_address', this.companyDetails.company_address);
+        fd.append('phone_number', this.companyDetails.phone_number);
+        fd.append('company_email', this.companyDetails.company_email);
+        fd.append('web_address', this.companyDetails.web_address);
+        fd.append('company_reg_number', this.companyDetails.company_reg_number);
+        fd.append('company_tax_number', this.companyDetails.company_tax_number);
+        
+        if (this.companyDetails.company_logo !== null) {
+            fd.append('Image', this.file, this.file.name);
+        }
+
+        if (this.companyDetails.company_id === null) {
+            this.http.post("http://localhost:50087/api/company/Post", fd).subscribe(res => {
+                console.log(res)
+            });
+        } else {
+            this.http.put("http://localhost:50087/api/company/Put", fd).subscribe(res => {
+                console.log(res)
+            });
+        }
     }
 }
