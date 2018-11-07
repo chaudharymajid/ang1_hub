@@ -12,6 +12,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export class CompSetup implements OnInit {
     employeeForm: FormGroup;
+    compDet: Blob;
     companyDetails: CompanyDetails = {
         company_id: null,
         company_name: null,
@@ -65,7 +66,7 @@ export class CompSetup implements OnInit {
             .subscribe((companyData) => this.companyDetails = companyData,
                 (error) => {
                     'Problem with the service, plz try later';
-                });        
+                });
     }
 
     formErrors = {
@@ -125,7 +126,7 @@ export class CompSetup implements OnInit {
     onFileChange(event) {
         this.file = <File>event.target.files[0];
     }
-    
+
     onSubmit() {
         const fd = new FormData();
 

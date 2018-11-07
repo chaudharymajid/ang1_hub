@@ -1,43 +1,33 @@
-<div >     
-<button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>more_vert</mat-icon>
-</button>
-<label>{{compDetails.company_name}}</label>
-<img [src]="companyDetails.company_logo">
+<div>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <label style="margin-left: 2%;">{{compDetails.company_name}}</label>
+    <img [src]="imagePath" style="width:40px; height:40px; margin-right: 1%;" align="right">
 </div>
 <div>
-<mat-menu #menu="matMenu">
-    <button mat-menu-item>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item>
             <mat-icon>home</mat-icon><a routerLink="home">Home</a>
-    </button>
-    <button mat-menu-item>
-            <mat-icon>group</mat-icon><a routerLink="employees">Employees</a>
-    </button>
-    <button mat-menu-item>
-        <a routerLink="grid"><mat-icon>apps</mat-icon>Grid</a>
-    </button>
-    <button mat-menu-item>
-        <a routerLink="skills"><mat-icon>beenhere</mat-icon>Skills</a>
-    </button>
-    <button mat-menu-item>
-            <a routerLink="compsetup"><mat-icon>attachment</mat-icon>Company Setup</a>
         </button>
-</mat-menu>
-<router-outlet></router-outlet>
+        <button mat-menu-item>
+            <mat-icon>group</mat-icon><a routerLink="employees">Employees</a>
+        </button>
+        <button mat-menu-item>
+            <a routerLink="grid">
+                <mat-icon>apps</mat-icon>Grid
+            </a>
+        </button>
+        <button mat-menu-item>
+            <a routerLink="skills">
+                <mat-icon>beenhere</mat-icon>Skills
+            </a>
+        </button>
+        <button mat-menu-item>
+            <a routerLink="compsetup">
+                <mat-icon>attachment</mat-icon>Company Setup
+            </a>
+        </button>
+    </mat-menu>
+    <router-outlet></router-outlet>
 </div>
-
-
-<!-- <h1>
-    {{getFullName()}}
-</h1>
-<img [src]='imagePath'/>
-<div>
-    <br/>
-<emp-complist></emp-complist>
-<br/>
-<br/>
-Name : <input size="11" [(ngModel)] = 'firstName'>
-<br/>
-<br/>
-First Name is :- {{firstName}}
-</div> -->

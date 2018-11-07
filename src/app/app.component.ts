@@ -9,11 +9,9 @@ import { CompanyDetails } from 'src/app/models/company.model';
   providers: [UserPreferencesService, ICompanyService]
 })
 export class AppComponent implements OnInit {
-  pageHeader: string = 'Employee Details';
-  imagePath: string = 'https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31';
+  imagePath: string = '/src/assets/logo.jpg';
 
-  firstName: string = 'Tommy';
-  lastName: string = 'Cat';
+
   classesToApply: string = 'italicClass boldClass';
   applyBoldClass: boolean = true;
   compDetails: CompanyDetails = {
@@ -30,8 +28,6 @@ export class AppComponent implements OnInit {
     company_logo: null,
   }
 
-  img: File;
-
   constructor(
     private companyserv: ICompanyService
   ) { }
@@ -41,16 +37,6 @@ export class AppComponent implements OnInit {
       .subscribe((companyData) => this.compDetails = companyData,
         (error) => {
           'Problem with the service, plz try later';
-        });   
-        this.img = this.compDetails.company_logo;     
-  }
-
-
-  getFullName(): string {
-    return this.firstName + ' ' + this.lastName;
-  }
-
-  onClick(): void {
-    alert('Button Clicked');
+        });
   }
 }
