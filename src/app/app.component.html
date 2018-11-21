@@ -2,8 +2,8 @@
     <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>more_vert</mat-icon>
     </button>
-    <label style="margin-left: 2%;">{{compDetails.company_name}}</label>
-    <img [src]="imagePath" style="width:40px; height:40px; margin-right: 1%;" align="right">
+    <label style="margin-left: 2%;">{{companyName}}</label>
+    <img [src]="imageName" style="width:140px; height:40px; margin-right: 1%;" align="right">
 </div>
 <div>
     <mat-menu #menu="matMenu">
@@ -14,8 +14,8 @@
             <mat-icon>group</mat-icon><a routerLink="employees">Employees</a>
         </button>
         <button mat-menu-item>
-            <a routerLink="grid">
-                <mat-icon>apps</mat-icon>Grid
+            <a routerLink="empsetup">
+                <mat-icon>apps</mat-icon>Emp Setup
             </a>
         </button>
         <button mat-menu-item>

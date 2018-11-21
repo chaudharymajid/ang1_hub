@@ -1,45 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CompanyDetails } from 'src/app/models/company.model';
-import { ICompanyService } from 'src/app/providers/company.service';
+import { EmployeeDetails } from 'src/app/models/employeesetup.model';
+
 
 @Component({
-    templateUrl: 'compsetup.component.html',
-    providers: [ICompanyService]
+    templateUrl: 'employeesetup.component.html',
+    providers: []
 })
 
 export class EmployeeSetup implements OnInit {
     employeeForm: FormGroup;
-    companyDetails: CompanyDetails 
+    empDetails: EmployeeDetails;
 
     constructor(
         private _homeRoute: Router,
-        private fb: FormBuilder,
-        private companyserv: ICompanyService
+        private fb: FormBuilder
     ) { }
 
     ngOnInit() {
 
-        this.companyserv.getCompany()
-            .subscribe((companyData) => this.companyDetails = companyData,
-                (error) => {
-                    'Problem with the service, plz try later';
-                });
-
-            
-            
-
+        
         this.employeeForm = this.fb.group({
-            companyName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
-            businessType: ['', [Validators.required]],
-            compAddress: ['', [Validators.required]],
-            phoneNumber: ['', [Validators.required]],
-            compEmail: ['', [Validators.required, Validators.email]],
-            webAddress: [''],
-            companyRegNum: [''],
-            companyTaxNum: [''],
-            companyLogo: ['']
+            emp_firstname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(35)]],
+            emp_lastname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(35)]],
+            emp_middlename: [''],
+            emp_phone: ['', [Validators.required, Validators.minLength(2)]],
+            emp_email: ['', [Validators.required, Validators.email]],
+            address: ['', [Validators.required]],
+            nationality: [''],
+            photo_id: [''],
+            emp_photo: ['']            
         });
 
         
@@ -112,7 +103,7 @@ export class EmployeeSetup implements OnInit {
         })
     }
 
-    onSubmit() {
-        console.log(this.companyDetails.company_reg_number + ' - ' + this.companyDetails.company_name + ' - ' + this.companyDetails.company_tax_number);
-    }
+    // onSubmit() {
+    //     console.log(this.companyDetails.company_reg_number + ' - ' + this.companyDetails.company_name + ' - ' + this.companyDetails.company_tax_number);
+    // }
 }

@@ -10,4 +10,5 @@ export class CompanyDetails {
     company_tax_number: string;
     parent_company: string;
     company_logo: File;
+    company_image: string;
 }

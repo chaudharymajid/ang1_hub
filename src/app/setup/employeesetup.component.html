@@ -10,13 +10,13 @@
                 <tr>
                     <td>
                         <mat-form-field class="demo-full-width">
-                            <input matInput placeholder="Company Name" formControlName="companyName" name='company_name' [(ngModel)]="companyDetails.company_name"> 
+                            <input matInput placeholder="First Name" formControlName="firstname" name='emp_firstname' [(ngModel)]="employeeDetails.emp_firstname"> 
                             <mat-error *ngIf="formErrors.companyName">{{formErrors.companyName}}</mat-error>
                         </mat-form-field> 
                     </td>
                     <td>
                         <mat-form-field class="demo-full-width">
-                            <input id="field-businessType" matInput placeholder="Business Type" name='business_type' formControlName="businessType" [(ngModel)]="companyDetails.business_type">
+                            <input id="field-businessType" matInput placeholder="Last Name" name='business_type' formControlName="businessType" [(ngModel)]="companyDetails.business_type">
                             <mat-error *ngIf="formErrors.companyType">{{formErrors.companyType}}</mat-error>
                         </mat-form-field>
                     </td>

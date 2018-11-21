@@ -9,32 +9,20 @@ import { CompanyDetails } from 'src/app/models/company.model';
   providers: [UserPreferencesService, ICompanyService]
 })
 export class AppComponent implements OnInit {
-  imagePath: string = '/src/assets/logo.jpg';
 
-
-  classesToApply: string = 'italicClass boldClass';
-  applyBoldClass: boolean = true;
-  compDetails: CompanyDetails = {
-    company_id: null,
-    company_name: null,
-    business_type: null,
-    company_address: null,
-    phone_number: null,
-    company_email: null,
-    web_address: null,
-    company_reg_number: null,
-    company_tax_number: null,
-    parent_company: null,
-    company_logo: null,
-  }
-
+  imageName: string;
+  companyName: string;
+  
   constructor(
     private companyserv: ICompanyService
   ) { }
 
   ngOnInit() {
     this.companyserv.getCompany()
-      .subscribe((companyData) => this.compDetails = companyData,
+      .subscribe((companyData) => {
+      this.imageName = 'http://localhost:50087/Content/images/company/' + companyData.company_image,
+      this.companyName = companyData.company_name
+    },
         (error) => {
           'Problem with the service, plz try later';
         });

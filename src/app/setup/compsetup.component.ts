@@ -12,7 +12,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export class CompSetup implements OnInit {
     employeeForm: FormGroup;
-    compDet: Blob;
+    logo : File;
+    binaryLogo : Blob;
+    
     companyDetails: CompanyDetails = {
         company_id: null,
         company_name: null,
@@ -24,7 +26,8 @@ export class CompSetup implements OnInit {
         company_reg_number: null,
         company_tax_number: null,
         parent_company: null,
-        company_logo: null
+        company_logo: null,
+        company_image: null
     }
 
     constructor(
@@ -37,7 +40,7 @@ export class CompSetup implements OnInit {
     ngOnInit() {
 
         this.employeeForm = new FormGroup({
-            companyName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]),
+            companyName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
             businessType: new FormControl('', [Validators.required]),
             compAddress: new FormControl('', [Validators.required]),
             phoneNumber: new FormControl('', [Validators.required]),
@@ -123,12 +126,14 @@ export class CompSetup implements OnInit {
     }
 
     file: File = null;
+    fileName: any;   
+    fileType: string; 
     onFileChange(event) {
         this.file = <File>event.target.files[0];
     }
 
     onSubmit() {
-        const fd = new FormData();
+       const fd = new FormData();
 
         fd.append('company_name', this.companyDetails.company_name);
         fd.append('business_type', this.companyDetails.business_type);
@@ -137,21 +142,25 @@ export class CompSetup implements OnInit {
         fd.append('company_email', this.companyDetails.company_email);
         fd.append('web_address', this.companyDetails.web_address);
         fd.append('company_reg_number', this.companyDetails.company_reg_number);
-        fd.append('company_tax_number', this.companyDetails.company_tax_number);
-        fd.append('company_id', this.companyDetails.company_id.toString())
+        fd.append('company_tax_number', this.companyDetails.company_tax_number);        
 
         if (this.file !== null) {
             fd.append('Image', this.file, this.file.name);
+
+            if (this.companyDetails.company_id == null) {
+                this.http.post("http://localhost:50087/api/company/Post", fd).subscribe(res => {
+                    console.log(res)
+                });
+            } else {
+                fd.append('company_id', this.companyDetails.company_id.toString());
+                this.http.put("http://localhost:50087/api/company/Put", fd).subscribe(res => {
+                    console.log(res)
+                });
+            }
         }
 
-        if (this.companyDetails.company_id === null) {
-            this.http.post("http://localhost:50087/api/company/Post", fd).subscribe(res => {
-                console.log(res)
-            });
-        } else {
-            this.http.put("http://localhost:50087/api/company/Put", fd).subscribe(res => {
-                console.log(res)
-            });
-        }
+        else {
+            alert("Please choose a logo file")
+        }        
     }
 }

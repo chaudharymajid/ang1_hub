@@ -1,0 +1,129 @@
+<mat-tab-group #dynamicHeight>
+  <mat-tab label="Employee List">
+    <div>
+      <mat-card>
+        <mat-card-title>
+          Employee List
+        </mat-card-title>
+        <mat-card-content>
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element" (dblclick)= "click($event)"> {{element.position}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element" (dblclick)= "click($event)"> {{element.name}} </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef> Weight </th>
+            <td mat-cell *matCellDef="let element" (dblclick)= "click($event)"> {{element.weight}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef> Symbol </th>
+            <td mat-cell id={{element.position}} *matCellDef="let element" (dblclick)="dynamicHeight.selectedIndex = 1; click($event)"> {{element.symbol}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Employee Registeration">
+    <div>
+      <mat-card>
+        <mat-card-title>
+          Employee Registeration
+        </mat-card-title>
+        <mat-card-content>
+          <table>
+            <tr>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="First Name" name='emp_firstname' [(ngModel)]="empDet.emp_firstname">
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="Last Name">
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="Middle Name">
+                </mat-form-field>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="Phone">
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="Email">
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="Manager">
+                </mat-form-field>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="Nationality">
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field>
+                  <input matInput [matDatepicker]="picker" placeholder="Hire Date">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field>
+                  <input matInput [matDatepicker]="picker1" placeholder="Fire Date">
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="1">
+
+                <label>Upload Company Logo</label>
+                <input type="file" id="companyLogo" #file accept="image/*">
+                <button mat-stroked-button color="white" (click)="file.click()" (change)="onFileChange($event)" style='visibility:hidden'>
+                  Upload Company Logo
+                </button>
+              </td>
+              <td>
+                <img src="http://localhost:50087/Content/images/Koala.jpg" style="width:70px; height:70px; margin-right: 1%;"
+                  align="Middle">
+              </td>
+            </tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-tab>
+</mat-tab-group>
