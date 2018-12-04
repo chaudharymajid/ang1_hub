@@ -4,6 +4,28 @@ import { Router } from '@angular/router';
 import { CompanyDetails } from 'src/app/models/company.model';
 import { ICompanyService } from 'src/app/providers/company.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { MatTableDataSource } from '@angular/material';
+import { EmployeeDetails } from 'src/app/models/employeesetup.model';
+
+export interface PeriodicElement {
+    name: string;
+    position: number;
+    weight: number;
+    symbol: string;
+  }
+  
+  const ELEMENT_DATA: PeriodicElement[] = [
+    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
+    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
+    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
+    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
+    { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
+    { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
+    { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
+    { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
+    { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
+    { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
+  ];
 
 @Component({
     templateUrl: 'compsetup.component.html',
@@ -12,9 +34,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export class CompSetup implements OnInit {
     employeeForm: FormGroup;
-    logo : File;
-    binaryLogo : Blob;
-    
+    logo: File;
+    binaryLogo: Blob;
+
     companyDetails: CompanyDetails = {
         company_id: null,
         company_name: null,
@@ -44,26 +66,12 @@ export class CompSetup implements OnInit {
             businessType: new FormControl('', [Validators.required]),
             compAddress: new FormControl('', [Validators.required]),
             phoneNumber: new FormControl('', [Validators.required]),
-            compEmail: new FormControl(''),
-            webAddress: new FormControl(''),
+            compEmail: new FormControl('', [Validators.email]),
+            webAddress: new FormControl('', [Validators.required]),
             companyRegNum: new FormControl(''),
             companyTaxNum: new FormControl(''),
             companyLogo: new FormControl('')
         });
-
-        var subButton = <HTMLInputElement>document.getElementById("submitButton");
-        this.employeeForm.valueChanges.subscribe((data) => {
-            this.logValidationErrors(this.employeeForm);
-            if (this.employeeForm.get('companyName').valid
-                && this.employeeForm.get('businessType').valid
-                && this.employeeForm.get('compAddress').valid
-                && this.employeeForm.get('phoneNumber').valid
-                && this.employeeForm.get('compEmail').valid) {
-                subButton.disabled = false;
-            } else {
-                subButton.disabled = true;
-            }
-        })
 
         this.companyserv.getCompany()
             .subscribe((companyData) => this.companyDetails = companyData,
@@ -125,15 +133,52 @@ export class CompSetup implements OnInit {
         })
     }
 
+    compValChange() {
+        if (this.tabIndex == '2') {
+             var subButton = <HTMLInputElement>document.getElementById('submitButton');
+            // this.employeeForm.valueChanges.subscribe((data) => {
+            //     this.logValidationErrors(this.employeeForm);
+            //     if (this.employeeForm.get('companyName').valid
+            //         && this.employeeForm.get('businessType').valid
+            //         && this.employeeForm.get('compAddress').valid
+            //         && this.employeeForm.get('phoneNumber').valid
+            //         && this.employeeForm.get('compEmail').valid) {
+            //         subButton.disabled = false;
+            //     } else {
+            //         subButton.disabled = true;
+            //     }
+            // });
+            if (this.employeeForm.get('companyName').valid
+                    && this.employeeForm.get('businessType').valid
+                    && this.employeeForm.get('compAddress').valid
+                    && this.employeeForm.get('phoneNumber').valid
+                    && this.employeeForm.get('compEmail').valid) {
+                    subButton.disabled = false;
+                } else {
+                    subButton.disabled = true;
+                }
+        }
+    }
+
     file: File = null;
-    fileName: any;   
-    fileType: string; 
+    fileName: any;
+    fileType: string;
+
     onFileChange(event) {
         this.file = <File>event.target.files[0];
+        var subButton = <HTMLInputElement>document.getElementById('submitButton');
+        if (this.employeeForm.get('companyName').valid
+        && this.employeeForm.get('businessType').valid
+        && this.employeeForm.get('compAddress').valid
+        && this.employeeForm.get('phoneNumber').valid
+        && this.employeeForm.get('compEmail').valid) {
+        subButton.disabled = false;
+    }
+
     }
 
     onSubmit() {
-       const fd = new FormData();
+        const fd = new FormData();
 
         fd.append('company_name', this.companyDetails.company_name);
         fd.append('business_type', this.companyDetails.business_type);
@@ -142,18 +187,18 @@ export class CompSetup implements OnInit {
         fd.append('company_email', this.companyDetails.company_email);
         fd.append('web_address', this.companyDetails.web_address);
         fd.append('company_reg_number', this.companyDetails.company_reg_number);
-        fd.append('company_tax_number', this.companyDetails.company_tax_number);        
+        fd.append('company_tax_number', this.companyDetails.company_tax_number);
 
         if (this.file !== null) {
             fd.append('Image', this.file, this.file.name);
 
             if (this.companyDetails.company_id == null) {
-                this.http.post("http://localhost:50087/api/company/Post", fd).subscribe(res => {
+                this.http.post("https://localhost:44317/api/company/Post", fd).subscribe(res => {
                     console.log(res)
                 });
             } else {
                 fd.append('company_id', this.companyDetails.company_id.toString());
-                this.http.put("http://localhost:50087/api/company/Put", fd).subscribe(res => {
+                this.http.put("https://localhost:44317/api/company/Put", fd).subscribe(res => {
                     console.log(res)
                 });
             }
@@ -161,6 +206,44 @@ export class CompSetup implements OnInit {
 
         else {
             alert("Please choose a logo file")
-        }        
+        }
+    }
+
+
+    // *******Employee Table & Form**********
+    // **************************************
+    // **************************************
+
+    displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+    dataSource = new MatTableDataSource(ELEMENT_DATA);
+
+    applyFilter(filterValue: string) {
+        this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+
+    empDet: EmployeeDetails = {
+        emp_id: null,
+        emp_firstname: null,
+        emp_lastname: null,
+        emp_middlename: null,
+        emp_cat_id: null,
+        emp_serv_id: null,
+        phone: null,
+        email: null,
+        address: null,
+        emp_photo: null
+    }
+
+    click(event) {
+        let clickEvent = event.target.id;
+        this.empDet.emp_firstname = clickEvent;
+    }
+
+    tabIndex: string;
+    tabName: string;
+
+    tabChanged(event) {
+        this.tabIndex = event.index;
+        this.tabName = event.tab.textLabel;
     }
 }

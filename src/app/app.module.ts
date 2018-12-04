@@ -26,10 +26,13 @@ import { MatSkills } from './empgrid/mat-skills.component';
 import { CompSetup } from './setup/compsetup.component';
 import { EmployeeSetup } from './setup/employeesetup.component';
 import { TableFilteringExample } from './testtable/testtable.component';
+import { UserComponent } from './user/user.component';
+import { SignInComponent } from './user/sign-in/sign-in.component';
+import { SignUpComponent } from './user/sign-up/sign-up.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'employees', component: EmployeeComponentList },
+  { path: 'user', component: UserComponent },
   { path: 'employees/:code', component: EmployeeComponent },
   { path: 'empsetup', component: TableFilteringExample },
   { path: 'compsetup', component: CompSetup },
@@ -41,7 +44,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent, EmployeeComponent, EmployeeComponentList, EmployeeTitlePipe, EmployeeCountComponent, HomeComponent, PageNotFoundComponent, 
-    EmpGrid, EmployeeSkills, MatSkills, CompSetup, EmployeeSetup, TableFilteringExample
+    EmpGrid, EmployeeSkills, MatSkills, CompSetup, EmployeeSetup, TableFilteringExample, UserComponent, SignInComponent, SignUpComponent, UserComponent
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, BsDropdownModule, TooltipModule, ModalModule, RouterModule.forRoot(appRoutes), BrowserAnimationsModule, 

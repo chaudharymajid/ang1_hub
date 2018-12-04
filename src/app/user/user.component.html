@@ -1,0 +1,30 @@
+<mat-tab-group [backgroundColor]= "green" #setupTabGrp (selectedTabChange)="tabChanged($event)">
+  <mat-tab label="Sign In">
+    <div id="contenttab1">
+      <div [formGroup]="employeeForm">
+        <table>
+          <tr>
+            <td>
+              <mat-form-field class="demo-full-width">
+                <input matInput placeholder="Email">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field class="demo-full-width">
+                <input matInput placeholder="Password">
+              </mat-form-field>
+            </td>
+          </tr>         
+        </table>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Registration">
+    <div id="contenttab2">
+      Working 2
+    </div>
+  </mat-tab>
+</mat-tab-group>

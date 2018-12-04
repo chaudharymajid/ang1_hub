@@ -10,9 +10,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class ICompanyService {
 
     constructor(private _http: HttpClient) { }
+    rootUrl: string = "http://localhost:4543/";
 
     getCompany(): Observable<CompanyDetails> {
-        return this._http.get<CompanyDetails>("http://localhost:50087/api/company")
+        return this._http.get<CompanyDetails>(this.rootUrl+"api/company")
             .catch(this.handleError);
     }
 
@@ -21,12 +22,12 @@ export class ICompanyService {
         headers.append('Content-Type', 'application/json')
 
         if (companyDetails.company_id === null) {
-            return this._http.post<CompanyDetails>("http://localhost:50087/api/company", companyDetails, {
+            return this._http.post<CompanyDetails>(this.rootUrl+"api/company", companyDetails, {
                 headers: headers
             })
                 .catch(this.handleError);
         } else {
-            return this._http.put<CompanyDetails>("http://localhost:50087/api/company", companyDetails, {
+            return this._http.put<CompanyDetails>(this.rootUrl+"api/company", companyDetails, {
                 headers: headers
             })
                 .catch(this.handleError);
@@ -40,12 +41,12 @@ export class ICompanyService {
         imgheaders.append('Content-Type', 'multipart/form-data');
 
         if(companyDetails.company_id === null){
-            return this._http.post<CompanyDetails>("http://localhost:50087/api/company", file, {
+            return this._http.post<CompanyDetails>("https://localhost:44317/api/company", file, {
             headers: imgheaders
         })
             .catch(this.handleError);
     } else {
-        return this._http.post<CompanyDetails>("http://localhost:50087/api/company", file, {
+        return this._http.post<CompanyDetails>("https://localhost:44317/api/company", file, {
             headers: imgheaders
         })
             .catch(this.handleError);

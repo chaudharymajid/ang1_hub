@@ -6,39 +6,40 @@
           Employee List
         </mat-card-title>
         <mat-card-content>
-        <mat-form-field>
-          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-        </mat-form-field>
+          <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+          </mat-form-field>
 
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-          <!-- Position Column -->
-          <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef> No. </th>
-            <td mat-cell *matCellDef="let element" (dblclick)= "click($event)"> {{element.position}} </td>
-          </ng-container>
+            <!-- Position Column -->
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef> No. </th>
+              <td mat-cell *matCellDef="let element" (dblclick)="click($event)"> {{element.position}} </td>
+            </ng-container>
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let element" (dblclick)= "click($event)"> {{element.name}} </td>
-          </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Name </th>
+              <td mat-cell *matCellDef="let element" (dblclick)="click($event)"> {{element.name}} </td>
+            </ng-container>
 
-          <!-- Weight Column -->
-          <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef> Weight </th>
-            <td mat-cell *matCellDef="let element" (dblclick)= "click($event)"> {{element.weight}} </td>
-          </ng-container>
+            <!-- Weight Column -->
+            <ng-container matColumnDef="weight">
+              <th mat-header-cell *matHeaderCellDef> Weight </th>
+              <td mat-cell *matCellDef="let element" (dblclick)="click($event)"> {{element.weight}} </td>
+            </ng-container>
 
-          <!-- Symbol Column -->
-          <ng-container matColumnDef="symbol">
-            <th mat-header-cell *matHeaderCellDef> Symbol </th>
-            <td mat-cell id={{element.position}} *matCellDef="let element" (dblclick)="dynamicHeight.selectedIndex = 1; click($event)"> {{element.symbol}} </td>
-          </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="symbol">
+              <th mat-header-cell *matHeaderCellDef> Symbol </th>
+              <td mat-cell id={{element.position}} *matCellDef="let element" (dblclick)="dynamicHeight.selectedIndex = 1; click($event)">
+                {{element.symbol}} </td>
+            </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
         </mat-card-content>
       </mat-card>
     </div>
@@ -117,13 +118,102 @@
                 </button>
               </td>
               <td>
-                <img src="http://localhost:50087/Content/images/Koala.jpg" style="width:70px; height:70px; margin-right: 1%;"
-                  align="Middle">
+                <img src="http://localhost:50087/Content/images/Koala.jpg" style="width:90px; height:90px;">
               </td>
             </tr>
           </table>
         </mat-card-content>
       </mat-card>
     </div>
+  </mat-tab>
+
+  <mat-tab label="Company Registeration">
+    <mat-card>
+
+      <mat-card-title>
+        Company Registeration
+      </mat-card-title>
+
+      <mat-card-content>
+        <div [formGroup]="employeeForm">
+          <table>
+            <tr>
+              <td>
+                <mat-form-field class="demo-full-width">
+                  <input matInput placeholder="Company Name" formControlName="companyName" name='company_name'
+                    [(ngModel)]="companyDetails.company_name">
+                  <mat-error *ngIf="formErrors.companyName">{{formErrors.companyName}}</mat-error>
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field class="demo-full-width">
+                  <input id="field-businessType" matInput placeholder="Business Type" name='business_type'
+                    formControlName="businessType" [(ngModel)]="companyDetails.business_type">
+                  <mat-error *ngIf="formErrors.companyType">{{formErrors.companyType}}</mat-error>
+                </mat-form-field>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <mat-form-field class="demo-full-width">
+                  <textarea matInput placeholder="Address" matTextareaAutosize matAutosizeMinRows="1"
+                    matAutosizeMaxRows="5" formControlName="compAddress" id="field-compAddress" name='company_address'
+                    [(ngModel)]="companyDetails.company_address"></textarea>
+                  <mat-error *ngIf="formErrors.Address">{{formErrors.Address}}</mat-error>
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field class="demo-full-width">
+                  <input id="field-phoneNumber" matInput placeholder="Phone Number" formControlName="phoneNumber" name='phone_number'
+                    [(ngModel)]="companyDetails.phone_number">
+                  <mat-error *ngIf="formErrors.phoneNumber"></mat-error>
+                </mat-form-field>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <mat-form-field class="demo-full-width">
+                  <input id="field-compEmail" matInput placeholder="Email" formControlName="compEmail" name='company_email'
+                    [(ngModel)]="companyDetails.company_email">
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field class="demo-full-width">
+                  <input id="field-webAddress" matInput placeholder="Web Address" formControlName="webAddress" name='web_address'
+                    [(ngModel)]="companyDetails.web_address">
+                </mat-form-field>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <mat-form-field class="demo-full-width">
+                  <input id="field-companyRegNum" matInput placeholder="Registeration Number" formControlName="companyRegNum"
+                    name='company_reg_number' [(ngModel)]="companyDetails.company_reg_number">
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field class="demo-full-width">
+                  <input id="field-companyTaxNum" matInput placeholder="Tax Registeration Number" formControlName="companyTaxNum"
+                    name='company_tax_number' [(ngModel)]="companyDetails.company_tax_number">
+                </mat-form-field>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <label>Upload Company Logo</label>
+                <input type="file" id="companyLogo" name="file" #file accept="image/*" (change)=onFileChange($event)>
+                <br>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <br>
+    <div align="center">
+      <button id="submitButton" type="submit" mat-stroked-button color="white" style="margin-right: 5px;" (click)="onSubmit()"
+        disabled>Submit</button>
+    </div>
+    <br>
   </mat-tab>
 </mat-tab-group>

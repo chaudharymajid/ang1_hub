@@ -1,0 +1,24 @@
+mat-tab-group {
+    align-items: center;
+    justify-content: left;
+    /* border: 1px solid lightgray; */
+    margin-left: 40%;
+    margin-right: 40%;    
+}
+
+/* #contenttab1 {
+    align-content: initial;
+} */
+
+.demo-full-width {    
+    width: 500px;    
+}    
+
+mat-tab {
+    padding-bottom: 5%;       
+}
+
+.mat-tab-label{ 
+    background-color:red;
+    color:red;        
+}
