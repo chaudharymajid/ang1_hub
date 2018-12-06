@@ -154,6 +154,7 @@ export class CompSetup implements OnInit {
                     && this.employeeForm.get('phoneNumber').valid
                     && this.employeeForm.get('compEmail').valid) {
                     subButton.disabled = false;
+                    console.log(this.companyDetails.company_name);
                 } else {
                     subButton.disabled = true;
                 }
@@ -222,16 +223,20 @@ export class CompSetup implements OnInit {
     }
 
     empDet: EmployeeDetails = {
-        emp_id: null,
+        emp_id: null, 
         emp_firstname: null,
         emp_lastname: null,
         emp_middlename: null,
         emp_cat_id: null,
         emp_serv_id: null,
-        phone: null,
-        email: null,
-        address: null,
-        emp_photo: null
+        emp_phone: null,
+        emp_email: null,
+        emp_password: null,
+        emp_confirmpassword: null,
+        emp_address: null,
+        emp_photo: null,
+        emp_comments: null,
+        emp_department: null        
     }
 
     click(event) {

@@ -73,24 +73,24 @@
                   <tr>
                     <td>
                       <mat-form-field>
-                        <input matInput placeholder="Phone">
-                      </mat-form-field>
-                    </td>
-                    <td>
-                      <mat-form-field>
                         <input matInput placeholder="Email">
                       </mat-form-field>
                     </td>
                     <td>
                       <mat-form-field>
-                        <input matInput placeholder="Manager">
+                        <input matInput placeholder="Password">
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-form-field>
+                        <input matInput placeholder="Confirm Password">
                       </mat-form-field>
                     </td>
                   </tr>
                   <tr>
                     <td>
                       <mat-form-field>
-                        <input matInput placeholder="Nationality">
+                        <input matInput placeholder="Department">
                       </mat-form-field>
                     </td>
                     <td>
@@ -109,6 +109,23 @@
                     </td>
                   </tr>
                   <tr>
+                      <td>
+                        <mat-form-field>
+                          <input matInput placeholder="Nationality">
+                        </mat-form-field>
+                      </td>
+                      <td>
+                        <mat-form-field>
+                          <input matInput placeholder="Comments">
+                        </mat-form-field>
+                      </td>
+                      <td>
+                        <mat-form-field>
+                          <input matInput placeholder="Employee ID" disabled>
+                        </mat-form-field>
+                      </td>
+                    </tr>
+                  <tr>
                     <td colspan="1">
       
                       <label>Upload Company Logo</label>
@@ -116,9 +133,9 @@
                       <button mat-stroked-button color="white" (change)="onFileChange($event)" style='visibility:hidden'>
                         Upload Company Logo
                       </button>
-                    </td>
+                    </td><td></td>
                     <td>
-                      <img src="https://localhost:44317/Content/images/company/hardware.png" style="width:90px; height:90px;">
+                      <img src="http://localhost:4543/Content/images/company/hardware.png" style="width:120px; height:90px; float: right; margin-right: 25px;">
                     </td>
                   </tr>
                 </table>
