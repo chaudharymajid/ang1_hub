@@ -45,106 +45,133 @@
           </div>
         </mat-tab>
       
-        <mat-tab label="Employee Registeration">
+        <mat-tab label="Employee Registration">
           <div>
             <mat-card>
               <mat-card-title>
-                Employee Registeration
+                Employee Registration
               </mat-card-title>
               <mat-card-content>
+                <div [formGroup]="empRegForm">
                 <table>
                   <tr>
                     <td>
                       <mat-form-field>
-                        <input matInput placeholder="First Name" name='emp_firstname' [(ngModel)]="empDet.emp_firstname">
+                        <input matInput placeholder="First Name" formcontrolname= 'firstName' [value] = "empDet.firstName">
                       </mat-form-field>
                     </td>
                     <td>
                       <mat-form-field>
-                        <input matInput placeholder="Last Name">
+                        <input matInput placeholder="Last Name" name='lastName' formcontrolname= 'lastName' [value] = "empDet.lastName">
                       </mat-form-field>
                     </td>
                     <td>
                       <mat-form-field>
-                        <input matInput placeholder="Middle Name">
-                      </mat-form-field>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <mat-form-field>
-                        <input matInput placeholder="Email">
-                      </mat-form-field>
-                    </td>
-                    <td>
-                      <mat-form-field>
-                        <input matInput placeholder="Password">
-                      </mat-form-field>
-                    </td>
-                    <td>
-                      <mat-form-field>
-                        <input matInput placeholder="Confirm Password">
+                        <input matInput placeholder="Middle Name" name='middleName' formcontrolname=' middleName' [value] = "empDet.middleName">
                       </mat-form-field>
                     </td>
                   </tr>
                   <tr>
                     <td>
                       <mat-form-field>
-                        <input matInput placeholder="Department">
+                        <input matInput placeholder="Email" name='email' formcontrolname= "email" [value] = "empDet.email">
                       </mat-form-field>
                     </td>
                     <td>
                       <mat-form-field>
-                        <input matInput [matDatepicker]="picker" placeholder="Hire Date">
+                        <input matInput placeholder="Password"  name='password' formcontrolname= "password" type="password" [value] = "empDet.password">
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-form-field>
+                        <input matInput placeholder="Confirm Password"  name='confirmPassword' formcontrolname= "confirmPassword" type="password" [value] = "empDet.confirmPassword">
+                      </mat-form-field>
+                    </td>
+                  </tr>
+                  <tr>
+                   <td>
+                      <mat-form-field>
+                        <input matInput [matDatepicker]="picker" placeholder="Hire Date"  name='hireDate' formcontrolname= "hireDate" [value] = "empDet.hireDate">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                       </mat-form-field>
                     </td>
                     <td>
                       <mat-form-field>
-                        <input matInput [matDatepicker]="picker1" placeholder="Fire Date">
+                        <input placeholder="Fire Date"  name='fireDate' formcontrolname= "fireDate"  [value] = "empDet.fireDate">
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-form-field>
+                        <input matInput placeholder="Nationality"  name='nationality' formcontrolname= "nationality" [value] = "empDet.nationality">
                       </mat-form-field>
                     </td>
                   </tr>
                   <tr>
                       <td>
                         <mat-form-field>
-                          <input matInput placeholder="Nationality">
+                          <input matInput placeholder="Phone"  name='phone' formcontrolname= "phone" [value] = "empDet.phone">
                         </mat-form-field>
                       </td>
                       <td>
                         <mat-form-field>
-                          <input matInput placeholder="Comments">
+                          <input matInput placeholder="Department"  name='dept' formcontrolname= "dept" [value] = "empDet.dept">                        
                         </mat-form-field>
                       </td>
                       <td>
                         <mat-form-field>
-                          <input matInput placeholder="Employee ID" disabled>
+                          <input matInput placeholder="Manager ID"  name='mgrId' formcontrolname= "mgrId" [value] = "empDet.mgrId">
                         </mat-form-field>
                       </td>
                     </tr>
                   <tr>
-                    <td colspan="1">
-      
-                      <label>Upload Company Logo</label>
-                      <input type="file" id="companyLogo" #file accept="image/*" (change)="onFileChange($event)">
-                      <button mat-stroked-button color="white" (change)="onFileChange($event)" style='visibility:hidden'>
-                        Upload Company Logo
-                      </button>
-                    </td><td></td>
                     <td>
-                      <img src="http://localhost:4543/Content/images/company/hardware.png" style="width:120px; height:90px; float: right; margin-right: 25px;">
+                        <mat-form-field>
+                            <input matInput placeholder="Address" name='address' formcontrolname= "address" [value] = "empDet.address">
+                          </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field>
+                            <input matInput placeholder="Comments" name='comments' formcontrolname= "comments" [value] = "empDet.comments">
+                          </mat-form-field>
+                    </td>
+                      <td>
+                          <mat-form-field>
+                            <input matInput placeholder="Employee ID" disabled  name='empId' formcontrolname= "empId" [value] = "empDet.empId" style="color:black">
+                          </mat-form-field>
+                        </td>
+                        </tr>
+                        <tr>
+                    <td>      
+                      <label>Upload Photo/Photo ID</label>
+                      <input type="file" id="companyLogo" #file accept="image/*" (change)="onEmpChange($event)"  name='photoId' formcontrolname= "photoId" [value] = "empDet.photoId">
+                      <button mat-stroked-button-dark color="white" (change)="onFileChange($event)" style='visibility:hidden'>
+                        Upload Photo/Photo ID
+                      </button>
+                    </td>
+                    <td>
                     </td>
                   </tr>
-                </table>
+                  <tr>
+                    <td>
+                        <button id="submitEmpButton" type="submit" mat-stroked-button  (click)='onEmpSubmit()'>
+                            Submit</button>
+                    </td>
+                  </tr>
+
+                </table>                
+              </div>              
               </mat-card-content>
             </mat-card>
-          </div>
+            </div>
+            <mat-card>
+                <img src="http://localhost:4543/Content/images/company/hardware.png">
+              </mat-card>
         </mat-tab>
       
-        <mat-tab label="Company Registeration">
+        <mat-tab label="Company Registration">
           <mat-card>
       
             <mat-card-title>
@@ -152,20 +179,20 @@
             </mat-card-title>
       
             <mat-card-content>
-              <div [formGroup]="employeeForm">
+              <div [formGroup]="companyForm">
                 <table>
                   <tr>
                     <td>
                       <mat-form-field class="demo-full-width">
                         <input matInput placeholder="Company Name" formControlName="companyName" name='company_name'
-                          [(ngModel)]="companyDetails.company_name" (ngModelChange)="compValChange()">
+                          [value]="companyDetails.company_name" (change)="compValChange()">
                         <mat-error *ngIf="formErrors.companyName">{{formErrors.companyName}}</mat-error>
                       </mat-form-field>
                     </td>
                     <td>
                       <mat-form-field class="demo-full-width">
-                        <input id="field-businessType" matInput placeholder="Business Type" name='business_type'
-                          formControlName="businessType" [(ngModel)]="companyDetails.business_type" (ngModelChange)="compValChange()">
+                        <input matInput placeholder="Business Type" formControlName="businessType" name='business_type'
+                         [value]="companyDetails.business_type" (Change)="compValChange()">
                         <mat-error *ngIf="formErrors.companyType">{{formErrors.companyType}}</mat-error>
                       </mat-form-field>
                     </td>
@@ -175,14 +202,14 @@
                       <mat-form-field class="demo-full-width">
                         <textarea matInput placeholder="Address" matTextareaAutosize matAutosizeMinRows="1"
                           matAutosizeMaxRows="5" formControlName="compAddress" id="field-compAddress" name='company_address'
-                          [(ngModel)]="companyDetails.company_address" (ngModelChange)="compValChange()"></textarea>
+                          [value]="companyDetails.company_address" (ngModelChange)="compValChange()"></textarea>
                         <mat-error *ngIf="formErrors.Address">{{formErrors.Address}}</mat-error>
                       </mat-form-field>
                     </td>
                     <td>
                       <mat-form-field class="demo-full-width">
                         <input id="field-phoneNumber" matInput placeholder="Phone Number" formControlName="phoneNumber" name='phone_number'
-                          [(ngModel)]="companyDetails.phone_number" (ngModelChange)="compValChange()">
+                        [value]="companyDetails.phone_number" (ngModelChange)="compValChange()">
                         <mat-error *ngIf="formErrors.phoneNumber"></mat-error>
                       </mat-form-field>
                     </td>
@@ -191,13 +218,13 @@
                     <td>
                       <mat-form-field class="demo-full-width">
                         <input id="field-compEmail" matInput placeholder="Email" formControlName="compEmail" name='company_email'
-                          [(ngModel)]="companyDetails.company_email" (ngModelChange)="compValChange()">
+                        [value]="companyDetails.company_email" (ngModelChange)="compValChange()">
                       </mat-form-field>
                     </td>
                     <td>
                       <mat-form-field class="demo-full-width">
                         <input id="field-webAddress" matInput placeholder="Web Address" formControlName="webAddress" name='web_address'
-                          [(ngModel)]="companyDetails.web_address" (ngModelChange)="compValChange()">
+                        [value]="companyDetails.web_address" (ngModelChange)="compValChange()">
                       </mat-form-field>
                     </td>
                   </tr>
@@ -205,13 +232,13 @@
                     <td>
                       <mat-form-field class="demo-full-width">
                         <input id="field-companyRegNum" matInput placeholder="Registeration Number" formControlName="companyRegNum"
-                          name='company_reg_number' [(ngModel)]="companyDetails.company_reg_number" (ngModelChange)="compValChange()">
+                          name='company_reg_number' [value]="companyDetails.company_reg_number" (ngModelChange)="compValChange()">
                       </mat-form-field>
                     </td>
                     <td>
                       <mat-form-field class="demo-full-width">
-                        <input id="field-companyTaxNum" matInput placeholder="Tax Registeration Number" formControlName="companyTaxNum"
-                          name='company_tax_number' [(ngModel)]="companyDetails.company_tax_number" (ngModelChange)="compValChange()">
+                        <input id="field-companyTaxNum" matInput placeholder="Tax Registration Number" formControlName="companyTaxNum"
+                          name='company_tax_number' [value]="companyDetails.company_tax_number" (ngModelChange)="compValChange()">
                       </mat-form-field>
                     </td>
                   </tr>
@@ -228,7 +255,7 @@
           </mat-card>
           <br>
           <div align="center">
-            <button id="submitButton" type="submit" mat-stroked-button color="white" style="margin-right: 5px;" (click)=onSubmit() disabled>
+            <button id="submitButton" type="submit" mat-stroked-button color="white" style="margin-right: 5px;" (click)=onCompanySubmit()>
                 Submit</button>
           </div>
           <br>          

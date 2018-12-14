@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
 
   imageName: string;
   companyName: string;
-  
+    
   constructor(
     private companyserv: ICompanyService
   ) { }
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.companyserv.getCompany()
       .subscribe((companyData) => {
-      this.imageName = 'https://localhost:44317/Content/images/company/' + companyData.company_image,
+      this.imageName = 'http://localhost:4543/Content/images/company/' + companyData.company_image,
       this.companyName = companyData.company_name
     },
         (error) => {

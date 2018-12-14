@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IEmployee } from '../employee/employee';
+import { EmployeeDetails } from 'src/app/models/employeesetup.model';
 import { Observable, Subject, observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -13,13 +13,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 export class EmployeeService {
 
     constructor(private _http: HttpClient) { }
-    getEmployees(): Observable<IEmployee[]> {
-        return this._http.get<IEmployee[]>("http://localhost:52549/api/employees")
+    rootUrl: string = "http://localhost:4543/";
+
+    getEmployees(): Observable<EmployeeDetails[]> {
+        return this._http.get<EmployeeDetails[]>(this.rootUrl + "api/employees")
             .catch(this.handleError);
     }
 
-    getEmployeeByCode(empCode: number): Observable<IEmployee> {
-        return this._http.get<IEmployee>("http://localhost:52549/api/employees/" + empCode)
+    getEmployeeByCode(emp: EmployeeDetails): Observable<EmployeeDetails> {
+        
+        return this._http.get<EmployeeDetails>(this.rootUrl + "api/employees/" + emp.empId)
             .catch(this.handleError);
     }
 

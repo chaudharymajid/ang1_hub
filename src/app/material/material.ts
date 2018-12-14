@@ -18,7 +18,8 @@ import {
     MatCheckboxModule,
     MatDialogModule,
     MatTableModule,
-    MatTabsModule    
+    MatTabsModule,
+        
 }
     from '@angular/material';
 

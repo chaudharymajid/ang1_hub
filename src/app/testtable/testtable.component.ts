@@ -38,24 +38,25 @@ export class TableFilteringExample {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  empDet: EmployeeDetails = {
-    emp_id: null, 
-    emp_firstname: null,
-    emp_lastname: null,
-    emp_middlename: null,
-    emp_cat_id: null,
-    emp_serv_id: null,
-    emp_phone: null,
-    emp_email: null,
-    emp_password: null,
-    emp_confirmpassword: null,
-    emp_address: null,
-    emp_photo: null,
-    emp_comments: null,
-    emp_department: null        
-}
-  click(event) {
-    let clickEvent = event.target.id;
-    this.empDet.emp_firstname = clickEvent;
-  }
+//   empDet: EmployeeDetails = {
+//     emp_id: null, 
+//     emp_firstname: null,
+//     emp_lastname: null,
+//     emp_middlename: null,
+//     emp_cat_id: null,
+//     emp_serv_id: null,
+//     emp_phone: null,
+//     emp_email: null,
+//     emp_password: null,
+//     emp_confirmpassword: null,
+//     emp_address: null,
+//     emp_photo: null,
+//     emp_comments: null,
+//     emp_department: null ,
+//     emp_manager_emp_id: null      
+// }
+//   click(event) {
+//     let clickEvent = event.target.id;
+//     this.empDet.emp_firstname = clickEvent;
+//   }
 }

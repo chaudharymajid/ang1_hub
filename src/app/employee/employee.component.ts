@@ -37,32 +37,32 @@ export class EmployeeComponent implements OnInit {
 
     ngOnInit() {
         let empCode: number = this._activatedRoute.snapshot.params['code'];
-        this.subscription = this._employeeService.getEmployeeByCode(empCode)
-        .retryWhen((err) => {
-            return err.scan((retryCount, val) => {
-                retryCount += 1;
-                if (retryCount < 6) {
-                    this.statusMessage = 'Retrying...Attempt #' + retryCount;
-                    return retryCount;
-                }
-                else {
-                    throw (err);
-                }
-            }, 0).delay(1000)
-        })         
-        .subscribe((employeeData) => {
-                if (employeeData == null) {
-                    this.statusMessage =
-                        'Employee with the specified Employee Code does not exist';
-                }
-                else {
-                    this.employee = employeeData;
-                }
-            },
-            (error) => {
-                this.statusMessage =
-                    'Problem with the service. Please try again after sometime';
-                console.error(error);
-            });
+        // this.subscription = this._employeeService.getEmployeeByCode(empCode)
+        // .retryWhen((err) => {
+        //     return err.scan((retryCount, val) => {
+        //         retryCount += 1;
+        //         if (retryCount < 6) {
+        //             this.statusMessage = 'Retrying...Attempt #' + retryCount;
+        //             return retryCount;
+        //         }
+        //         else {
+        //             throw (err);
+        //         }
+        //     }, 0).delay(1000)
+        // })         
+        // .subscribe((employeeData) => {
+        //         if (employeeData == null) {
+        //             this.statusMessage =
+        //                 'Employee with the specified Employee Code does not exist';
+        //         }
+        //         else {
+        //             this.employee = employeeData;
+        //         }
+        //     },
+        //     (error) => {
+        //         this.statusMessage =
+        //             'Problem with the service. Please try again after sometime';
+        //         console.error(error);
+        //     });
     }
 }

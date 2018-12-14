@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CompanyDetails } from 'src/app/models/company.model';
@@ -12,9 +12,9 @@ export interface PeriodicElement {
     position: number;
     weight: number;
     symbol: string;
-  }
-  
-  const ELEMENT_DATA: PeriodicElement[] = [
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
     { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
     { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
     { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
@@ -25,17 +25,21 @@ export interface PeriodicElement {
     { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
     { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
     { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-  ];
+];
 
 @Component({
     templateUrl: 'compsetup.component.html',
     providers: [ICompanyService]
 })
 
-export class CompSetup implements OnInit {
-    employeeForm: FormGroup;
+export class CompSetup implements OnInit, AfterContentInit {
+    companyForm: FormGroup;
+    empRegForm: FormGroup;
+
     logo: File;
     binaryLogo: Blob;
+    rootUrl: string = "http://localhost:4543/";
+    someString: string;
 
     companyDetails: CompanyDetails = {
         company_id: null,
@@ -52,6 +56,21 @@ export class CompSetup implements OnInit {
         company_image: null
     }
 
+    empDet: EmployeeDetails = {
+        empId: null,
+        firstname: null,
+        lastname: null,
+        middlename: null,
+        phone: null,
+        email: null,
+        password: null,
+        confirmPassword: null,
+        address: null,
+        photoId: null,
+        dept: null,
+        mgrId: null   
+    }
+
     constructor(
         private _homeRoute: Router,
         private fb: FormBuilder,
@@ -59,9 +78,34 @@ export class CompSetup implements OnInit {
         private http: HttpClient
     ) { }
 
+    ngAfterContentInit() {
+
+        this.companyserv.getCompany()
+            .subscribe((companyData) => 
+            {
+                this.companyDetails = companyData,
+                    this.someString = companyData.business_type
+            },
+                (error) => 
+            {
+                    'Problem with the service, plz try later';
+        });
+
+        // this.http.get<EmployeeDetails>(this.rootUrl + "api/employeereg").subscribe((res) => {
+        //     this.empDet = res},
+        //     (error) => {
+        //         'Problem with the service, plz try later';
+        //     }); 
+                
+    }
+
+            
+    
+
+
     ngOnInit() {
 
-        this.employeeForm = new FormGroup({
+        this.companyForm = new FormGroup({
             companyName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
             businessType: new FormControl('', [Validators.required]),
             compAddress: new FormControl('', [Validators.required]),
@@ -73,12 +117,31 @@ export class CompSetup implements OnInit {
             companyLogo: new FormControl('')
         });
 
-        this.companyserv.getCompany()
-            .subscribe((companyData) => this.companyDetails = companyData,
-                (error) => {
-                    'Problem with the service, plz try later';
-                });
+        this.empRegForm = this.fb.group({
+            firstName: ['', [Validators.required]],
+            LastName: ['', [Validators.required]],
+            middleName: [''],
+            empEmail: ['', [Validators.required]],
+            password: ['', [Validators.required]],
+            confirmPassword: ['', [Validators.required]],
+            hireDate: [''],
+            fireDate: [''],
+            nationality: [''],
+            phone: [''],
+            dept: [''],
+            mgrId: [''],
+            empId: [''],
+            photoId: [''],
+            address: [''],
+            comments: ['']
+        });
+    
     }
+
+        
+
+
+            
 
     formErrors = {
         'companyName': '',
@@ -135,7 +198,7 @@ export class CompSetup implements OnInit {
 
     compValChange() {
         if (this.tabIndex == '2') {
-             var subButton = <HTMLInputElement>document.getElementById('submitButton');
+            var subButton = <HTMLInputElement>document.getElementById('submitButton');
             // this.employeeForm.valueChanges.subscribe((data) => {
             //     this.logValidationErrors(this.employeeForm);
             //     if (this.employeeForm.get('companyName').valid
@@ -148,16 +211,16 @@ export class CompSetup implements OnInit {
             //         subButton.disabled = true;
             //     }
             // });
-            if (this.employeeForm.get('companyName').valid
-                    && this.employeeForm.get('businessType').valid
-                    && this.employeeForm.get('compAddress').valid
-                    && this.employeeForm.get('phoneNumber').valid
-                    && this.employeeForm.get('compEmail').valid) {
-                    subButton.disabled = false;
-                    console.log(this.companyDetails.company_name);
-                } else {
-                    subButton.disabled = true;
-                }
+            if (this.companyForm.get('companyName').valid
+                && this.companyForm.get('businessType').valid
+                && this.companyForm.get('compAddress').valid
+                && this.companyForm.get('phoneNumber').valid
+                && this.companyForm.get('compEmail').valid) {
+                subButton.disabled = false;
+                console.log(this.companyDetails.company_name);
+            } else {
+                subButton.disabled = true;
+            }
         }
     }
 
@@ -168,38 +231,38 @@ export class CompSetup implements OnInit {
     onFileChange(event) {
         this.file = <File>event.target.files[0];
         var subButton = <HTMLInputElement>document.getElementById('submitButton');
-        if (this.employeeForm.get('companyName').valid
-        && this.employeeForm.get('businessType').valid
-        && this.employeeForm.get('compAddress').valid
-        && this.employeeForm.get('phoneNumber').valid
-        && this.employeeForm.get('compEmail').valid) {
-        subButton.disabled = false;
-    }
+        if (this.companyForm.get('companyName').valid
+            && this.companyForm.get('businessType').valid
+            && this.companyForm.get('compAddress').valid
+            && this.companyForm.get('phoneNumber').valid
+            && this.companyForm.get('compEmail').valid) {
+            subButton.disabled = false;
+        }
 
     }
 
-    onSubmit() {
+    onCompanySubmit() {
         const fd = new FormData();
 
-        fd.append('company_name', this.companyDetails.company_name);
-        fd.append('business_type', this.companyDetails.business_type);
-        fd.append('company_address', this.companyDetails.company_address);
-        fd.append('phone_number', this.companyDetails.phone_number);
-        fd.append('company_email', this.companyDetails.company_email);
-        fd.append('web_address', this.companyDetails.web_address);
-        fd.append('company_reg_number', this.companyDetails.company_reg_number);
-        fd.append('company_tax_number', this.companyDetails.company_tax_number);
+        fd.append('company_name', this.companyForm.value.companyName);
+        fd.append('business_type', this.companyForm.value.businessType);
+        fd.append('company_address', this.companyForm.value.compAddress);
+        fd.append('phone_number', this.companyForm.value.phoneNumber);
+        fd.append('company_email', this.companyForm.value.compEmail);
+        fd.append('web_address', this.companyForm.value.webAddress);
+        fd.append('company_reg_number', this.companyForm.value.companyRegNum);
+        fd.append('company_tax_number', this.companyForm.value.companyTaxNum);
 
         if (this.file !== null) {
             fd.append('Image', this.file, this.file.name);
 
             if (this.companyDetails.company_id == null) {
-                this.http.post("https://localhost:44317/api/company/Post", fd).subscribe(res => {
+                this.http.post(this.rootUrl + "api/company/Post", fd).subscribe(res => {
                     console.log(res)
                 });
             } else {
                 fd.append('company_id', this.companyDetails.company_id.toString());
-                this.http.put("https://localhost:44317/api/company/Put", fd).subscribe(res => {
+                this.http.put(this.rootUrl + "api/company/Put", fd).subscribe(res => {
                     console.log(res)
                 });
             }
@@ -222,27 +285,17 @@ export class CompSetup implements OnInit {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
-    empDet: EmployeeDetails = {
-        emp_id: null, 
-        emp_firstname: null,
-        emp_lastname: null,
-        emp_middlename: null,
-        emp_cat_id: null,
-        emp_serv_id: null,
-        emp_phone: null,
-        emp_email: null,
-        emp_password: null,
-        emp_confirmpassword: null,
-        emp_address: null,
-        emp_photo: null,
-        emp_comments: null,
-        emp_department: null        
-    }
-
+    
     click(event) {
-        let clickEvent = event.target.id;
-        this.empDet.emp_firstname = clickEvent;
+        let id = event.target.id;
+        this.http.get<EmployeeDetails>(this.rootUrl + "api/employeereg/" + id).subscribe((res) => {
+            this.empDet = res
+        },
+            (error) => {
+                'Problem with the service, plz try later';
+            });          
     }
+    
 
     tabIndex: string;
     tabName: string;
@@ -250,5 +303,53 @@ export class CompSetup implements OnInit {
     tabChanged(event) {
         this.tabIndex = event.index;
         this.tabName = event.tab.textLabel;
+    }
+
+    onEmpSubmit() {
+        var fd = new FormData();
+
+        fd.append('firstName', this.empRegForm.value.firstName);
+        fd.append('lastName', this.empRegForm.value.lastName);
+        fd.append('middleName', this.empRegForm.value.middleName);
+        fd.append('email', this.empRegForm.value.email);        
+        fd.append('phone', this.empRegForm.value.phone);
+        fd.append('address', this.empRegForm.value.address);
+        fd.append('hireDate', this.empRegForm.value.hireDate);
+        fd.append('fireDate', this.empRegForm.value.fireDate);
+        fd.append('nationality', this.empRegForm.value.nationality);
+        fd.append('dept', this.empRegForm.value.dept);
+        fd.append('mgrId', this.empRegForm.value.mgrId);
+        fd.append('comments', this.empRegForm.value.comments);
+        fd.append('empId', this.empRegForm.value.empId);
+        
+        var createUser = new FormData();
+        createUser.append('email', this.empRegForm.value.email); 
+        createUser.append('password', this.empRegForm.value.password);
+        createUser.append('confirmPassword', this.empRegForm.value.confirmPassword);
+        
+        if (this.empPhoto !=null){
+            fd.append('Image', this.empPhoto, this.empPhoto.name);
+        }
+        
+
+        if (this.empRegForm.value.empId === null || this.empRegForm.value.empId === '') {
+            
+
+            this.http.post(this.rootUrl + "api/account/register", createUser).subscribe(res => {
+                console.log(res)
+            });
+            
+        } else {
+            fd.append('company_id', this.companyDetails.company_id.toString());
+            this.http.put(this.rootUrl + "api/EmployeeReg/Put", fd).subscribe(res => {
+                console.log(res)
+            });
+        }
+    }
+    
+    empPhoto: File = null;    
+
+    onEmpChange(event) {
+        this.empPhoto = <File>event.target.files[0];
     }
 }
