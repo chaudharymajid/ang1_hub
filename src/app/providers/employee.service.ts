@@ -16,7 +16,7 @@ export class EmployeeService {
     rootUrl: string = "http://localhost:4543/";
 
     getEmployees(): Observable<EmployeeDetails[]> {
-        return this._http.get<EmployeeDetails[]>(this.rootUrl + "api/employees")
+        return this._http.get<EmployeeDetails[]>(this.rootUrl + "api/employeereg")        
             .catch(this.handleError);
     }
 

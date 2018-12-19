@@ -1,7 +1,7 @@
 export class EmployeeDetails {
     empId: string;
-    firstname: string;
-    lastname: string;
+    firstName: string;
+    lastName: string;
     middlename: string;
     phone: string;
     email: string;
@@ -10,5 +10,6 @@ export class EmployeeDetails {
     address: string;
     photoId: string;
     dept: string;
-    mgrId: string;    
+    mgrId: string;   
+    comments: string; 
 }

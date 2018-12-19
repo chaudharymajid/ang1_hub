@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CompanyDetails } from 'src/app/models/company.model';
@@ -6,36 +6,31 @@ import { ICompanyService } from 'src/app/providers/company.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material';
 import { EmployeeDetails } from 'src/app/models/employeesetup.model';
+import { EmployeeService } from 'src/app/providers/employee.service';
 
-export interface PeriodicElement {
-    name: string;
-    position: number;
-    weight: number;
-    symbol: string;
-  }
-  
-  const ELEMENT_DATA: PeriodicElement[] = [
-    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-    { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-    { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-    { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-    { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-    { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-    { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-  ];
+export class empTable {
+    firstName: string;
+    lastName: string;
+    dept: string;
+    comments: string;
+    empId: string;
+}
+
+
 
 @Component({
     templateUrl: 'compsetup.component.html',
-    providers: [ICompanyService]
+    providers: [ICompanyService, EmployeeService]
 })
 
-export class CompSetup implements OnInit {
+export class CompSetup implements OnInit, AfterContentInit {
     companyForm: FormGroup;
     logo: File;
     binaryLogo: Blob;
+    rootUrl: string = "http://localhost:4543/";
+    abc: string[];
+    def: Array<empTable> = [];
+    dataSource: MatTableDataSource<empTable>;
 
     companyDetails: CompanyDetails = {
         company_id: null,
@@ -52,35 +47,70 @@ export class CompSetup implements OnInit {
         company_image: null
     }
 
+    employeeDetails: EmployeeDetails[];
+    employeeDetails1: EmployeeDetails[];
+
     constructor(
         private _homeRoute: Router,
         private fb: FormBuilder,
         private companyserv: ICompanyService,
+        private empserv: EmployeeService,
         private http: HttpClient
     ) {
         this.companyForm = this.fb.group({
             companyName: [''],
             businessType: [''],
-            compAddress:[''],
+            compAddress: [''],
             phoneNumber: [''],
             compEmail: [''],
             webAddress: [''],
             companyRegNum: [''],
             companyTaxNum: [''],
             companyLogo: [''],
-            companyId:['']
+            companyId: ['']
         });
+
+        this.empserv.getEmployees()
+            .subscribe((res) => {
+                res.forEach((value) => {
+                    let newarr = new empTable();
+                    newarr.empId = value.empId;
+                    newarr.firstName = value.firstName;
+                    newarr.lastName = value.lastName;
+                    newarr.dept = value.dept;
+                    newarr.comments = value.comments;
+                    this.def.push(newarr);
+                });
+                console.log(this.def);
+                this.dataSource = new MatTableDataSource(this.def);
+            },
+                (error) => {
+                    'Problem with the service, plz try later';
+                });
     }
 
-    ngOnInit() {        
+    ngOnInit() {
 
         this.companyserv.getCompany()
             .subscribe((companyData) => this.modelToForm(companyData)
-            ,
+                ,
                 (error) => {
                     'Problem with the service, plz try later';
-                });                
-    }   
+                });
+    }
+
+    ngAfterContentInit() {
+
+    }
+
+    resToArray(arr1): void {
+        arr1.forEach((value) => {
+            let newarr = new empTable();
+            newarr.firstName = value;
+            this.def.push(newarr);
+        });
+        console.log(this.def);
+    }
 
     modelToForm(data): void {
         this.companyForm.patchValue({
@@ -96,7 +126,7 @@ export class CompSetup implements OnInit {
             companyId: data.company_id
         });
     }
-    
+
     formErrors = {
         'companyName': '',
         'businessType': '',
@@ -152,7 +182,7 @@ export class CompSetup implements OnInit {
 
     compValChange() {
         if (this.tabIndex == '2') {
-             var subButton = <HTMLInputElement>document.getElementById('submitButton');
+            var subButton = <HTMLInputElement>document.getElementById('submitButton');
             // this.employeeForm.valueChanges.subscribe((data) => {
             //     this.logValidationErrors(this.employeeForm);
             //     if (this.employeeForm.get('companyName').valid
@@ -166,15 +196,15 @@ export class CompSetup implements OnInit {
             //     }
             // });
             if (this.companyForm.get('companyName').valid
-                    && this.companyForm.get('businessType').valid
-                    && this.companyForm.get('compAddress').valid
-                    && this.companyForm.get('phoneNumber').valid
-                    && this.companyForm.get('compEmail').valid) {
-                    subButton.disabled = false;
-                    console.log(this.companyDetails.company_name);
-                } else {
-                    subButton.disabled = true;
-                }
+                && this.companyForm.get('businessType').valid
+                && this.companyForm.get('compAddress').valid
+                && this.companyForm.get('phoneNumber').valid
+                && this.companyForm.get('compEmail').valid) {
+                subButton.disabled = false;
+                console.log(this.companyDetails.company_name);
+            } else {
+                subButton.disabled = true;
+            }
         }
     }
 
@@ -186,12 +216,12 @@ export class CompSetup implements OnInit {
         this.file = <File>event.target.files[0];
         var subButton = <HTMLInputElement>document.getElementById('submitButton');
         if (this.companyForm.get('companyName').valid
-        && this.companyForm.get('businessType').valid
-        && this.companyForm.get('compAddress').valid
-        && this.companyForm.get('phoneNumber').valid
-        && this.companyForm.get('compEmail').valid) {
-        subButton.disabled = false;
-    }
+            && this.companyForm.get('businessType').valid
+            && this.companyForm.get('compAddress').valid
+            && this.companyForm.get('phoneNumber').valid
+            && this.companyForm.get('compEmail').valid) {
+            subButton.disabled = false;
+        }
 
     }
 
@@ -232,8 +262,9 @@ export class CompSetup implements OnInit {
     // **************************************
     // **************************************
 
-    displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-    dataSource = new MatTableDataSource(ELEMENT_DATA);
+    displayedColumns: string[] = ['firstName', 'lastName', 'dept', 'comments'];
+
+    //this.dataSource = new MatTableDataSource(this.def);
 
     applyFilter(filterValue: string) {
         this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -241,8 +272,8 @@ export class CompSetup implements OnInit {
 
     empDet: EmployeeDetails = {
         empId: null,
-        firstname: null,
-        lastname: null,
+        firstName: null,
+        lastName: null,
         middlename: null,
         phone: null,
         email: null,
@@ -251,12 +282,13 @@ export class CompSetup implements OnInit {
         address: null,
         photoId: null,
         dept: null,
-        mgrId: null
+        mgrId: null,
+        comments: null
     }
 
     click(event) {
-        let clickEvent = event.target.id;
-        this.empDet.firstname = clickEvent;
+        let clickEvent = event.target.lastName;
+        this.empDet.firstName = clickEvent;
     }
 
     tabIndex: string;
