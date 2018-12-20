@@ -10,6 +10,7 @@ export class EmployeeDetails {
     address: string;
     photoId: string;
     dept: string;
-    mgrId: string;   
+    mgrId: string;
+    mgrName: string;   
     comments: string; 
 }

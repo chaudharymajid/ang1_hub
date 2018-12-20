@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CompanyDetails } from 'src/app/models/company.model';
@@ -16,20 +16,18 @@ export class empTable {
     empId: string;
 }
 
-
-
 @Component({
     templateUrl: 'compsetup.component.html',
     providers: [ICompanyService, EmployeeService]
 })
 
-export class CompSetup implements OnInit, AfterContentInit {
+export class CompSetup implements OnInit {
     companyForm: FormGroup;
+    employeeForm: FormGroup;
     logo: File;
     binaryLogo: Blob;
     rootUrl: string = "http://localhost:4543/";
-    abc: string[];
-    def: Array<empTable> = [];
+    empTableSource: Array<empTable> = [];
     dataSource: MatTableDataSource<empTable>;
 
     companyDetails: CompanyDetails = {
@@ -47,15 +45,13 @@ export class CompSetup implements OnInit, AfterContentInit {
         company_image: null
     }
 
-    employeeDetails: EmployeeDetails[];
-    employeeDetails1: EmployeeDetails[];
-
     constructor(
         private _homeRoute: Router,
         private fb: FormBuilder,
         private companyserv: ICompanyService,
         private empserv: EmployeeService,
-        private http: HttpClient
+        private http: HttpClient,
+        private _cdr : ChangeDetectorRef
     ) {
         this.companyForm = this.fb.group({
             companyName: [''],
@@ -70,6 +66,22 @@ export class CompSetup implements OnInit, AfterContentInit {
             companyId: ['']
         });
 
+        this.employeeForm = this.fb.group({
+            empId: [''],
+            firstName: [''],
+            lastName: [''],
+            middlename: [''],
+            phone: [''],
+            email: [''],
+            password: [''],
+            confirmPassword: [''],
+            address: [''],
+            photoId: [''],
+            dept: [''],
+            mgrId: [''],
+            comments: ['']
+        });
+
         this.empserv.getEmployees()
             .subscribe((res) => {
                 res.forEach((value) => {
@@ -79,10 +91,9 @@ export class CompSetup implements OnInit, AfterContentInit {
                     newarr.lastName = value.lastName;
                     newarr.dept = value.dept;
                     newarr.comments = value.comments;
-                    this.def.push(newarr);
+                    this.empTableSource.push(newarr);
                 });
-                console.log(this.def);
-                this.dataSource = new MatTableDataSource(this.def);
+                this.dataSource = new MatTableDataSource(this.empTableSource);                
             },
                 (error) => {
                     'Problem with the service, plz try later';
@@ -90,26 +101,13 @@ export class CompSetup implements OnInit, AfterContentInit {
     }
 
     ngOnInit() {
-
         this.companyserv.getCompany()
             .subscribe((companyData) => this.modelToForm(companyData)
                 ,
                 (error) => {
                     'Problem with the service, plz try later';
                 });
-    }
-
-    ngAfterContentInit() {
-
-    }
-
-    resToArray(arr1): void {
-        arr1.forEach((value) => {
-            let newarr = new empTable();
-            newarr.firstName = value;
-            this.def.push(newarr);
-        });
-        console.log(this.def);
+    
     }
 
     modelToForm(data): void {
@@ -283,19 +281,48 @@ export class CompSetup implements OnInit, AfterContentInit {
         photoId: null,
         dept: null,
         mgrId: null,
+        mgrName: null,
         comments: null
     }
-
+    
     click(event) {
-        let clickEvent = event.target.lastName;
-        this.empDet.firstName = clickEvent;
+        // let clickEvent = +event.target.id;
+        let clickEvent: number = 1;
+        let selectEmp: EmployeeDetails;
+        this.empserv.getEmployees()
+        .subscribe((res) => {
+            res.forEach((value) => {
+                if (+value.empId === clickEvent) {
+                    this.updateEmpView(value);
+                    }                
+            });        
+        },
+            (error) => {
+                'Problem with the service, plz try later';
+            });           
     }
+
+    updateEmpView(value): void {
+        this.employeeForm.patchValue({
+            firstName: value.firstName,
+            lastName : value.lastName,
+            middleName: value.middleName
+        });  
+                      
+    }   
+    
 
     tabIndex: string;
     tabName: string;
 
     tabChanged(event) {
-        this.tabIndex = event.index;
-        this.tabName = event.tab.textLabel;
+        // this.tabIndex = event.index;
+        // this.tabName = event.tab.textLabel;
+        console.log(this.employeeForm.value.firstName);
+        this._cdr.detectChanges();
+    }
+
+    empSelectedEmployee(id): void {
+     
     }
 }
