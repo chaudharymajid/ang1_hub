@@ -226,13 +226,103 @@
               <td>
                   <mat-form-field class="demo-full-width">
                       <input matInput placeholder="Middle Name" formControlName="middleName" name='middleName'>                  
-                    </mat-form-field>
+                  </mat-form-field>
               </td>
             </tr>
-          </table>
-        </div>
+            <tr>
+              <td>
+                  <mat-form-field class="demo-full-width">
+                      <input matInput placeholder="Email" formControlName="email" name='email'>                  
+                  </mat-form-field>
+              </td>
+              <td>
+                  <mat-form-field class="demo-full-width">
+                      <input matInput placeholder="Paswword" formControlName="password" name='password'>                  
+                  </mat-form-field>
+              </td>
+              <td>
+                  <mat-form-field class="demo-full-width">
+                      <input matInput placeholder="Confirm Password" formControlName="confirmPassword" name='confirmPassword'>                  
+                  </mat-form-field>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                  <mat-form-field class="demo-full-width">
+                      <input matInput [matDatepicker]="picker" placeholder="Hire Date" formControlName="hireDate" name='hireDate'>
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+              </td>
+              <td>
+                  <mat-form-field class="demo-full-width">
+                      <input matInput [matDatepicker]="picker1" placeholder="Fire Date" formControlName="fireDate" name='fireDate'>
+                      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+              </td>
+              <td>
+                  <mat-form-field class="demo-full-width">
+                      <input matInput placeholder="Nationality" formControlName="nationality" name='nationality'>                  
+                  </mat-form-field>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                  <mat-form-field class="demo-full-width">
+                      <input matInput placeholder="Phone" formControlName="phone" name='phone'>                  
+                  </mat-form-field>
+              </td>
+              <td>
+                  <mat-form-field class="demo-full-width">
+                      <input matInput placeholder="Department" formControlName="dept" name='dept'>                  
+                  </mat-form-field>
+              </td>
+              <td>
+                  <mat-form-field class="demo-full-width">
+                      <input matInput placeholder="Manager" formControlName="mgrId" name='mgrId'>                  
+                  </mat-form-field>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                  <mat-form-field class="demo-full-width">
+                      <input matInput placeholder="Address" formControlName="address" name='address'>                  
+                  </mat-form-field>
+              </td>           
+              <td>
+                  <mat-form-field class="demo-full-width">
+                      <input matInput placeholder="Comments" formControlName="comments" name='comments'>                  
+                  </mat-form-field>
+              </td>
+              <td>
+                  <mat-form-field class="demo-full-width">
+                      <input matInput placeholder="Employee ID" formControlName="empId" name='empId' disabled style="color:black">                  
+                  </mat-form-field>
+              </td>
+            </tr>
+
+            <tr>
+                <td>      
+                  <label>Upload Photo/Photo ID</label>
+                  <input type="file" id="companyLogo" #file accept="image/*" (change)="onEmpChange($event)"  name='photoId' formcontrolname= "photoId">
+                  <button mat-stroked-button-dark color="white" (change)="onFileChange($event)" style='visibility:hidden'>
+                    Upload Photo/Photo ID
+                  </button>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <button id="submitEmpButton" type="submit" mat-stroked-button  (click)='onEmpSubmit()'>
+                        Submit</button>
+                </td>
+              </tr>
+            </table>
+            <br><br><br><br>
+          </div>
       </mat-card-content>
     </mat-card>
+    <img [src]="employeeForm.value.photoId" >
   </mat-tab>
 
   <mat-tab label="Company Registeration">

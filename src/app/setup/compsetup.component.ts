@@ -29,6 +29,7 @@ export class CompSetup implements OnInit {
     rootUrl: string = "http://localhost:4543/";
     empTableSource: Array<empTable> = [];
     dataSource: MatTableDataSource<empTable>;
+    empImgPath: string = this.rootUrl + 'Content/images/employees/';
 
     companyDetails: CompanyDetails = {
         company_id: null,
@@ -79,7 +80,10 @@ export class CompSetup implements OnInit {
             photoId: [''],
             dept: [''],
             mgrId: [''],
-            comments: ['']
+            comments: [''],
+            hireDate: [''],
+            fireDate: [''],
+            nationality: [''],
         });
 
         this.empserv.getEmployees()
@@ -282,12 +286,15 @@ export class CompSetup implements OnInit {
         dept: null,
         mgrId: null,
         mgrName: null,
-        comments: null
+        comments: null,
+        hireDate: null,
+        fireDate: null,
+        nationality: null,
     }
     
     click(event) {
-        // let clickEvent = +event.target.id;
-        let clickEvent: number = 1;
+        let clickEvent = +event.target.id;
+        
         let selectEmp: EmployeeDetails;
         this.empserv.getEmployees()
         .subscribe((res) => {
@@ -306,10 +313,20 @@ export class CompSetup implements OnInit {
         this.employeeForm.patchValue({
             firstName: value.firstName,
             lastName : value.lastName,
-            middleName: value.middleName
+            middleName: value.middleName,
+            email: value.email,
+            hireDate: value.hireDate,
+            fireDate: value.fireDate,
+            nationality: value.nationality,
+            phone: value.phone,
+            dept: value.dept,
+            address: value.address,
+            comments: value.comments,
+            empId: value.empId,
+            photoId: this.empImgPath + value.photoId,
         });  
                       
-    }   
+    } 
     
 
     tabIndex: string;
@@ -317,12 +334,34 @@ export class CompSetup implements OnInit {
 
     tabChanged(event) {
         // this.tabIndex = event.index;
-        // this.tabName = event.tab.textLabel;
-        console.log(this.employeeForm.value.firstName);
-        this._cdr.detectChanges();
+        // this.tabName = event.tab.textLabel;       
     }
+    
+    onEmpSubmit(): void {
+        const fd = new FormData();
 
-    empSelectedEmployee(id): void {
-     
+        fd.append('firstName', this.employeeForm.value.firstName);
+        fd.append('lastName', this.employeeForm.value.lastName);
+        fd.append('middleName', this.employeeForm.value.middleName);
+        fd.append('email', this.employeeForm.value.email);
+        fd.append('phone', this.employeeForm.value.phone);
+        fd.append('address', this.employeeForm.value.address);
+        fd.append('hireDate', this.employeeForm.value.hireDate);
+        fd.append('fireDate', this.employeeForm.value.fireDate);
+        fd.append('nationality', this.employeeForm.value.nationality);
+        fd.append('dept', this.employeeForm.value.dept);
+        fd.append('mgrId', this.employeeForm.value.mgrId);
+        fd.append('comments', this.employeeForm.value.comments);
+
+        if (this.employeeForm.value.empId == "") {
+            this.http.post(this.rootUrl + "api/employeereg/Post", fd).subscribe(res => {
+                console.log(res)
+            });
+        } else {
+            fd.append('empId', this.employeeForm.value.empId);
+            this.http.put(this.rootUrl + "api/employeereg/Put", fd).subscribe(res => {
+                console.log(res)
+            });
+        }
     }
 }

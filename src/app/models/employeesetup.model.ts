@@ -12,5 +12,8 @@ export class EmployeeDetails {
     dept: string;
     mgrId: string;
     mgrName: string;   
-    comments: string; 
+    comments: string;
+    hireDate: string;
+    fireDate: string;
+    nationality: string;
 }
