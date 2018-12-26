@@ -10,10 +10,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class ICompanyService {
 
     constructor(private _http: HttpClient) { }
-    rootUrl: string = "http://localhost:4543/";
+    rootUrl: string = "http://localhost:3200/";
 
     getCompany(): Observable<CompanyDetails> {
-        return this._http.get<CompanyDetails>(this.rootUrl+"api/company")
+        return this._http.get<CompanyDetails>(this.rootUrl+"company")
             .catch(this.handleError);
     }
 

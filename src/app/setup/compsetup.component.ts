@@ -52,7 +52,7 @@ export class CompSetup implements OnInit {
         private companyserv: ICompanyService,
         private empserv: EmployeeService,
         private http: HttpClient,
-        private _cdr : ChangeDetectorRef
+        private _cdr: ChangeDetectorRef
     ) {
         this.companyForm = this.fb.group({
             companyName: [''],
@@ -97,7 +97,7 @@ export class CompSetup implements OnInit {
                     newarr.comments = value.comments;
                     this.empTableSource.push(newarr);
                 });
-                this.dataSource = new MatTableDataSource(this.empTableSource);                
+                this.dataSource = new MatTableDataSource(this.empTableSource);
             },
                 (error) => {
                     'Problem with the service, plz try later';
@@ -111,7 +111,7 @@ export class CompSetup implements OnInit {
                 (error) => {
                     'Problem with the service, plz try later';
                 });
-    
+
     }
 
     modelToForm(data): void {
@@ -216,6 +216,7 @@ export class CompSetup implements OnInit {
 
     onFileChange(event) {
         this.file = <File>event.target.files[0];
+
         var subButton = <HTMLInputElement>document.getElementById('submitButton');
         if (this.companyForm.get('companyName').valid
             && this.companyForm.get('businessType').valid
@@ -240,15 +241,15 @@ export class CompSetup implements OnInit {
         fd.append('company_tax_number', this.companyForm.value.companyTaxNum);
 
         if (this.file !== null) {
-            fd.append('Image', this.file, this.file.name);
+            fd.append('compImg', this.file, this.file.name);
 
             if (this.companyForm.value.companyId == null) {
-                this.http.post("https://localhost:44317/api/company/Post", fd).subscribe(res => {
+                this.http.post("http://localhost:3200/company", fd).subscribe(res => {
                     console.log(res)
                 });
             } else {
                 fd.append('company_id', this.companyForm.value.companyId.toString());
-                this.http.put("https://localhost:44317/api/company/Put", fd).subscribe(res => {
+                this.http.put("http://localhost:3200/company", fd).subscribe(res => {
                     console.log(res)
                 });
             }
@@ -291,28 +292,28 @@ export class CompSetup implements OnInit {
         fireDate: null,
         nationality: null,
     }
-    
+
     click(event) {
         let clickEvent = +event.target.id;
-        
+
         let selectEmp: EmployeeDetails;
         this.empserv.getEmployees()
-        .subscribe((res) => {
-            res.forEach((value) => {
-                if (+value.empId === clickEvent) {
-                    this.updateEmpView(value);
-                    }                
-            });        
-        },
-            (error) => {
-                'Problem with the service, plz try later';
-            });           
+            .subscribe((res) => {
+                res.forEach((value) => {
+                    if (+value.empId === clickEvent) {
+                        this.updateEmpView(value);
+                    }
+                });
+            },
+                (error) => {
+                    'Problem with the service, plz try later';
+                });
     }
 
     updateEmpView(value): void {
         this.employeeForm.patchValue({
             firstName: value.firstName,
-            lastName : value.lastName,
+            lastName: value.lastName,
             middleName: value.middleName,
             email: value.email,
             hireDate: value.hireDate,
@@ -324,10 +325,9 @@ export class CompSetup implements OnInit {
             comments: value.comments,
             empId: value.empId,
             photoId: this.empImgPath + value.photoId,
-        });  
-                      
-    } 
-    
+        });
+
+    }
 
     tabIndex: string;
     tabName: string;
@@ -336,7 +336,7 @@ export class CompSetup implements OnInit {
         // this.tabIndex = event.index;
         // this.tabName = event.tab.textLabel;       
     }
-    
+
     onEmpSubmit(): void {
         const fd = new FormData();
 

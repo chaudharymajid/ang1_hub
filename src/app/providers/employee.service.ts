@@ -13,7 +13,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 export class EmployeeService {
 
     constructor(private _http: HttpClient) { }
-    rootUrl: string = "http://localhost:4543/";
+    rootUrl: string = "http://localhost:3200/";
 
     getEmployees(): Observable<EmployeeDetails[]> {
         return this._http.get<EmployeeDetails[]>(this.rootUrl + "api/employeereg")        
