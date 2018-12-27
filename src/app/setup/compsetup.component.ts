@@ -26,10 +26,11 @@ export class CompSetup implements OnInit {
     employeeForm: FormGroup;
     logo: File;
     binaryLogo: Blob;
-    rootUrl: string = "http://localhost:4543/";
+    rootUrl: string = "http://localhost:3200/";
     empTableSource: Array<empTable> = [];
     dataSource: MatTableDataSource<empTable>;
     empImgPath: string = this.rootUrl + 'Content/images/employees/';
+    abc : any;
 
     companyDetails: CompanyDetails = {
         company_id: null,
@@ -106,7 +107,8 @@ export class CompSetup implements OnInit {
 
     ngOnInit() {
         this.companyserv.getCompany()
-            .subscribe((companyData) => this.modelToForm(companyData)
+            .subscribe((companyData) => {this.modelToForm(companyData[0]),
+            this.abc = companyData}
                 ,
                 (error) => {
                     'Problem with the service, plz try later';

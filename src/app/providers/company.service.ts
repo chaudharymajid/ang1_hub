@@ -12,8 +12,8 @@ export class ICompanyService {
     constructor(private _http: HttpClient) { }
     rootUrl: string = "http://localhost:3200/";
 
-    getCompany(): Observable<CompanyDetails> {
-        return this._http.get<CompanyDetails>(this.rootUrl+"company")
+    getCompany(): Observable<Response> {
+        return this._http.get<Response>(this.rootUrl+"company")
             .catch(this.handleError);
     }
 
