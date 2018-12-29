@@ -20,8 +20,8 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.companyserv.getCompany()
       .subscribe((companyData) => {
-      this.imageName = 'http://localhost:4543/Content/images/company/' + companyData.company_image,
-      this.companyName = companyData.company_name
+      this.imageName = 'http://localhost:3200/' + companyData[0].company_image,
+      this.companyName = companyData[0].company_name
     },
         (error) => {
           'Problem with the service, plz try later';

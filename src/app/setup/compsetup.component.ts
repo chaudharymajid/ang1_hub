@@ -30,7 +30,7 @@ export class CompSetup implements OnInit {
     empTableSource: Array<empTable> = [];
     dataSource: MatTableDataSource<empTable>;
     empImgPath: string = this.rootUrl + 'Content/images/employees/';
-    abc : any;
+    abc: any;
 
     companyDetails: CompanyDetails = {
         company_id: null,
@@ -107,8 +107,10 @@ export class CompSetup implements OnInit {
 
     ngOnInit() {
         this.companyserv.getCompany()
-            .subscribe((companyData) => {this.modelToForm(companyData[0]),
-            this.abc = companyData}
+            .subscribe((companyData) => {
+                this.modelToForm(companyData[0]),
+                this.abc = companyData
+            }
                 ,
                 (error) => {
                     'Problem with the service, plz try later';
@@ -232,7 +234,7 @@ export class CompSetup implements OnInit {
 
     onSubmit() {
         const fd = new FormData();
-
+        
         fd.append('company_name', this.companyForm.value.companyName);
         fd.append('business_type', this.companyForm.value.businessType);
         fd.append('company_address', this.companyForm.value.compAddress);
@@ -241,26 +243,46 @@ export class CompSetup implements OnInit {
         fd.append('web_address', this.companyForm.value.webAddress);
         fd.append('company_reg_number', this.companyForm.value.companyRegNum);
         fd.append('company_tax_number', this.companyForm.value.companyTaxNum);
+        fd.append('modification_date', new Date().toString());
 
-        if (this.file !== null) {
-            fd.append('compImg', this.file, this.file.name);
-
-            if (this.companyForm.value.companyId == null) {
-                this.http.post("http://localhost:3200/company", fd).subscribe(res => {
+        if (this.file === null){
+                if (this.companyForm.value.companyId == null || this.companyForm.value.companyId === "") {
+                    this.http.post("http://localhost:3200/company", fd).subscribe(res => {
+                        console.log(res)
+                    });
+                } else {
+                    fd.append('company_id', this.companyForm.value.companyId.toString());
+                    this.http.put("http://localhost:3200/company", fd).subscribe(res => {
+                        console.log(res)
+                    });
+                }
+        } else {
+            fd.append('company_image', this.file,this.companyForm.value.companyName+this.file.name);
+            if (this.companyForm.value.companyId == null || this.companyForm.value.companyId === "") {
+                this.http.post("http://localhost:3200/companyfileupload", fd).subscribe(res => {
                     console.log(res)
                 });
             } else {
                 fd.append('company_id', this.companyForm.value.companyId.toString());
-                this.http.put("http://localhost:3200/company", fd).subscribe(res => {
+                this.http.put("http://localhost:3200/companyfileupload", fd).subscribe(res => {
                     console.log(res)
                 });
             }
         }
 
-        else {
-            alert("Please choose a logo file")
-        }
+        this.companyserv.getCompany()
+            .subscribe((companyData) => {
+                this.modelToForm(companyData[0]),
+                this.abc = companyData
+            }
+                ,
+                (error) => {
+                    'Problem with the service, plz try later';
+                });
+
+        
     }
+
 
 
     // *******Employee Table & Form**********
