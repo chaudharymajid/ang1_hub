@@ -24,13 +24,12 @@ export class empTable {
 export class CompSetup implements OnInit {
     companyForm: FormGroup;
     employeeForm: FormGroup;
-    logo: File;
-    binaryLogo: Blob;
     rootUrl: string = "http://localhost:3200/";
     empTableSource: Array<empTable> = [];
     dataSource: MatTableDataSource<empTable>;
     empImgPath: string = this.rootUrl + 'Content/images/employees/';
-    abc: any;
+    compSelectedImage: string;
+    compOldImg: string;
 
     companyDetails: CompanyDetails = {
         company_id: null,
@@ -53,6 +52,7 @@ export class CompSetup implements OnInit {
         private companyserv: ICompanyService,
         private empserv: EmployeeService,
         private http: HttpClient,
+        private router: Router,
         private _cdr: ChangeDetectorRef
     ) {
         this.companyForm = this.fb.group({
@@ -64,7 +64,7 @@ export class CompSetup implements OnInit {
             webAddress: [''],
             companyRegNum: [''],
             companyTaxNum: [''],
-            companyLogo: [''],
+            companyImg: [''],
             companyId: ['']
         });
 
@@ -72,7 +72,7 @@ export class CompSetup implements OnInit {
             empId: [''],
             firstName: [''],
             lastName: [''],
-            middlename: [''],
+            middleName: [''],
             phone: [''],
             email: [''],
             password: [''],
@@ -98,7 +98,7 @@ export class CompSetup implements OnInit {
                     newarr.comments = value.comments;
                     this.empTableSource.push(newarr);
                 });
-                this.dataSource = new MatTableDataSource(this.empTableSource);
+                this.dataSource = new MatTableDataSource(this.empTableSource);                
             },
                 (error) => {
                     'Problem with the service, plz try later';
@@ -109,7 +109,8 @@ export class CompSetup implements OnInit {
         this.companyserv.getCompany()
             .subscribe((companyData) => {
                 this.modelToForm(companyData[0]),
-                this.abc = companyData
+                this.compSelectedImage = 'http://localhost:3200/' + companyData[0].company_image,
+                this.compOldImg = 'G:\\Users\\chaudhary\\Downloads\\nodejs\\uploads\\' + companyData[0].company_image
             }
                 ,
                 (error) => {
@@ -128,8 +129,9 @@ export class CompSetup implements OnInit {
             webAddress: data.web_address,
             companyRegNum: data.company_reg_number,
             companyTaxNum: data.company_tax_number,
-            companyLogo: data.company_logo,
-            companyId: data.company_id
+            companyImg: data.company_image,
+            companyId: data.company_id,
+
         });
     }
 
@@ -220,6 +222,11 @@ export class CompSetup implements OnInit {
 
     onFileChange(event) {
         this.file = <File>event.target.files[0];
+        var reader = new FileReader();
+        reader.onload = (event:any) => {
+            this.compSelectedImage = event.target.result;
+        }
+        reader.readAsDataURL(this.file);
 
         var subButton = <HTMLInputElement>document.getElementById('submitButton');
         if (this.companyForm.get('companyName').valid
@@ -234,7 +241,7 @@ export class CompSetup implements OnInit {
 
     onSubmit() {
         const fd = new FormData();
-        
+
         fd.append('company_name', this.companyForm.value.companyName);
         fd.append('business_type', this.companyForm.value.businessType);
         fd.append('company_address', this.companyForm.value.compAddress);
@@ -244,20 +251,21 @@ export class CompSetup implements OnInit {
         fd.append('company_reg_number', this.companyForm.value.companyRegNum);
         fd.append('company_tax_number', this.companyForm.value.companyTaxNum);
         fd.append('modification_date', new Date().toString());
+        fd.append('oldImg', this.compOldImg);
 
-        if (this.file === null){
-                if (this.companyForm.value.companyId == null || this.companyForm.value.companyId === "") {
-                    this.http.post("http://localhost:3200/company", fd).subscribe(res => {
-                        console.log(res)
-                    });
-                } else {
-                    fd.append('company_id', this.companyForm.value.companyId.toString());
-                    this.http.put("http://localhost:3200/company", fd).subscribe(res => {
-                        console.log(res)
-                    });
-                }
+        if (this.file === null) {
+            if (this.companyForm.value.companyId === null || this.companyForm.value.companyId === "") {
+                this.http.post("http://localhost:3200/company", fd).subscribe(res => {
+                    // console.log(res)
+                });
+            } else {
+                fd.append('company_id', this.companyForm.value.companyId.toString());
+                this.http.put("http://localhost:3200/company", fd).subscribe(res => {
+                    // console.log(res)
+                });
+            }
         } else {
-            fd.append('company_image', this.file,this.companyForm.value.companyName+this.file.name);
+            fd.append('company_image', this.file, this.companyForm.value.companyName + this.file.name);            
             if (this.companyForm.value.companyId == null || this.companyForm.value.companyId === "") {
                 this.http.post("http://localhost:3200/companyfileupload", fd).subscribe(res => {
                     console.log(res)
@@ -268,19 +276,8 @@ export class CompSetup implements OnInit {
                     console.log(res)
                 });
             }
-        }
-
-        this.companyserv.getCompany()
-            .subscribe((companyData) => {
-                this.modelToForm(companyData[0]),
-                this.abc = companyData
-            }
-                ,
-                (error) => {
-                    'Problem with the service, plz try later';
-                });
-
-        
+        }  
+        window.location.reload();
     }
 
 
@@ -301,7 +298,7 @@ export class CompSetup implements OnInit {
         empId: null,
         firstName: null,
         lastName: null,
-        middlename: null,
+        middleName: null,
         phone: null,
         email: null,
         password: null,
@@ -326,6 +323,8 @@ export class CompSetup implements OnInit {
                 res.forEach((value) => {
                     if (+value.empId === clickEvent) {
                         this.updateEmpView(value);
+                        this.employeeForm.controls['password'].disable();
+                        this.employeeForm.controls['confirmPassword'].disable();
                     }
                 });
             },

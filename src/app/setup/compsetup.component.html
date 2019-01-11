@@ -68,145 +68,12 @@
     </div>
   </mat-tab>
 
-  <!-- <mat-tab label="Employee Registeration">
-    <div>
-      <mat-card>
-        <mat-card-title>
-          Employee Registeration
-        </mat-card-title>
-        <mat-card-content> -->
-            <!-- <div [formGroup]="employeeForm">
-          <table>
-            <tr>
-              <td>
-                <mat-form-field>
-                  <input matInput placeholder="First Name" formcontrolname='firstName' name="firstName">
-                </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field>
-                  <input matInput placeholder="Last Name" name='lastName' formcontrolname='lastName'>
-                </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field>
-                  <input matInput placeholder="Middle Name" name='middleName' formcontrolname=' middleName'>
-                </mat-form-field>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <mat-form-field>
-                  <input matInput placeholder="Email" name='email' formcontrolname="email">
-                </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field>
-                  <input matInput placeholder="Password" name='password' formcontrolname="password" type="password">
-                </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field>
-                  <input matInput placeholder="Confirm Password" name='confirmPassword' formcontrolname="confirmPassword"
-                    type="password">
-                </mat-form-field>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <mat-form-field>
-                  <input matInput [matDatepicker]="picker" placeholder="Hire Date" name='hireDate' formcontrolname="hireDate">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field>
-                  <input matInput [matDatepicker]="picker1" placeholder="Fire Date" name='fireDate' formcontrolname="fireDate">
-                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                  <mat-datepicker #picker1></mat-datepicker>
-                </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field>
-                  <input matInput placeholder="Nationality" name='nationality' formcontrolname="nationality">
-                </mat-form-field>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <mat-form-field>
-                  <input matInput placeholder="Phone" name='phone' formcontrolname="phone">
-                </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field>
-                  <input matInput placeholder="Department" name='dept' formcontrolname="dept">
-                </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field>
-                  <mat-select placeholder="Manager ID">
-                    <mat-option *ngFor="let emp of employees" name='mgrId' formcontrolname= "mgrId">
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <mat-form-field>
-                  <input matInput placeholder="Address" name='address' formcontrolname="address">
-                </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field>
-                  <input matInput placeholder="Comments" name='comments' formcontrolname="comments">
-                </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field>
-                  <input matInput placeholder="Employee ID" disabled name='empId' formcontrolname="empId" style="color:black">
-                </mat-form-field>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label>Upload Photo/Photo ID</label>
-                <input type="file" id="companyLogo" #file accept="image/*" (change)="onEmpChange($event)" name='photoId'
-                  formcontrolname="photoId">
-                <button mat-stroked-button-dark color="white" (change)="onFileChange($event)" style='visibility:hidden'>
-                  Upload Photo/Photo ID
-                </button>
-              </td>
-              <td>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <button id="submitEmpButton" type="submit" mat-stroked-button (click)='onEmpSubmit()'>
-                  Submit</button>                  
-              </td>
-              <td>
-                  <button id="1" type="button" mat-stroked-button (click)="click($event); tabChanged($event)">
-                      Load</button>
-              </td>
-            </tr>
-          </table>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <mat-card>
-      <img src="http://localhost:4543/Content/images/company/hardware.png">
-    </mat-card>
-  </mat-tab> -->
 
-  <mat-tab label="Company Registeration">
+  <mat-tab label="Employee Registration">
     <mat-card>
   
       <mat-card-title>
-        Employee Registeration
+        Employee Registration
       </mat-card-title>
   
       <mat-card-content>
@@ -311,25 +178,25 @@
                   </button>
                 </td>
                 <td>
+                  <img [src]="compSelectedImage" style="width:140px; height:40px; margin-right: 1%;" align="right">
                 </td>
                 <td>
                     <button id="submitEmpButton" type="submit" mat-stroked-button  (click)='onEmpSubmit()'>
                         Submit</button>
                 </td>
-              </tr>
+              </tr>              
             </table>
             <br><br><br><br>
           </div>
-      </mat-card-content>
-    </mat-card>
-    <img [src]="employeeForm.value.photoId" >
+      </mat-card-content>    </mat-card>
+    
   </mat-tab>
 
-  <mat-tab label="Company Registeration">
+  <mat-tab label="Company Registration">
     <mat-card>
 
       <mat-card-title>
-        Company Registeration
+        Company Registration
       </mat-card-title>
 
       <mat-card-content>
@@ -400,10 +267,14 @@
                 <label>Upload Company Logo</label>
                 <input type="file" id="companyLogo" name="file" #file accept="image/*" (change)=onFileChange($event)>
                 <br>
-              </td>
-            </tr>
+              </td> 
+            </tr>                          
           </table>
+          <div style=" margin-right: 1%;">
+            <img [src]="compSelectedImage"  style="max-width:300px; max-height:150px; display: block;width: auto;height: auto;" >
+          </div>
         </div>
+        <br><br>
       </mat-card-content>
     </mat-card>
     <br>

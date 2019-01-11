@@ -2,7 +2,7 @@ export class EmployeeDetails {
     empId: string;
     firstName: string;
     lastName: string;
-    middlename: string;
+    middleName: string;
     phone: string;
     email: string;
     password: string;
