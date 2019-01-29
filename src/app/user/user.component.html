@@ -23,7 +23,10 @@
           <button id="loginButton" type="submit" mat-stroked-button color="white" (click)="onSubmit()">
             Sign in</button>
         </td>
+        </tr>        
     </table>
+    <br>
+    <div style="color:red; align-content: flex-start" *ngIf="error">Login Failed</div>
     </div>
   </div>
 </mat-card></div>

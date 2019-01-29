@@ -3,7 +3,10 @@
         <mat-icon>more_vert</mat-icon>
     </button>
     <label style="margin-left: 2%;">{{companyName}}</label>
-    <img [src]="imageName" style="width:140px; height:40px; margin-right: 1%;" align="right">
+    <button mat-icon-button style="float: right;" (click)= "logOff()">
+        <mat-icon aria-label="logout">logout</mat-icon>
+      </button>
+    <img [src]="imageName" style="width:140px; height:40px; margin-right: 1%;float: right" >    
 </div>
 <div>
     <mat-menu #menu="matMenu">
@@ -28,6 +31,11 @@
                 <mat-icon>attachment</mat-icon>Company Setup
             </a>
         </button>
+        <!-- <button mat-menu-item>
+            <a routerLink="Logout">
+                <mat-icon>logout</mat-icon>Logout
+            </a>
+        </button> -->
     </mat-menu>
     <router-outlet></router-outlet>
 </div>

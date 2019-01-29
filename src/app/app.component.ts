@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserPreferencesService } from './employee/userPreference.service';
 import { ICompanyService } from 'src/app/providers/company.service';
-import { CompanyDetails } from 'src/app/models/company.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'my-app',
@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   companyName: string;
     
   constructor(
-    private companyserv: ICompanyService
+    private companyserv: ICompanyService, private router: Router
   ) { }
 
   ngOnInit() {
@@ -27,4 +27,13 @@ export class AppComponent implements OnInit {
           'Problem with the service, plz try later';
         });
   }
+ 
+  logOff() {
+    sessionStorage.removeItem('userToken');
+    sessionStorage.removeItem('userEmail');
+    sessionStorage.removeItem('userId');
+
+    this.router.navigateByUrl('/user')
+  }
+
 }

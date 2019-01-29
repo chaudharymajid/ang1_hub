@@ -6,6 +6,9 @@ import * as jwt_decode from "jwt-decode";
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import 'rxjs/add/operator/catch';
 import { EmployeeService } from '../providers/employee.service'
+import { Router } from '@angular/router';
+import { routerNgProbeToken } from '@angular/router/src/router_module';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -17,12 +20,13 @@ import { EmployeeService } from '../providers/employee.service'
 export class UserComponent {
 
   loginForm: FormGroup;
+  error: boolean = false;
   fd: signIn = {
     email: null,
     password: null
   }
 
-  constructor(private http: Http, private fb: FormBuilder, private empserv: EmployeeService) {
+  constructor(private http: Http, private fb: FormBuilder, private empserv: EmployeeService, private router: Router) {
     this.loginForm = this.fb.group({
       email: ["", [Validators.email, Validators.required]],
       password: ["", [Validators.required]]
@@ -31,12 +35,12 @@ export class UserComponent {
 
  onSubmit() {
 
-    var userEmail: string;
-    var userId: string;
+    let userEmail: string;
+    let userId: string;
     const sessionExp = new Date(0);
-    var userToken: string;
-    var jwtToken: any;
-    var jwtTokenDecoded: any;
+    let userToken: string;
+    let jwtToken: any;
+    let jwtTokenDecoded: any;    
 
     this.fd.email = this.loginForm.value.email;
     this.fd.password = this.loginForm.value.password;
@@ -51,11 +55,19 @@ export class UserComponent {
       jwtToken = jwtToken.token;
       //userToken = JSON.stringify(jwtToken.token.json().token).replace(/['"]+/g, '');
 
-
       sessionStorage.setItem('userToken', jwtToken);
       sessionStorage.setItem('userEmail', userEmail);
       sessionStorage.setItem('userId', userId);
-    })
+      this.router.navigateByUrl('/home');
+    }, (err) => {
+      this.error = true;
+    });    
+  }
+
+  logOff() {
+    sessionStorage.removeItem('userToken');
+    sessionStorage.removeItem('userEmail');
+    sessionStorage.removeItem('userId');
   }
 
   handleError(error: Response) {

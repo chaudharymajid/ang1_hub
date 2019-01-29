@@ -32,30 +32,43 @@
                     The actual rendered columns are set as a property on the row definition" -->
 
             <!-- Position Column -->
+            <ng-container matColumnDef="employeeid">
+              <th mat-header-cell *matHeaderCellDef> ID </th>
+              <td mat-cell *matCellDef="let element" (dblclick)="click($event); setupTabGrp.selectedIndex = 1; " id="{{element.employeeid}}">
+                {{element.employeeid}} </td>
+            </ng-container>
+
+
             <ng-container matColumnDef="firstName">
               <th mat-header-cell *matHeaderCellDef> First Name </th>
-              <td mat-cell *matCellDef="let element" (click)="click($event)" id="{{element.empId}}">
+              <td mat-cell *matCellDef="let element" (dblclick)="click($event); setupTabGrp.selectedIndex = 1;" id="{{element.employeeid}}">
                 {{element.firstName}} </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="lastName">
               <th mat-header-cell *matHeaderCellDef> Last Name </th>
-              <td mat-cell *matCellDef="let element" (click)="click($event); setupTabGrp.selectedIndex = 1;" id="{{element.empId}}">
+              <td mat-cell *matCellDef="let element" (dblclick)="click($event); setupTabGrp.selectedIndex = 1;" id="{{element.employeeid}}">
                 {{element.lastName}} </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="dept">
+              <th mat-header-cell *matHeaderCellDef> Department </th>
+              <td mat-cell *matCellDef="let element" (dblclick)="click($event); setupTabGrp.selectedIndex = 1;" id="{{element.employeeid}}">
+                {{element.dept}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
               <th mat-header-cell *matHeaderCellDef> Email </th>
-              <td mat-cell *matCellDef="let element" (dblclick)="click($event)" id="{{element.empId}}">
+              <td mat-cell *matCellDef="let element" (dblclick)="click($event); setupTabGrp.selectedIndex = 1;" id="{{element.employeeid}}">
                 {{element.email}} </td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="comments">
               <th mat-header-cell *matHeaderCellDef> Comments </th>
-              <td mat-cell *matCellDef="let element" (dblclick)="click($event)" id="{{element.empId}}">
+              <td mat-cell *matCellDef="let element" (dblclick)="click($event); setupTabGrp.selectedIndex = 1;" id="{{element.employeeid}}">
                 {{element.comments}} </td>
             </ng-container>
 
@@ -104,12 +117,12 @@
               </td>
               <td>
                   <mat-form-field class="demo-full-width">
-                      <input matInput placeholder="Paswword" formControlName="password" name='password'>                  
+                      <input type="password" matInput placeholder="Paswword" formControlName="password" name='password'>                  
                   </mat-form-field>
               </td>
               <td>
                   <mat-form-field class="demo-full-width">
-                      <input matInput placeholder="Confirm Password" formControlName="confirmPassword" name='confirmPassword'>                  
+                      <input type="password" matInput placeholder="Confirm Password" formControlName="confirmPassword" name='confirmPassword'>                  
                   </mat-form-field>
               </td>
             </tr>
@@ -164,32 +177,35 @@
               </td>
               <td>
                   <mat-form-field class="demo-full-width">
-                      <input matInput placeholder="Employee ID" formControlName="empId" name='empId' style="color:black">                  
+                      <input readonly matInput placeholder="Employee ID" formControlName="empId" name='empId' style="color:black" >                  
                   </mat-form-field>
               </td>
             </tr>
 
             <tr>
-                <td>      
-                  <label>Upload Photo/Photo ID</label>
-                  <input type="file" id="companyLogo" #file accept="image/*" (change)="onEmpChange($event)"  name='photoId' formcontrolname= "photoId">
-                  <button mat-stroked-button-dark color="white" (change)="onFileChange($event)" style='visibility:hidden'>
-                    Upload Photo/Photo ID
-                  </button>
-                </td>
-                <td>
-                  <img [src]="compSelectedImage" style="width:140px; height:40px; margin-right: 1%;" align="right">
-                </td>
-                <td>
-                    <button id="submitEmpButton" type="submit" mat-stroked-button  (click)='onEmpSubmit()'>
-                        Submit</button>
-                </td>
-              </tr>              
+              <td colspan="2">
+                <label>Upload Photo / Photo ID</label>
+                <input type="file"  #empPhotoId id="empPhotoId" name="file" #file accept="image/*" (change)="onEmpFileChange($event)">
+                <br>
+              </td> 
+            </tr>              
             </table>
-            <br><br><br><br>
+            <div style=" margin-right: 1%;">
+              <img *ngIf="empSelectedImage" [src]="empSelectedImage"  style="max-width:300px; max-height:150px; display: block;width: auto;height: auto;" >
+            </div>
           </div>
-      </mat-card-content>    </mat-card>
-    
+      </mat-card-content>   <br><br><br> </mat-card> <br>
+      <div align="right">
+      <button  id="submitEmpButton" #empSbmtBtn type="submit" mat-stroked-button color="white" style="margin-right: 5px;" (click)="onEmpSubmit()" disabled >
+        Submit</button>
+        <button id="resetEmpButton" #empResetBtn type="button" mat-stroked-button color="white" style="margin-right: 5px;" (click)="onEmpReset()" disabled>
+          Reset Form</button>
+          <br>
+          <div  *ngIf="userCreated" style="margin-right: 15px; color: blue;">User Created</div>
+          <div  *ngIf="userUpdated" style="margin-right: 15px; color: blue;">User Created</div>
+        </div>
+      <br>
+      <div style="color:red;" *ngIf="error">* Password mismatch</div>      
   </mat-tab>
 
   <mat-tab label="Company Registration">
