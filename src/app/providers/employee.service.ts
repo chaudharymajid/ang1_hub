@@ -15,8 +15,13 @@ export class EmployeeService {
     constructor(private _http: HttpClient) { }
     rootUrl: string = "http://localhost:3200/";
 
+    logIn(fd): Observable<Response> {
+        return this._http.post<Response>(this.rootUrl + "users/login", fd).map(Response => Response)     
+            .catch(this.handleError);
+    }
+
     getEmployees(): Observable<EmployeeDetails[]> {
-        return this._http.get<EmployeeDetails[]>(this.rootUrl + "api/employeereg")        
+        return this._http.get<EmployeeDetails[]>(this.rootUrl + "users")        
             .catch(this.handleError);
     }
 
@@ -28,6 +33,6 @@ export class EmployeeService {
 
     handleError(error: Response) {
         console.error(error);
-        return ErrorObservable.create(error);
+        return ErrorObservable.create(error);        
     }
 }

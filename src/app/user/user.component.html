@@ -2,26 +2,28 @@
 <mat-card >
   <mat-card-title>Sign in</mat-card-title>
   <div>
+      <div [formGroup]="loginForm">
     <table>
       <tr>
-        <td>
-          <mat-form-field class="demo-full-width" id="emailfield">
-            <input matInput placeholder="Email">
-          </mat-form-field>
-        </td>
+          <td>
+              <mat-form-field class="demo-full-width">
+                <input matInput placeholder="email" formControlName="email" name='email'>                  
+              </mat-form-field>
+            </td>
       </tr>
       <tr>
         <td>
           <mat-form-field class="demo-full-width" id="passwordfield">
-            <input matInput placeholder="Password" type="password">
+            <input matInput placeholder="Password" type="password" formControlName="password" name='password'>
           </mat-form-field>
         </td>
       </tr>
       <tr>
         <td align="center">
-          <button id="loginButton" type="submit" mat-stroked-button color="white" (click)=onSignin()>
+          <button id="loginButton" type="submit" mat-stroked-button color="white" (click)="onSubmit()">
             Sign in</button>
         </td>
     </table>
+    </div>
   </div>
 </mat-card></div>

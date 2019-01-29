@@ -14,6 +14,6 @@ export class EmployeeDetails {
     mgrName: string;   
     comments: string;
     hireDate: string;
-    fireDate: string;
+    endDate: string;
     nationality: string;
 }

@@ -10,7 +10,7 @@ import { EmployeeService } from "src/app/providers/employee.service";
 })
 export class EmpGrid implements OnInit {
 
-    employees: object[];
+    employees: any;
     statusMessage: string = "Loading data, Please wait ...";
     
     constructor(private _employeeService: EmployeeService) {

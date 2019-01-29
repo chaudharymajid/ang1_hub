@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -27,6 +27,8 @@ import { CompSetup } from './setup/compsetup.component';
 import { EmployeeSetup } from './setup/employeesetup.component';
 import { TableFilteringExample } from './testtable/testtable.component';
 import { UserComponent } from './user/user.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthInterceptor } from './providers/auth.interceptor';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -42,14 +44,20 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent, EmployeeComponent, EmployeeComponentList, EmployeeTitlePipe, EmployeeCountComponent, HomeComponent, PageNotFoundComponent, 
-    EmpGrid, EmployeeSkills, MatSkills, CompSetup, EmployeeSetup, TableFilteringExample, UserComponent, UserComponent
+    EmpGrid, EmployeeSkills, MatSkills, CompSetup, EmployeeSetup, TableFilteringExample, UserComponent, UserComponent, LoginComponent
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, BsDropdownModule, TooltipModule, ModalModule, RouterModule.forRoot(appRoutes), BrowserAnimationsModule, 
-    MaterialModule, ReactiveFormsModule, HttpModule
+    MaterialModule, ReactiveFormsModule, HttpModule, HttpClientModule
   ],
   exports: [],
-  providers: [EmployeeService],
+  providers: [EmployeeService,
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi   : true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

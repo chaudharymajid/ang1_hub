@@ -14,6 +14,7 @@ export class empTable {
     dept: string;
     comments: string;
     empId: string;
+    email: string;
 }
 
 @Component({
@@ -83,11 +84,11 @@ export class CompSetup implements OnInit {
             mgrId: [''],
             comments: [''],
             hireDate: [''],
-            fireDate: [''],
+            endDate: [''],
             nationality: [''],
         });
 
-        this.empserv.getEmployees()
+         this.empserv.getEmployees()
             .subscribe((res) => {
                 res.forEach((value) => {
                     let newarr = new empTable();
@@ -95,6 +96,7 @@ export class CompSetup implements OnInit {
                     newarr.firstName = value.firstName;
                     newarr.lastName = value.lastName;
                     newarr.dept = value.dept;
+                    newarr.email = value.email;
                     newarr.comments = value.comments;
                     this.empTableSource.push(newarr);
                 });
@@ -310,7 +312,7 @@ export class CompSetup implements OnInit {
         mgrName: null,
         comments: null,
         hireDate: null,
-        fireDate: null,
+        endDate: null,
         nationality: null,
     }
 
@@ -340,7 +342,7 @@ export class CompSetup implements OnInit {
             middleName: value.middleName,
             email: value.email,
             hireDate: value.hireDate,
-            fireDate: value.fireDate,
+            endDate: value.endDate,
             nationality: value.nationality,
             phone: value.phone,
             dept: value.dept,
@@ -370,7 +372,7 @@ export class CompSetup implements OnInit {
         fd.append('phone', this.employeeForm.value.phone);
         fd.append('address', this.employeeForm.value.address);
         fd.append('hireDate', this.employeeForm.value.hireDate);
-        fd.append('fireDate', this.employeeForm.value.fireDate);
+        fd.append('endDate', this.employeeForm.value.endDate);
         fd.append('nationality', this.employeeForm.value.nationality);
         fd.append('dept', this.employeeForm.value.dept);
         fd.append('mgrId', this.employeeForm.value.mgrId);
