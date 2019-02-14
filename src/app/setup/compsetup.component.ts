@@ -390,6 +390,7 @@ export class CompSetup implements OnInit {
     }
 
     updateEmpView(value): void {
+        this.employeeForm.reset();
         this.employeeForm.patchValue({
             firstName: value.firstName,
             lastName: value.lastName,
@@ -406,7 +407,7 @@ export class CompSetup implements OnInit {
             photoId: this.empImgPath + value.photoId,
         });
        
-        this.empSelectedImage = (value.emp_photo !== null) ? this.rootUrl + value.emp_photo : null;
+        this.empSelectedImage = (value.photoid !== null) ? this.rootUrl + value.photoid : null;
         this.renderer.setProperty(this.empSubmtBtn, 'disabled', 'true');
         this.renderer.setProperty(this.empResetBtn, 'disabled', 'false');
     }
@@ -477,7 +478,7 @@ export class CompSetup implements OnInit {
             fd.append('modifiedBy', sessionStorage.getItem('userEmail') );
 
             if (this.empFile != null) {
-                fd.append('empImg', this.empFile, this.employeeForm.value.lastName + this.empFile.name)
+                fd.append('photoId', this.empFile, this.employeeForm.value.lastName + this.empFile.name)
                 if (this.employeeForm.value.empId === "" || this.employeeForm.value.empId == null) {
                     this.empserv.signUpPhoto(fd).subscribe(res => {
                         this.userCreated = true;
@@ -491,7 +492,7 @@ export class CompSetup implements OnInit {
                             }
                         });
                 } else {
-                    this.empserv.updateUserPhoto(fd).subscribe(res => {
+                    this.empserv.updateUser(fd, this.employeeForm.value.empId).subscribe(res => {
                         this.userUpdated = true;
                         this.userCreated = false;
                     },
@@ -517,7 +518,7 @@ export class CompSetup implements OnInit {
                             }
                         });
                 } else {
-                    this.empserv.updateUser(fd).subscribe(res => {
+                    this.empserv.updateUser(fd, this.employeeForm.value.empId).subscribe(res => {
                         this.userUpdated = true;
                         this.userCreated = false;
                     },

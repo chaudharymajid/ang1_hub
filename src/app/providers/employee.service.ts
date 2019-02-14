@@ -30,8 +30,8 @@ export class EmployeeService {
             .catch(this.handleError);
     }
 
-    updateUser(fd): Observable<Response> {
-        return this._http.put<Response>(this.rootUrl + "users/update/" + fd.empId, fd).map(Response => Response)
+    updateUser(fd, id): Observable<Response> {
+        return this._http.put<Response>(this.rootUrl + "users/update/" + id, fd).map(Response => Response)
         .catch(this.handleError);
     }
 

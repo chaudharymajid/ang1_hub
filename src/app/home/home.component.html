@@ -1,4 +1,28 @@
 <h1>This is the home page</h1>
-<div>Chosen color is: 
-    <input type="text" [(ngModel)] = "colour" [style.background]="colour"/>
+<div>Chosen color is:
+    <input type="text" [(ngModel)]="colour" [style.background]="colour" />
 </div>
+<ng-container *ngFor="let employee of employees;">
+    <mat-card style="width: 80%; background-color: cadetblue;">
+        <div class="grid-container">
+            {{employee.code}}
+            {{employee.name}}
+            {{employee.gender}}
+            {{employee.annualSalary}}
+            {{employee.dateOfBirth}}
+        </div>
+    </mat-card>
+</ng-container>
+<div class="container">
+    <div class="row">
+      <div class="col-sm">
+        One of three columns
+      </div>
+      <div class="col-sm">
+        One of three columns
+      </div>
+      <div class="col-sm">
+        One of three columns
+      </div>
+    </div>
+  </div>
