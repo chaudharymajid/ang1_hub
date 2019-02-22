@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CompanyDetails } from 'src/app/models/company.model';
 import { ICompanyService } from 'src/app/providers/company.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatDialogRef } from '@angular/material';
 import { EmployeeDetails } from 'src/app/models/employeesetup.model';
 import { EmployeeService } from 'src/app/providers/employee.service';
+import { IDeptService } from 'src/app/providers/dept.service';
 
 export class empTable {
     firstName: string;
@@ -17,25 +18,46 @@ export class empTable {
     email: string;
 }
 
+export class deptTable {
+    deptName: string;
+    deptParent: string;
+    comments: string;    
+}
+
+@Component({
+    selector: 'confirmation-modal',
+    templateUrl: 'confirmation-modal.html',
+})
+export class ConfirmationModal { }
+
 @Component({
     templateUrl: 'compsetup.component.html',
-    providers: [ICompanyService, EmployeeService]
+    providers: [ICompanyService, EmployeeService, IDeptService]
 })
 
 export class CompSetup implements OnInit {
     companyForm: FormGroup;
     employeeForm: FormGroup;
+    prodCatForm: FormGroup;
+    deptForm: FormGroup;
     rootUrl: string = "http://localhost:3200/";
     empTableSource: Array<empTable> = [];
     dataSource: MatTableDataSource<empTable>;
+    deptDataSource: MatTableDataSource<empTable>;
     empImgPath: string = this.rootUrl + 'Content/images/employees/';
     compSelectedImage: string;
     empSelectedImage: string;
-    compOldImg: string;    
+    compOldImg: string;
     empBtnDisabled = true;
+    error: boolean = false;
+    success: boolean = false;
+    userCreated: boolean = false;
+    userUpdated: boolean = false;
+    userDeleted: boolean = false;
     @ViewChild('empSbmtBtn') empSubmtBtn: ElementRef;
     @ViewChild('empResetBtn') empResetBtn: ElementRef;
     @ViewChild('empPhotoId') empPhotoIdBtn: ElementRef;
+    @ViewChild('empDelBtn') empDelBtn: ElementRef;
 
 
     companyDetails: CompanyDetails = {
@@ -60,7 +82,8 @@ export class CompSetup implements OnInit {
         private empserv: EmployeeService,
         private http: HttpClient,
         private router: Router,
-        private renderer: Renderer2
+        private renderer: Renderer2,
+        public dialog: MatDialog
     ) {
         this.companyForm = this.fb.group({
             companyName: [''],
@@ -94,6 +117,17 @@ export class CompSetup implements OnInit {
             nationality: [''],
         });
 
+        this.deptForm = this.fb.group ({
+            deptId: [''],
+            deptName: [''],
+            deptParent: [''],
+            deptComments: ['']
+        });
+
+        this.prodCatForm = this.fb.group({
+
+        });
+
         this.empserv.getEmployees()
             .subscribe((res) => {
                 res.forEach((value) => {
@@ -106,7 +140,7 @@ export class CompSetup implements OnInit {
                     newarr.comments = value.comments;
                     this.empTableSource.push(newarr);
                 });
-                console.log(this.empTableSource);
+                //console.log(this.empTableSource);
                 this.dataSource = new MatTableDataSource(this.empTableSource);
             },
                 (error) => {
@@ -116,18 +150,18 @@ export class CompSetup implements OnInit {
                     //this.router.navigateByUrl('/users');
                 });
 
-                this.companyserv.getCompany()
-                .subscribe((companyData) => {
-                    this.modelToForm(companyData[0]),
-                        this.compSelectedImage = 'http://localhost:3200/' + companyData[0].company_image,
-                        this.compOldImg = 'G:\\Users\\chaudhary\\Downloads\\nodejs\\uploads\\' + companyData[0].company_image
-                }
-                    ,
-                    (error) => {
-                        if (error.status == 401) {
-                            this.router.navigateByUrl('/user');
-                        }
-                    });
+        this.companyserv.getCompany()
+            .subscribe((companyData) => {
+                this.modelToForm(companyData[0]),
+                    this.compSelectedImage = 'http://localhost:3200/' + companyData[0].company_image,
+                    this.compOldImg = 'G:\\Users\\chaudhary\\Downloads\\nodejs\\uploads\\' + companyData[0].company_image
+            }
+                ,
+                (error) => {
+                    if (error.status == 401) {
+                        this.router.navigateByUrl('/user');
+                    }
+                });
     }
 
     ngOnInit() {
@@ -135,6 +169,28 @@ export class CompSetup implements OnInit {
             this.renderer.setProperty(this.empSubmtBtn, 'disabled', 'false');
             this.renderer.setProperty(this.empResetBtn, 'disabled', 'false');
         })
+    }
+
+    updateEmpList() {
+        this.empserv.getEmployees()
+            .subscribe((res) => {
+                res.forEach((value) => {
+                    let newarr = new empTable();
+                    newarr.employeeid = value.empId;
+                    newarr.firstName = value.firstName;
+                    newarr.lastName = value.lastName;
+                    newarr.dept = value.dept;
+                    newarr.email = value.email;
+                    newarr.comments = value.comments;
+                    this.empTableSource.push(newarr);
+                });
+                this.dataSource = new MatTableDataSource(this.empTableSource);
+            },
+                (error) => {
+                    if (error.status == 401) {
+                        this.router.navigateByUrl('/user');
+                    }
+                });
     }
 
     modelToForm(data): void {
@@ -271,7 +327,7 @@ export class CompSetup implements OnInit {
         fd.append('company_tax_number', this.companyForm.value.companyTaxNum);
         fd.append('modification_date', new Date().toString());
         fd.append('oldImg', this.compOldImg);
-        fd.append('modifiedBy', sessionStorage.getItem('userEmail') );
+        fd.append('modifiedBy', sessionStorage.getItem('userEmail'));
 
         if (this.file === null) {
             if (this.companyForm.value.companyId === null || this.companyForm.value.companyId === "") {
@@ -374,7 +430,7 @@ export class CompSetup implements OnInit {
 
         this.employeeForm.get('password').disable();
         this.employeeForm.get('confirmPassword').disable();
-        
+
         this.empserv.getEmployeeByCode(empId)
             .subscribe((res) => {
                 this.updateEmpView(res[0])
@@ -386,7 +442,8 @@ export class CompSetup implements OnInit {
                     } else {
                         console.log(error.status);
                     }
-                });       
+                });
+        this.renderer.setProperty(this.empDelBtn, 'disabled', 'false');
     }
 
     updateEmpView(value): void {
@@ -405,13 +462,14 @@ export class CompSetup implements OnInit {
             comments: value.comments,
             empId: value.empId,
             photoId: this.empImgPath + value.photoId,
+            
         });
-       
+
         this.empSelectedImage = (value.photoid !== null) ? this.rootUrl + value.photoid : null;
         this.renderer.setProperty(this.empSubmtBtn, 'disabled', 'true');
         this.renderer.setProperty(this.empResetBtn, 'disabled', 'false');
     }
-    
+
     tabIndex: string;
     tabName: string;
 
@@ -437,6 +495,23 @@ export class CompSetup implements OnInit {
 
     onEmpReset() {
         this.employeeForm.reset();
+
+        this.employeeForm.patchValue({
+            firstName: '',
+            lastName: '',
+            middleName: '',
+            email: '',
+            hireDate: '',
+            endDate: '',
+            nationality: '',
+            phone: '',
+            dept: '',
+            address: '',
+            comments: '',
+            empId: '',
+            photoId: '',
+        });
+
         this.employeeForm.get('password').enable();
         this.employeeForm.get('confirmPassword').enable();
         this.error = false;
@@ -445,20 +520,39 @@ export class CompSetup implements OnInit {
         this.userUpdated = false;
         this.renderer.setProperty(this.empSubmtBtn, 'disabled', 'true');
         this.renderer.setProperty(this.empResetBtn, 'disabled', 'true');
+        this.renderer.setProperty(this.empDelBtn, 'disabled', 'true');
         this.renderer.setValue(this.empPhotoIdBtn, null);
         this.empSelectedImage = null;
         this.empFile = null;
     }
 
-    error: boolean = false;
-    success: boolean = false;
-    userCreated: boolean = false;
-    userUpdated: boolean = false;
+    onEmpDel() {
+        this.empserv.delEmployee(this.employeeForm.value.empId).subscribe(res => {
+            this.userDeleted = true;
+            this.onEmpReset();
+            this.updateEmpList();
+        },
+            (error) => {
+                if (error.status == 401) {
+                    this.router.navigateByUrl('/user');
+                } else {
+                    console.log(error.status);
+                }
+            });
+    }
 
     onEmpSubmit(): void {
         const fd = new FormData();
         this.error = false;
+        let kval: string;
+        let forms: string = 'this.employeeForm.value.';
+        let checkNulls: string[];
+
         if (this.employeeForm.value.password === this.employeeForm.value.confirmPassword) {
+
+            // Object.keys(this.employeeForm.controls).forEach(key => {
+            //     checkNulls.push(forms+key);               
+            // });
 
             fd.append('firstName', this.employeeForm.value.firstName);
             fd.append('lastName', this.employeeForm.value.lastName);
@@ -475,64 +569,67 @@ export class CompSetup implements OnInit {
             fd.append('mgrId', this.employeeForm.value.mgrId);
             fd.append('comments', this.employeeForm.value.comments);
             fd.append('empId', this.employeeForm.value.empId);
-            fd.append('modifiedBy', sessionStorage.getItem('userEmail') );
+            fd.append('modifiedBy', sessionStorage.getItem('userEmail'));
 
             if (this.empFile != null) {
-                fd.append('photoId', this.empFile, this.employeeForm.value.lastName + this.empFile.name)
-                if (this.employeeForm.value.empId === "" || this.employeeForm.value.empId == null) {
-                    this.empserv.signUpPhoto(fd).subscribe(res => {
-                        this.userCreated = true;
-                        this.userUpdated = false;
-                    },
-                        (error) => {
-                            if (error.status == 401) {
-                                this.router.navigateByUrl('/user');
-                            } else {
-                                console.log(error.status);
-                            }
-                        });
-                } else {
-                    this.empserv.updateUser(fd, this.employeeForm.value.empId).subscribe(res => {
-                        this.userUpdated = true;
-                        this.userCreated = false;
-                    },
-                        (error) => {
-                            if (error.status == 401) {
-                                this.router.navigateByUrl('/user');
-                            } else {
-                                console.log(error.status);
-                            }
-                        });
-                }
+                fd.append('photoId', this.empFile, this.employeeForm.value.lastName + this.empFile.name);
+            }
+
+            if (this.employeeForm.value.empId === "" || this.employeeForm.value.empId == null) {
+                this.empserv.signUpPhoto(fd).subscribe(res => {
+                    this.userCreated = true;
+                    this.userUpdated = false;
+                },
+                    (error) => {
+                        if (error.status == 401) {
+                            this.router.navigateByUrl('/user');
+                        } else {
+                            console.log(error.status);
+                        }
+                    });
             } else {
-                if (this.employeeForm.value.empId === "" || this.employeeForm.value.empId == null) {
-                    this.empserv.signUp(fd).subscribe(res => {
-                        this.userCreated = true;
-                        this.userUpdated = false;
-                    },
-                        (error) => {
-                            if (error.status == 401) {
-                                this.router.navigateByUrl('/user');
-                            } else {
-                                console.log(error.status);
-                            }
-                        });
-                } else {
-                    this.empserv.updateUser(fd, this.employeeForm.value.empId).subscribe(res => {
-                        this.userUpdated = true;
-                        this.userCreated = false;
-                    },
-                        (error) => {
-                            if (error.status == 401) {
-                                this.router.navigateByUrl('/user');
-                            } else {
-                                console.log(error.status);
-                            }
-                        });
-                }
+                this.empserv.updateUser(fd, this.employeeForm.value.empId).subscribe(res => {
+                    this.userUpdated = true;
+                    this.userCreated = false;
+                },
+                    (error) => {
+                        if (error.status == 401) {
+                            this.router.navigateByUrl('/user');
+                        } else {
+                            console.log(error.status);
+                        }
+                    });
             }
         } else {
             this.error = true;
         }
     }
+
+    name: string;
+    animal: string;
+
+    openDialog(): void {
+        const dialogRef = this.dialog.open(ConfirmationModal, {
+            width: '250px',
+            data: { name: this.employeeForm.value.lastName }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+            if (result == "1") {
+                this.onEmpDel();
+            }
+        });
+    }
+
+// ***************Depts*********************************************
+// ***************Depts*********************************************
+// ***************Depts*********************************************
+
+displayedDeptColumns: string[] = ['deptName', 'deptParent', 'comments'];
+
+applyDeptFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+}
+
 }

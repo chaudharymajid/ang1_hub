@@ -20,13 +20,13 @@ export class EmployeeService {
             .catch(this.handleError);
     }
 
-    signUp(fd): Observable<Response> {
-        return this._http.post<Response>("http://localhost:3200/users/signup", fd).map(Response => Response)     
-            .catch(this.handleError);
-    }
+    // signUp(fd): Observable<Response> {
+    //     return this._http.post<Response>("http://localhost:3200/users/signup", fd).map(Response => Response)     
+    //         .catch(this.handleError);
+    // }
 
     signUpPhoto(fd): Observable<Response> {
-        return this._http.post<Response>("http://localhost:3200/users/signup", fd).map(Response => Response)     
+        return this._http.post<Response>(this.rootUrl + "users/signup", fd).map(Response => Response)     
             .catch(this.handleError);
     }
 
@@ -35,10 +35,10 @@ export class EmployeeService {
         .catch(this.handleError);
     }
 
-    updateUserPhoto(fd): Observable<Response> {
-        return this._http.put<Response>(this.rootUrl + "users/update/" + fd.empId, fd).map(Response => Response)
-        .catch(this.handleError);
-    }
+    // updateUserPhoto(fd, id): Observable<Response> {
+    //     return this._http.put<Response>(this.rootUrl + "img/" + id, fd).map(Response => Response)
+    //     .catch(this.handleError);
+    // }
 
     getEmployees(): Observable<EmployeeDetails[]> {
         return this._http.get<EmployeeDetails[]>(this.rootUrl + "users")        
@@ -48,6 +48,11 @@ export class EmployeeService {
     getEmployeeByCode(empId: number): Observable<Response> {
         return this._http.get<Response>(this.rootUrl + "users/" + empId).map(Response => Response)
             .catch(this.handleError);
+    }
+
+    delEmployee(id): Observable<Response> {
+        return this._http.delete<Response>(this.rootUrl + "users/" + id).map(Response => Response)
+        .catch(this.handleError);
     }
 
     handleError(error: Response) {
